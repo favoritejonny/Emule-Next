@@ -1,80 +1,88 @@
+<p align="center">
+  <img src="docs/media/github-social-preview-v1.jpg" alt="eMule Next — modern eD2K and Kad client for Windows" width="100%">
+</p>
+
 # eMule Next
 
-eMule Next is an independent community build for Windows, based on the eMule
-Community 0.72a code base. It keeps compatibility with the eD2K and Kad
-networks while modernising the Windows build, reliability, interface and
-packaging.
+**eMule Next is an independent, open-source eMule Community fork for Windows, with a modernised interface, Win32 and x64 portable builds, 43 languages, and continued compatibility with the eD2K and Kad networks.**
 
-The project is maintained by Jonny Favorite. It is not an official eMule
-Project release and is not affiliated with, endorsed by, or sponsored by the
-original eMule Project.
+## Download
 
-## Current status
+### [Download eMule Next 1.0.0-alpha.1](https://github.com/favoritejonny/Emule-Next/releases/tag/v1.0.0-alpha.1)
 
-The Windows Win32 and x64 release candidates and their portable packages have
-completed the current manual stability tests. The first public pre-release is
-not published yet: the remaining items in [LEGAL_STATUS.md](LEGAL_STATUS.md)
-and [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) must be resolved first.
+| Windows package | Recommended for | Direct download |
+| --- | --- | --- |
+| x64 portable | Most modern 64-bit Windows PCs | [Download x64 ZIP](https://github.com/favoritejonny/Emule-Next/releases/download/v1.0.0-alpha.1/eMuleNext-1.0.0-alpha.1-x64-portable.zip) |
+| Win32 portable | 32-bit Windows and older compatible systems | [Download Win32 ZIP](https://github.com/favoritejonny/Emule-Next/releases/download/v1.0.0-alpha.1/eMuleNext-1.0.0-alpha.1-win32-portable.zip) |
+| SHA-256 checksums | Verify either downloaded archive | [Download checksums](https://github.com/favoritejonny/Emule-Next/releases/download/v1.0.0-alpha.1/SHA256SUMS-1.0.0-alpha.1.txt) |
 
-Please use the repository only for project source, documentation and lawful
-technical reports. Do not upload copyrighted media, download links, server
-lists of uncertain provenance, personal configuration files or credentials.
+This is an **alpha pre-release** for testing. The portable builds do not require installation: extract the ZIP into a writable folder and run `eMuleNext.exe`.
 
-## License
+The current executables are not digitally signed, so Microsoft Defender SmartScreen may display a warning on first launch. Verify that the ZIP came from this repository and compare its SHA-256 checksum before continuing. See [WINDOWS-SMARTSCREEN.md](WINDOWS-SMARTSCREEN.md) for the safe procedure.
 
-eMule Next is a derivative work of eMule. The original source headers license
-the program under the GNU General Public License, version 2 or (at the
-recipient's option) any later version. See [LICENSE](LICENSE).
+## Highlights
 
-This means that every recipient may run, study, modify and redistribute the
-program under those terms. A binary release must always be accompanied by the
-complete corresponding source code and the notices required by the included
-third-party components.
+- Native Windows Win32 and x64 builds.
+- Portable packages that keep their configuration inside their own folder.
+- 43 included interface languages.
+- Modern Light as the default theme, with refreshed icons and interface details.
+- eD2K server and Kad network compatibility.
+- Updated first-run experience, help links and GitHub issue reporting.
+- No project telemetry, analytics or automatic crash-report upload.
 
-Read the following before making a public release:
+## Screenshots
 
-- [NOTICE.md](NOTICE.md) - upstream attribution and trademark clarification;
-- [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) - libraries and notices;
-- [CHANGES.md](CHANGES.md) - eMule Next changes;
-- [SOURCE-CODE.md](SOURCE-CODE.md) - source availability rules;
-- [WINDOWS-SMARTSCREEN.md](WINDOWS-SMARTSCREEN.md) - safe first-run checks for
-  the currently unsigned Windows builds;
-- [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) - mandatory release checks;
-- [LEGAL_STATUS.md](LEGAL_STATUS.md) - current release-clearance status.
+<table>
+  <tr>
+    <td width="50%"><img src="docs/media/screenshots/search-overview-clean-v1.png" alt="eMule Next search interface"></td>
+    <td width="50%"><img src="docs/media/screenshots/kad-overview-clean-v1.png" alt="eMule Next Kad interface"></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>Search</strong></td>
+    <td align="center"><strong>Kad network</strong></td>
+  </tr>
+</table>
+
+<p align="center">
+  <img src="docs/media/screenshots/preferences-modern-light-v2.png" alt="eMule Next preferences with refreshed icons" width="539">
+  <br>
+  <strong>Modernised preferences and included language selection</strong>
+</p>
+
+## Project status
+
+Both portable packages in `1.0.0-alpha.1` passed the current clean-start and manual stability tests. This remains an early public build: back up important configuration, report reproducible problems through [GitHub Issues](https://github.com/favoritejonny/Emule-Next/issues), and do not treat it as a finished stable release.
+
+The project is maintained by Jonny Favorite. It is not an official eMule Project release and is not affiliated with, endorsed by, or sponsored by the original eMule Project.
 
 ## Safe and lawful use
 
-The software is a general-purpose peer-to-peer client. Users are responsible
-for downloading and sharing only material they are authorised to receive or
-distribute. Do not use official project channels to publish copyrighted
-content, infringing server lists, or material that encourages copyright
-infringement.
+eMule Next is a general-purpose peer-to-peer client. Users are responsible for downloading and sharing only material they are authorised to receive or distribute. Do not use project channels to publish copyrighted content, infringing links, server lists of uncertain provenance, personal configuration files or credentials.
 
 ## Privacy
 
-The current distribution does not collect crash reports, analytics or other
-telemetry for the project maintainer. See [PRIVACY.md](PRIVACY.md). Peer-to-peer
-network traffic is inherently exchanged with other participating peers and
-servers as needed for the protocol.
+The current distribution does not collect crash reports, analytics or other telemetry for the project maintainer. Peer-to-peer network traffic is inherently exchanged with other participating peers and servers as required by the protocol. See [PRIVACY.md](PRIVACY.md).
 
-## Builds and packages
+## Build from source
 
-The Visual Studio solution is [srchybrid/emule.sln](srchybrid/emule.sln).
-Release executables are built separately for Win32 and x64. The portable
-package script is [packaging/Build-PortablePackages.ps1](packaging/Build-PortablePackages.ps1).
-The first public pre-release is planned as two portable ZIP archives, one for
-Win32 and one for x64, without an installer. Each archive includes the
-SmartScreen notice and must be published with its SHA-256 checksum.
+The Visual Studio solution is [srchybrid/emule.sln](srchybrid/emule.sln). Release executables are built separately for Win32 and x64. The portable package script is [packaging/Build-PortablePackages.ps1](packaging/Build-PortablePackages.ps1).
 
-Do not publish a package until every item in [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md)
-has been completed and the blockers in [LEGAL_STATUS.md](LEGAL_STATUS.md) are
-resolved.
+Binary releases must be accompanied by the complete corresponding source code and all notices required by the included third-party components. Maintainers should complete [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) before publishing a new version.
+
+## License and notices
+
+eMule Next is a derivative work of eMule and is distributed under the GNU General Public License, version 2 or, at the recipient's option, any later version. See [LICENSE](LICENSE).
+
+- [NOTICE.md](NOTICE.md) — upstream attribution and name clarification.
+- [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) — included libraries and notices.
+- [CHANGES.md](CHANGES.md) — eMule Next changes.
+- [SOURCE-CODE.md](SOURCE-CODE.md) — corresponding-source information.
+- [LEGAL_STATUS.md](LEGAL_STATUS.md) — release-clearance record.
 
 ## Participate
 
 - Read [SUPPORT.md](SUPPORT.md) before asking for help.
-- Use the guided GitHub issue forms for reproducible bugs and feature ideas.
+- Use the guided [GitHub issue forms](https://github.com/favoritejonny/Emule-Next/issues/new/choose) for reproducible bugs and feature ideas.
 - Read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing a source change.
-- Report security vulnerabilities privately as described in
-  [SECURITY.md](SECURITY.md), never in a public issue.
+- Report security vulnerabilities privately as described in [SECURITY.md](SECURITY.md), never in a public issue.
 - Follow [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) in all project spaces.
