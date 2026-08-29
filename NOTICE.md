@@ -16,14 +16,19 @@ with the whole program under GPL-2.0-or-later.
 ## Project identity and trademarks
 
 "eMule Next" identifies this independent modified build. The use of "eMule"
-describes its technical origin only; this notice does not grant a trademark
-licence. The official eMule Project reported in 2004 that the eMule trademark
-was transferred to its developers. The current ownership and permitted use of
-the proposed name have not yet been verified. Resolve this before using the
-name, logo or domain for a public launch.
+describes its technical origin and follows the long-standing `eMule [own
+name]` convention for community mods. In a written response dated 2026-08-29,
+the official eMule Project DevTeam explained that it does not give a special
+licence for uses already covered by GPL 2.0, considers artwork included in the
+source files licensed under GPL 2.0, and confirmed that this naming convention
+is fine for forks that do not pretend to be the official/original eMule. The
+DevTeam did not claim certainty about current registered trademark ownership
+and noted that implicit rights might exist.
 
-Do not imply that the original eMule Project endorses, supports or publishes
-eMule Next.
+eMule Next is not the official/original eMule. Do not imply that the original
+eMule Project endorses, supports, sponsors or publishes eMule Next. The source
+artwork and modifications remain subject to GPL-2.0-or-later and all retained
+copyright and attribution notices.
 
 ## No warranty
 

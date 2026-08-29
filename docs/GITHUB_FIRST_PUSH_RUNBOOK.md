@@ -1,6 +1,7 @@
 # GitHub first-push runbook
 
-Status: **prepared only - do not execute while legal permissions are pending.**
+Status: **upstream written responses received; perform the final audit and
+obtain explicit action-time confirmation before executing the first push.**
 
 Repository: <https://github.com/favoritejonny/Emule-Next>
 

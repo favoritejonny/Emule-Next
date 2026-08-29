@@ -33,6 +33,9 @@ still rejects a checkout.
 
 ## Publication interpretation
 
-This audit confirms that the local Git structure is technically suitable for
-GitHub. It does not clear the legal blockers in `LEGAL_STATUS.md` and does not
-authorise a push, public tag or binary release.
+This audit confirms that the local Git structure was technically suitable for
+GitHub at the audited revision. The later written upstream responses are
+recorded in `LEGAL_STATUS.md`. Because documentation commits were added after
+this audit, repeat the clean-tree, privacy, credential and integrity checks
+immediately before any push. This historical audit does not by itself
+authorise a public tag or binary release.

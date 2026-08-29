@@ -44,14 +44,15 @@ portable con esito positivo.
 
 ## Verifiche ancora necessarie
 
-1. L'autorizzazione GPL-2.0-or-later per TreeOptionsCtrl e HttpDownloadDlg e
-   stata ricevuta e registrata. Resta da chiarire l'uso pubblico del nome
-   `eMule Next` e della relativa grafica.
-2. Creare un tag Git immutabile della revisione esatta approvata e pubblicare
+1. Le risposte scritte per TreeOptionsCtrl, HttpDownloadDlg, nome `eMule Next`
+   e grafica sono state ricevute e registrate con le relative condizioni.
+2. Eseguire l'audit finale e caricare nella repository pubblica il sorgente
+   locale revisionato senza usare push forzati.
+3. Creare un tag Git immutabile della revisione esatta approvata e pubblicare
    il sorgente corrispondente insieme ai binari, come richiesto dalla GPL.
-3. Rigenerare i due ZIP finali per includere i documenti legali corretti e
+4. Rigenerare i due ZIP finali per includere i documenti legali corretti e
    ripetere la verifica automatica e un breve test di avvio.
-4. Decidere se firmare digitalmente gli eseguibili. La RC1 attuale non e
+5. Decidere se firmare digitalmente gli eseguibili. La RC1 attuale non e
    firmata e Windows puo quindi mostrare un avviso SmartScreen.
 
 ## Regola per la pubblicazione

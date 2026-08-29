@@ -5,8 +5,9 @@ Complete every item before publishing a Win32, x64 or portable package.
 ## Legal and identity
 
 - [ ] Resolve every blocker in [LEGAL_STATUS.md](LEGAL_STATUS.md).
-- [ ] Confirm the eMule Next name, logo and release-page wording do not create
-      a trademark conflict or imply upstream affiliation.
+- [x] Record the official eMule DevTeam's written clarification for the
+      `eMule [own name]` convention and source artwork, and keep the independent
+      non-official disclaimer on the release page and in [NOTICE.md](NOTICE.md).
 - [ ] Keep [LICENSE](LICENSE), [NOTICE.md](NOTICE.md),
       [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md),
       [CHANGES.md](CHANGES.md), [PRIVACY.md](PRIVACY.md) and

@@ -1,7 +1,9 @@
 # Legal release status
 
-Status as of 2026-08-29: **tested release candidate prepared; public-release
-clearance is still blocked.**
+Status as of 2026-08-29: **the identified upstream licence, name and artwork
+issues are documented as resolved for the planned independent non-commercial
+GPL pre-release. Final source publication, rebuild and packaging checks remain
+incomplete.**
 
 The project now has a GPL licence file, attribution, third-party inventory,
 privacy statement, source-distribution procedure and release checklist. That
@@ -51,26 +53,36 @@ anomalies. The local recovery copy is outside this project and the root
   public record is in `docs/PERMISSION_REQUEST_PJ_NAUGHTER.md`. This blocker is
   resolved. Do not modify the copyright blocks or remove attribution.
 
+## Resolved name and source-artwork clarification
+
+- **eMule Next name and artwork:** on 2026-08-29 the official eMule Project
+  administrative/legal contact replied to the project's written request. The
+  DevTeam explained that most requested use is already covered by GPL 2.0,
+  considers artwork included in the source files licensed under GPL 2.0, and
+  confirmed that the customary `eMule [own name]` convention is fine. It did
+  not claim certainty that an official registered trademark still exists and
+  noted that implicit rights might remain, but stated that it does not intend
+  to enforce trademark rights against forks that do not pretend to be the
+  official/original eMule. `eMule Next` follows that convention and every
+  public surface must retain a clear independent/unofficial disclaimer. The
+  original response is retained privately and the public record is in
+  `docs/PERMISSION_REQUEST_EMULE_PROJECT.md`.
+
 ## Required verification before clearing a release
 
-- **Project name:** the official eMule Project reported in 2004 that the eMule
-  trademark was transferred to the eMule developers. The current owner and
-  permitted use of `eMule Next` have not yet been verified in the relevant
-  registers. Obtain permission or specialist advice, or adopt a name that does
-  not use `eMule`, before a public launch. On 2026-08-29 the official site's
-  administrative/legal contact route was confirmed and the written permission
-  request in `docs/PERMISSION_REQUEST_EMULE_PROJECT.md` was sent. A written
-  response is pending and no permission is assumed.
 - **Repository:** the intended GitHub repository is now public but empty. This
   working folder was initialized as a local Git repository on 2026-08-29 and
-  contains a reviewed clean initial commit using the maintainer's GitHub
-  no-reply identity. Do not push the blocked source yet. A public immutable
-  source tag must exist before publishing binaries.
+  contains a reviewed clean history using the maintainer's GitHub no-reply
+  identity. Perform a fresh privacy, secret and integrity audit immediately
+  before the first normal, non-forced source push. A public immutable source
+  tag must exist before publishing binaries.
 - Re-audit all linked dependencies after their versions are frozen.
 - Retain the restored full miniupnpc BSD-3-Clause text.
 - Have a lawyer experienced in copyright and open-source licensing review a
   commercial launch, monetisation, hosted services or data collection.
 
-This status is deliberately conservative. It prevents us from falsely claiming
-that the project is legally ready while a material upstream condition remains
-unresolved.
+This status is deliberately conservative. The written upstream responses
+resolve the specific issues identified for the planned independent
+non-commercial GPL fork, but they are not a universal trademark clearance or
+legal advice for future commercial, merchandising, hosted-service or
+data-collection activity.

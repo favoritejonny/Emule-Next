@@ -10,3 +10,10 @@ La personalizzazione eMule Next è mantenuta piccola e localizzata:
 
 Il logo e le informazioni storiche nei crediti restano dove richiesto dalla
 licenza. Uno skin esterno può ancora sostituire `MainToolBarBk`.
+
+Il DevTeam ufficiale eMule ha confermato per iscritto il 29 agosto 2026 che la
+grafica inclusa nei sorgenti viene considerata coperta dalla GPL 2.0 e che la
+convenzione `eMule [nome proprio]` è accettata per fork che non si presentano
+come eMule ufficiale/originale. Tutte le superfici pubbliche di eMule Next
+devono quindi mantenere chiaramente la natura indipendente e non ufficiale del
+progetto.

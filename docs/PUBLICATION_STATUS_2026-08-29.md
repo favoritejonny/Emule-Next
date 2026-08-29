@@ -13,7 +13,7 @@ Both portable packages passed automated structure checks and manual launch
 testing. The normal-profile Win32 and x64 clients were also tested for about
 12 hours each without reported anomalies.
 
-## Resolved item
+## Resolved upstream items
 
 P. J. Naughter granted written permission on 2026-08-29 to release the
 modified modules identified in the project's request under GPL-2.0-or-later
@@ -22,19 +22,26 @@ HttpDownloadDlg source-distribution blocker. The original email is retained
 privately; the public permission record is in
 `docs/PERMISSION_REQUEST_PJ_NAUGHTER.md`.
 
-## Publication blockers
+The official eMule Project DevTeam also provided a written clarification on
+2026-08-29. It considers source-file artwork licensed under GPL 2.0 and
+confirmed that the customary `eMule [own name]` naming convention is fine for
+forks that do not pretend to be the official/original eMule. It stated no
+intention to enforce trademark rights against such forks, while noting that
+implicit rights might exist and not claiming certainty about current formal
+registration. `eMule Next` will retain a clear independent/unofficial
+disclaimer. The original email is retained privately; the public record is in
+`docs/PERMISSION_REQUEST_EMULE_PROJECT.md`.
 
-1. Resolve use of the `eMule Next` name and mule artwork by permission,
-   specialist review or renaming. The official administrative/legal contact
-   route has been identified and the request in
-   `docs/PERMISSION_REQUEST_EMULE_PROJECT.md` was sent on 2026-08-29. A
-   written response is pending and permission is not yet assumed.
-2. The public GitHub repository now exists and is empty. A reviewed local Git
+## Remaining publication steps
+
+1. The public GitHub repository now exists and is empty. A reviewed local Git
    repository and clean initial commit were created on 2026-08-29 using the
-   maintainer's GitHub no-reply identity. Push only after the legal blockers
-   are resolved, then create an immutable source tag.
-3. Regenerate the final portable archives so that they contain the corrected
+   maintainer's GitHub no-reply identity. Repeat the final privacy, credential
+   and integrity audit, then perform the first normal non-forced source push.
+2. Regenerate the final portable archives so that they contain the corrected
    legal documents, then verify and briefly smoke-test them.
+3. Create the immutable source tag on the exact rebuilt revision and publish
+   the two portable ZIPs and checksum file as a GitHub pre-release.
 
 No public binary should be uploaded before these items are complete.
 
