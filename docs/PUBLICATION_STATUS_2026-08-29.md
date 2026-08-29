@@ -16,11 +16,15 @@ testing. The normal-profile Win32 and x64 clients were also tested for about
 ## Publication blockers
 
 1. Resolve TreeOptionsCtrl and HttpDownloadDlg's non-GPL source-distribution
-   conditions by written permission or replacement.
+   conditions by written permission or replacement. The permission request was
+   sent to the author's published contact address on 2026-08-29; a written
+   response is pending and permission is not yet assumed.
 2. Resolve use of the `eMule Next` name and mule artwork by permission,
    specialist review or renaming.
-3. Create the public GitHub repository from a reviewed clean source tree and
-   create an immutable tag.
+3. The public GitHub repository now exists and is empty. A reviewed local Git
+   repository and clean initial commit were created on 2026-08-29 using the
+   maintainer's GitHub no-reply identity. Push only after the legal blockers
+   are resolved, then create an immutable source tag.
 4. Regenerate the final portable archives so that they contain the corrected
    legal documents, then verify and briefly smoke-test them.
 

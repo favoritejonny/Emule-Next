@@ -2,6 +2,10 @@
 
 Suggested recipient: `pjna@naughter.com`
 
+Status: **sent by the project maintainer on 2026-08-29; written response
+pending.** No permission is assumed unless an explicit reply is received and
+retained with the project records.
+
 Subject: Permission request for CTreeOptionsCtrl and CHttpDownloadDlg in an
 open-source eMule fork
 

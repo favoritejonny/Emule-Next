@@ -46,15 +46,20 @@ anomalies. The local recovery copy is outside this project and the root
   clear GPL-compatible grant for a public fork, and the HTTP dialog is visibly
   adapted for eMule. Before publishing, either obtain written
   GPL-2.0-or-later-compatible permission from the author for all four files or
-  replace both components. Do not modify their copyright blocks.
+  replace both components. A permission request was sent to the author's
+  published contact address on 2026-08-29 and a written response is pending.
+  Permission is not assumed while waiting. Do not modify their copyright
+  blocks.
 - **Project name:** the official eMule Project reported in 2004 that the eMule
   trademark was transferred to the eMule developers. The current owner and
   permitted use of `eMule Next` have not yet been verified in the relevant
   registers. Obtain permission or specialist advice, or adopt a name that does
   not use `eMule`, before a public launch.
-- **Repository:** as checked on 2026-08-29, the intended GitHub URL was not
-  publicly accessible and this working folder was not a Git repository. A
-  public immutable source tag must exist before publishing binaries.
+- **Repository:** the intended GitHub repository is now public but empty. This
+  working folder was initialized as a local Git repository on 2026-08-29 and
+  contains a reviewed clean initial commit using the maintainer's GitHub
+  no-reply identity. Do not push the blocked source yet. A public immutable
+  source tag must exist before publishing binaries.
 - Re-audit all linked dependencies after their versions are frozen.
 - Retain the restored full miniupnpc BSD-3-Clause text.
 - Have a lawyer experienced in copyright and open-source licensing review a
