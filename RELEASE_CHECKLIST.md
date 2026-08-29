@@ -4,7 +4,8 @@ Complete every item before publishing a Win32, x64 or portable package.
 
 ## Legal and identity
 
-- [ ] Resolve every blocker in [LEGAL_STATUS.md](LEGAL_STATUS.md).
+- [x] Resolve every identified upstream blocker in
+      [LEGAL_STATUS.md](LEGAL_STATUS.md) for this independent GPL pre-release.
 - [x] Record the official eMule DevTeam's written clarification for the
       `eMule [own name]` convention and source artwork, and keep the independent
       non-official disclaimer on the release page and in [NOTICE.md](NOTICE.md).
@@ -12,9 +13,11 @@ Complete every item before publishing a Win32, x64 or portable package.
       [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md),
       [CHANGES.md](CHANGES.md), [PRIVACY.md](PRIVACY.md) and
       [SOURCE-CODE.md](SOURCE-CODE.md) in the source tag and binary packages.
-- [ ] Include [WINDOWS-SMARTSCREEN.md](WINDOWS-SMARTSCREEN.md) in each unsigned
+- [x] Include [WINDOWS-SMARTSCREEN.md](WINDOWS-SMARTSCREEN.md) in each unsigned
       binary package and state clearly in the release notes that it is unsigned.
-- [ ] Check every new or upgraded dependency and record its licence here.
+- [x] Check every bundled dependency and record its licence in
+      [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and the package licence
+      directory.
 - [x] Confirm the released source tree no longer contains the unused legacy
       ResizableLib implementation and that the executable links only the
       in-tree GPL NextResizable module.
@@ -41,7 +44,7 @@ Complete every item before publishing a Win32, x64 or portable package.
       reporting route in [SECURITY.md](SECURITY.md).
 - [ ] Record resolved security issues and known limitations in the release
       notes.
-- [ ] Verify the release contains no private test data, crash dumps, personal
+- [x] Verify the release contains no private test data, crash dumps, personal
       paths, tokens or passwords.
 - [ ] If data collection was added, update [PRIVACY.md](PRIVACY.md) before the
       release and obtain specialist review where required.
@@ -67,3 +70,8 @@ Complete every item before publishing a Win32, x64 or portable package.
 - Automated RC1-fix9 archive verification: readable ZIPs, 59 entries and 43
   translations each, correct PE architecture, no user configuration, dumps or
   PDB files, and executable hashes matching the tested Release builds.
+- Final 1.0.0-alpha.1 rebuild on 2026-08-29: Win32 and x64 completed
+  sequentially with zero errors. Automated final archive verification passed:
+  59 entries and 43 translations each, correct PE architecture, no user data,
+  dumps, logs or PDB files, valid checksums, and executable hashes matching the
+  fresh Release builds. Manual launch testing of these final ZIPs is pending.

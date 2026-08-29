@@ -1,8 +1,8 @@
 # GitHub pre-release draft
 
-Status: **local draft only - do not publish yet.** Replace every bracketed
-field after the legal blockers are resolved, the final tagged source is built
-and the final archives are regenerated and verified.
+Status: **local draft only - do not publish yet.** The final archives are
+generated and verified automatically. Publish only after their manual launch
+test succeeds and the exact source revision receives the immutable tag.
 
 ## GitHub fields
 
@@ -43,8 +43,8 @@ against the same configuration folder at the same time.
 Download `SHA256SUMS-1.0.0-alpha.1.txt` from this release and compare the
 SHA-256 value before running the program.
 
-- Win32: `[FINAL WIN32 SHA-256]`
-- x64: `[FINAL X64 SHA-256]`
+- Win32: `8893FDB7AD545FFD9AED892F0FD749B3550F10C10AB5842BCF576DC90D7B54D1`
+- x64: `6A2FB77DB00FAC08FE83A8A42AFCE3EA80C7F3CC155202EC0A905B0F1362B455`
 
 The final source for these exact binaries is the immutable
 [`v1.0.0-alpha.1`](https://github.com/favoritejonny/Emule-Next/tree/v1.0.0-alpha.1)
@@ -92,7 +92,7 @@ See `LICENSE`, `NOTICE.md`, `THIRD_PARTY_NOTICES.md`, `PRIVACY.md` and
 
 ## Final publication checks for this text
 
-- Remove this draft header and every bracketed placeholder.
+- Remove this draft header after the manual launch test passes.
 - Confirm the tag link resolves publicly to the exact build revision.
 - Paste hashes from the newly generated final checksum file, not RC hashes.
 - Confirm uploaded filenames exactly match the names shown above.
