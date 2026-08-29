@@ -3,8 +3,8 @@
 Status as of 2026-08-29: **the identified upstream licence, name and artwork
 issues are documented as resolved for the planned independent non-commercial
 GPL pre-release. The reviewed source history is public, and the final Win32
-and x64 rebuild and packaging checks passed. Manual launch testing of the final
-ZIPs and exact-source tagging remain incomplete.**
+and x64 rebuild, packaging checks and manual launch tests passed. Exact-source
+tagging and GitHub pre-release publication remain incomplete.**
 
 The project now has a GPL licence file, attribution, third-party inventory,
 privacy statement, source-distribution procedure and release checklist. That

@@ -1,8 +1,8 @@
 # GitHub pre-release draft
 
-Status: **local draft only - do not publish yet.** The final archives are
-generated and verified automatically. Publish only after their manual launch
-test succeeds and the exact source revision receives the immutable tag.
+Status: **ready for the final GitHub publication step.** The final archives
+passed automated verification and manual testing. Publish them only with the
+immutable tag that points to the exact build revision.
 
 ## GitHub fields
 
@@ -92,7 +92,7 @@ See `LICENSE`, `NOTICE.md`, `THIRD_PARTY_NOTICES.md`, `PRIVACY.md` and
 
 ## Final publication checks for this text
 
-- Remove this draft header after the manual launch test passes.
+- Remove this local status paragraph from the public release notes.
 - Confirm the tag link resolves publicly to the exact build revision.
 - Paste hashes from the newly generated final checksum file, not RC hashes.
 - Confirm uploaded filenames exactly match the names shown above.

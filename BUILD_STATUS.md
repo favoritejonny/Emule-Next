@@ -398,8 +398,9 @@ simboli di debug e i loro eseguibili corrispondono byte per byte alle build
 appena prodotte. Dimensioni e checksum sono registrati in
 `PRE_RELEASE_1.0.0_ALPHA1.md`.
 
-Il prossimo passo e un breve collaudo manuale di avvio dei due ZIP finali.
-Dopo il suo esito positivo verranno creati il tag immutabile
-`v1.0.0-alpha.1` e la pre-release GitHub. La prima pubblicazione comprende
-solo i pacchetti portatili Win32 e x64: installer e ARM64 restano obiettivi di
-un aggiornamento futuro e non bloccano questa pre-release.
+Il progetto tester ha estratto e provato entrambi gli ZIP finali il 29 agosto
+2026 e li ha dichiarati funzionanti. Il prossimo passo e creare il tag
+immutabile `v1.0.0-alpha.1` sulla revisione esatta usata per la build e la
+pre-release GitHub. La prima pubblicazione comprende solo i pacchetti portatili
+Win32 e x64: installer e ARM64 restano obiettivi di un aggiornamento futuro e
+non bloccano questa pre-release.

@@ -74,4 +74,5 @@ Complete every item before publishing a Win32, x64 or portable package.
   sequentially with zero errors. Automated final archive verification passed:
   59 entries and 43 translations each, correct PE architecture, no user data,
   dumps, logs or PDB files, valid checksums, and executable hashes matching the
-  fresh Release builds. Manual launch testing of these final ZIPs is pending.
+  fresh Release builds. The project tester then extracted and tested both final
+  portable ZIPs and reported both working.

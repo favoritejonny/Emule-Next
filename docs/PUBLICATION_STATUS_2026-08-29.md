@@ -11,10 +11,11 @@ The final local candidate was rebuilt from public revision
   `6A2FB77DB00FAC08FE83A8A42AFCE3EA80C7F3CC155202EC0A905B0F1362B455`
 
 Both final portable packages passed complete automated structure, content,
-architecture and checksum checks. Manual launch testing of these newly
-generated ZIPs is still required. The earlier RC1-fix9 portable packages
-passed manual testing, and the normal-profile Win32 and x64 clients were also
-tested for about 12 hours each without reported anomalies.
+architecture and checksum checks. The project tester then extracted and tested
+both newly generated final ZIPs and reported both working. The earlier
+RC1-fix9 portable packages also passed manual testing, and the normal-profile
+Win32 and x64 clients were tested for about 12 hours each without reported
+anomalies.
 
 ## Resolved upstream items
 
@@ -46,8 +47,7 @@ used for the final binary rebuild.
 
 ## Remaining publication steps
 
-1. Briefly smoke-test the newly generated final Win32 and x64 portable ZIPs.
-2. Create the immutable source tag on the exact rebuilt revision and publish
+1. Create the immutable source tag on the exact rebuilt revision and publish
    the two portable ZIPs and checksum file as a GitHub pre-release.
 
 No public binary should be uploaded before these items are complete.

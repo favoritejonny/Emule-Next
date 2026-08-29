@@ -3,9 +3,9 @@
 Preparation date: 2026-08-29  
 Build source revision: `27a14542ef7d02785c83a79e908d7685faa55591`
 
-This is the final local candidate for the first public pre-release. It
-supersedes RC1-fix9 for publication, but it must still pass a brief manual
-launch test before the immutable tag and GitHub pre-release are created.
+This is the final candidate for the first public pre-release. It supersedes
+RC1-fix9 for publication. On 2026-08-29, the project tester extracted and
+tested both final portable archives and reported both working.
 
 ## Release builds
 
@@ -49,9 +49,6 @@ recorded checksum file matches both archives.
 
 ## Remaining publication gate
 
-1. Manually extract and launch each final ZIP once, keeping the two folders
-   separate, and confirm that the first-run wizard and main window appear.
-2. Create `v1.0.0-alpha.1` on the exact build revision.
-3. Publish only the two portable ZIPs and checksum file as a GitHub
+1. Create `v1.0.0-alpha.1` on the exact build revision.
+2. Publish only the two portable ZIPs and checksum file as a GitHub
    pre-release, together with the source supplied by the immutable tag.
-
