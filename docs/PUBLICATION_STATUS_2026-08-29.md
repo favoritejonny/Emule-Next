@@ -32,3 +32,9 @@ testing. The normal-profile Win32 and x64 clients were also tested for about
    legal documents, then verify and briefly smoke-test them.
 
 No public binary should be uploaded before these items are complete.
+
+## Repository safety setup
+
+GitHub private vulnerability reporting was enabled by the repository owner on
+2026-08-29. The prepared `SECURITY.md` and issue-template contact link will use
+that private channel after the source is published.

@@ -11,6 +11,9 @@ the supported release line.
 Do not disclose a suspected vulnerability in a public issue, discussion,
 screenshot or log.
 
+Private vulnerability reporting was enabled for the public GitHub repository
+by the maintainer on 2026-08-29.
+
 Use GitHub's private vulnerability reporting on the repository **Security**
 page. Include the affected version and architecture, a concise description,
 reproduction steps, impact and any proposed mitigation. Do not include real
