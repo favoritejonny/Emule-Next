@@ -9,7 +9,7 @@ Complete every item before publishing a Win32, x64 or portable package.
 - [x] Record the official eMule DevTeam's written clarification for the
       `eMule [own name]` convention and source artwork, and keep the independent
       non-official disclaimer on the release page and in [NOTICE.md](NOTICE.md).
-- [ ] Keep [LICENSE](LICENSE), [NOTICE.md](NOTICE.md),
+- [x] Keep [LICENSE](LICENSE), [NOTICE.md](NOTICE.md),
       [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md),
       [CHANGES.md](CHANGES.md), [PRIVACY.md](PRIVACY.md) and
       [SOURCE-CODE.md](SOURCE-CODE.md) in the source tag and binary packages.
@@ -27,22 +27,23 @@ Complete every item before publishing a Win32, x64 or portable package.
 
 ## Source and binaries
 
-- [ ] Create an immutable Git tag for the exact source revision.
-- [ ] Build Win32 and x64 Release sequentially from that tag.
+- [x] Create an immutable Git tag for the exact source revision.
+- [x] Build Win32 and x64 Release sequentially from the exact revision now
+      identified by that tag.
 - [x] Test both executables manually without overwriting an existing user
       profile.
 - [ ] Resize and restart each main resizable window, including Transfers,
       Search, Servers, Shared Files, Preferences, file details and the
       first-run wizard.
 - [x] Create portable archives and SHA-256 checksums.
-- [ ] Publish the complete corresponding source from the same tag in the same
+- [x] Publish the complete corresponding source from the same tag in the same
       release location as the binaries.
 
 ## Security and privacy
 
 - [x] Enable GitHub private vulnerability reporting and document the private
       reporting route in [SECURITY.md](SECURITY.md).
-- [ ] Record resolved security issues and known limitations in the release
+- [x] Record resolved security issues and known limitations in the release
       notes.
 - [x] Verify the release contains no private test data, crash dumps, personal
       paths, tokens or passwords.
@@ -51,12 +52,12 @@ Complete every item before publishing a Win32, x64 or portable package.
 
 ## Publication
 
-- [ ] Link the release notes to the exact source tag and checksum file.
-- [ ] Publish only the Win32 and x64 portable ZIPs for the first pre-release;
+- [x] Link the release notes to the exact source tag and checksum file.
+- [x] Publish only the Win32 and x64 portable ZIPs for the first pre-release;
       do not describe them as installers.
-- [ ] Use neutral wording: users must download and share only material they
+- [x] Use neutral wording: users must download and share only material they
       are authorised to receive or distribute.
-- [ ] Retain the release archive, source archive, build log and checksums for
+- [x] Retain the release archive, source archive, build log and checksums for
       reproducibility.
 - [x] Prepare guided bug, feature, pull-request and security-reporting
       templates for the public repository.
@@ -76,3 +77,7 @@ Complete every item before publishing a Win32, x64 or portable package.
   dumps, logs or PDB files, valid checksums, and executable hashes matching the
   fresh Release builds. The project tester then extracted and tested both final
   portable ZIPs and reported both working.
+- Public GitHub pre-release published on 2026-08-29 as `v1.0.0-alpha.1`. The
+  tag resolves to the exact build commit `27a14542ef7d02785c83a79e908d7685faa55591`;
+  GitHub shows the two verified portable archives, checksum file and tagged
+  source archives.

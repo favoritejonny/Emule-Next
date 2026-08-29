@@ -45,12 +45,16 @@ first verified at `1626ae05724530939c4724d83b53367cdac2497d`. Local and remote
 `main` now match at `27a14542ef7d02785c83a79e908d7685faa55591`, the revision
 used for the final binary rebuild.
 
-## Remaining publication steps
+## Publication completed
 
-1. Create the immutable source tag on the exact rebuilt revision and publish
-   the two portable ZIPs and checksum file as a GitHub pre-release.
+The first public pre-release was published on 2026-08-29:
 
-No public binary should be uploaded before these items are complete.
+`https://github.com/favoritejonny/Emule-Next/releases/tag/v1.0.0-alpha.1`
+
+GitHub identifies it as a pre-release. Tag `v1.0.0-alpha.1` resolves to the
+exact build revision `27a14542ef7d02785c83a79e908d7685faa55591`. The public
+assets are the verified Win32 and x64 portable ZIPs and the matching SHA-256
+file; GitHub supplies the two corresponding source archives from the tag.
 
 ## Repository safety setup
 

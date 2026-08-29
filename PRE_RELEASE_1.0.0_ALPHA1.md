@@ -1,11 +1,12 @@
-# eMule Next 1.0.0-alpha.1 - final portable candidate
+# eMule Next 1.0.0-alpha.1 - published pre-release record
 
 Preparation date: 2026-08-29  
 Build source revision: `27a14542ef7d02785c83a79e908d7685faa55591`
 
-This is the final candidate for the first public pre-release. It supersedes
+This is the record of the first public eMule Next pre-release. It supersedes
 RC1-fix9 for publication. On 2026-08-29, the project tester extracted and
-tested both final portable archives and reported both working.
+tested both final portable archives and reported both working. The verified
+archives were then published without modification.
 
 ## Release builds
 
@@ -47,8 +48,13 @@ for x64. The packages contain no user configuration, profile, dump, PDB or log
 files. `SOURCE-CODE.md` points to the public eMule Next repository, and the
 recorded checksum file matches both archives.
 
-## Remaining publication gate
+## Publication record
 
-1. Create `v1.0.0-alpha.1` on the exact build revision.
-2. Publish only the two portable ZIPs and checksum file as a GitHub
-   pre-release, together with the source supplied by the immutable tag.
+- Public release:
+  `https://github.com/favoritejonny/Emule-Next/releases/tag/v1.0.0-alpha.1`
+- Immutable source tag: `v1.0.0-alpha.1`.
+- Tagged commit: `27a14542ef7d02785c83a79e908d7685faa55591`.
+- Published assets: the Win32 portable ZIP, x64 portable ZIP and checksum
+  file listed above. GitHub also supplies source ZIP and tarball archives for
+  the tag.
+- GitHub displays the release as a pre-release, not a production release.

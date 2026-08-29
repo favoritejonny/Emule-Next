@@ -3,8 +3,8 @@
 Status as of 2026-08-29: **the identified upstream licence, name and artwork
 issues are documented as resolved for the planned independent non-commercial
 GPL pre-release. The reviewed source history is public, and the final Win32
-and x64 rebuild, packaging checks and manual launch tests passed. Exact-source
-tagging and GitHub pre-release publication remain incomplete.**
+and x64 rebuild, packaging checks and manual launch tests passed. The exact
+source tag and GitHub pre-release were published on 2026-08-29.**
 
 The project now has a GPL licence file, attribution, third-party inventory,
 privacy statement, source-distribution procedure and release checklist. That
@@ -76,8 +76,9 @@ anomalies. The local recovery copy is outside this project and the root
   verified public revision was
   `1626ae05724530939c4724d83b53367cdac2497d`, using the maintainer's GitHub
   no-reply identity. The final binaries were rebuilt from public revision
-  `27a14542ef7d02785c83a79e908d7685faa55591`. A public immutable source tag
-  pointing to that exact revision must exist before publishing binaries.
+  `27a14542ef7d02785c83a79e908d7685faa55591`. The public immutable tag
+  `v1.0.0-alpha.1` points to that exact revision and was published with the
+  corresponding Win32/x64 portable binaries and checksum file.
 - Re-audit all linked dependencies after their versions are frozen.
 - Retain the restored full miniupnpc BSD-3-Clause text.
 - Have a lawyer experienced in copyright and open-source licensing review a

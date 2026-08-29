@@ -1,8 +1,9 @@
-# GitHub pre-release draft
+# GitHub pre-release publication record
 
-Status: **ready for the final GitHub publication step.** The final archives
-passed automated verification and manual testing. Publish them only with the
-immutable tag that points to the exact build revision.
+Status: **published on 2026-08-29.** The final archives passed automated
+verification and manual testing. The public release is:
+
+`https://github.com/favoritejonny/Emule-Next/releases/tag/v1.0.0-alpha.1`
 
 ## GitHub fields
 
@@ -90,12 +91,13 @@ GPL-2.0-or-later, subject to the notices for included third-party components.
 See `LICENSE`, `NOTICE.md`, `THIRD_PARTY_NOTICES.md`, `PRIVACY.md` and
 `SOURCE-CODE.md` in the tagged source and binary packages.
 
-## Final publication checks for this text
+## Completed publication checks
 
-- Remove this local status paragraph from the public release notes.
-- Confirm the tag link resolves publicly to the exact build revision.
-- Paste hashes from the newly generated final checksum file, not RC hashes.
-- Confirm uploaded filenames exactly match the names shown above.
-- Attach only the two portable ZIPs and checksum file; GitHub supplies source
+- [x] The local status paragraph was excluded from the public release notes.
+- [x] The tag link resolves publicly to the exact build revision.
+- [x] The published hashes came from the final checksum file, not RC hashes.
+- [x] Uploaded filenames exactly match the names shown above.
+- [x] Only the two portable ZIPs and checksum file were attached; GitHub supplies source
   archives for the tag automatically.
-- Re-read the complete release page while signed out before announcing it.
+- [ ] Re-read the complete release page while signed out before wider
+  announcement.
