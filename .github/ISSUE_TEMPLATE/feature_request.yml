@@ -1,0 +1,41 @@
+name: Feature request
+description: Suggest a focused improvement for eMule Next
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Explain the user problem first. Requests must preserve lawful use, privacy, security and eD2K/Kad compatibility.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: What is difficult or missing today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed improvement
+      description: Describe the smallest useful change.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmation
+      options:
+        - label: I searched existing issues and requests.
+          required: true
+        - label: This request does not seek to bypass access controls, network operators or applicable law.
+          required: true
+        - label: I have not included personal data or copyrighted material.
+          required: true

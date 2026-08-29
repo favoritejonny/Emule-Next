@@ -9,6 +9,17 @@ The project is maintained by Jonny Favorite. It is not an official eMule
 Project release and is not affiliated with, endorsed by, or sponsored by the
 original eMule Project.
 
+## Current status
+
+The Windows Win32 and x64 release candidates and their portable packages have
+completed the current manual stability tests. The first public pre-release is
+not published yet: the remaining items in [LEGAL_STATUS.md](LEGAL_STATUS.md)
+and [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) must be resolved first.
+
+Please use the repository only for project source, documentation and lawful
+technical reports. Do not upload copyrighted media, download links, server
+lists of uncertain provenance, personal configuration files or credentials.
+
 ## License
 
 eMule Next is a derivative work of eMule. The original source headers license
@@ -58,3 +69,12 @@ SmartScreen notice and must be published with its SHA-256 checksum.
 Do not publish a package until every item in [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md)
 has been completed and the blockers in [LEGAL_STATUS.md](LEGAL_STATUS.md) are
 resolved.
+
+## Participate
+
+- Read [SUPPORT.md](SUPPORT.md) before asking for help.
+- Use the guided GitHub issue forms for reproducible bugs and feature ideas.
+- Read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing a source change.
+- Report security vulnerabilities privately as described in
+  [SECURITY.md](SECURITY.md), never in a public issue.
+- Follow [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) in all project spaces.
