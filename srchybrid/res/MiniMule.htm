@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>eMule Next MiniMule</title>
+    <style type="text/css">
+        html, body { margin: 0; padding: 0; overflow: hidden; }
+        body { background: #f3f7fa; color: #233140; font-family: "Segoe UI", Tahoma, sans-serif; font-size: 9pt; }
+        table { background: #f8fafc; border: 1px solid #91bcd9; border-collapse: separate; border-spacing: 0; width: 100%; }
+        td { padding: 5px 8px; vertical-align: middle; }
+        td.c1 { color: #334b60; font-weight: 600; }
+        .miniIcon { background: #e5f1f8; border: 1px solid #b5d2e5; border-radius: 5px; color: #2577b5; display: inline-block; float: left; font-family: "Segoe UI Symbol", "Segoe UI", sans-serif; font-size: 14px; font-weight: 700; height: 20px; line-height: 18px; margin-right: 8px; text-align: center; width: 20px; }
+        .connectionPair { padding-left: 1px; padding-right: 1px; white-space: nowrap; }
+        .statusDot { border-radius: 50%; display: inline-block; height: 6px; margin: 6px 1px; width: 6px; }
+        .status0 { background: #a4adb7; }
+        .status1 { background: #e0993f; }
+        .status2 { background: #2faa79; }
+        td.c2 { border-top: 1px solid #d7e3ec; background: #edf5fa; }
+        div.c3 { text-align: right; }
+        a { text-decoration: none; display: inline-block; padding: 3px; margin-left: 3px; }
+        a:hover { background: #e2f0fc; }
+        a .miniIcon { float: none; margin: 0; }
+        #connected, #upRate, #downRate, #completed, #freeSpace { color: #2577b5; font-weight: 600; text-align: right; }
+    </style>
+</head>
+<body id="CMiniMule">
+    <table cellspacing="0" cellpadding="0" id="table">
+        <tr><td class="c1" nowrap><span class="miniIcon connectionPair" id="connectedImg"><span class="statusDot status2"></span><span class="statusDot status2"></span></span><div id="connectedLabel">Connected</div></td><td id="connected" width="86" nowrap>Yes</td></tr>
+        <tr><td class="c1" nowrap><span class="miniIcon" id="uploadImg">&#8593;</span><div id="upRateLabel">Upload</div></td><td id="upRate" width="86" nowrap>50.0 KB/s</td></tr>
+        <tr><td class="c1" nowrap><span class="miniIcon" id="downloadImg">&#8595;</span><div id="downRateLabel">Download</div></td><td id="downRate" width="86" nowrap>123.4 KB/s</td></tr>
+        <tr><td class="c1" nowrap><span class="miniIcon" id="completedImg">&#10003;</span><div id="completedLabel">Completed</div></td><td id="completed" width="86" nowrap>2</td></tr>
+        <tr><td class="c1" nowrap><span class="miniIcon" id="freeSpaceImg">&#9638;</span><div id="freeSpaceLabel">Free Space</div></td><td id="freeSpace" width="86" nowrap>500 MB</td></tr>
+        <tr><td class="c2">&nbsp;</td><td id="links" class="c2" width="86" nowrap><div class="c3">
+            <a title="Incoming Folder" id="openIncomingLink" href="#"><span class="miniIcon" id="openIncomingImg">&#9634;</span></a>
+            <a title="Options" id="optionsLink" href="#"><span class="miniIcon" id="optionsImg">&#9881;</span></a>
+            <a title="eMule Window" id="restoreWndLink" href="#"><span class="miniIcon" id="restoreWndImg">&#8599;</span></a>
+        </div></td></tr>
+    </table>
+</body>
+</html>

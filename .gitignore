@@ -1,0 +1,62 @@
+# Generated build trees, packages and historical build logs
+**/build/
+**/build-logs/
+/dist/
+*.log
+
+# Visual Studio and compiler intermediates
+.vs/
+**/Debug/
+**/Release/
+**/Dynamic/
+*.obj
+*.res
+*.pch
+*.pdb
+*.idb
+*.ipch
+*.tlog
+*.lastbuildstate
+*.recipe
+*.Build.CppClean.log
+*.VC.db
+*.VC.opendb
+*.aps
+*.ncb
+*.suo
+*.user
+
+# Architecture output directories. These are intentionally explicit because
+# zlib/win32 contains real build source files which must remain tracked.
+/cryptopp/Win32/
+/cryptopp/x64/
+/id3lib/libprj/Win32/
+/id3lib/libprj/x64/
+/mbedtls/visualc/VS2017/obj/
+/mbedtls/visualc/VS2017/Win32/
+/mbedtls/visualc/VS2017/x64/
+/miniupnpc/msvc/Win32/
+/miniupnpc/msvc/x64/
+/srchybrid/Win32/
+/srchybrid/x64/
+/srchybrid/lang/Win32/
+/srchybrid/lang/x64/
+/zlib/contrib/vstudio/vc/ARM64/
+/zlib/contrib/vstudio/vc/Win32/
+/zlib/contrib/vstudio/vc/x64/
+
+# Generated binaries and packages
+*.exe
+*.dll
+*.lib
+*.exp
+*.ilk
+*.zip
+
+# Local user state, crash data and temporary files
+/srchybrid/config/
+**/Temp/
+**/Logs/
+*.dmp
+*.tmp
+*.bak

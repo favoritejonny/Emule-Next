@@ -1,0 +1,27 @@
+# Publication status - 2026-08-29
+
+## Candidate tested
+
+The current tested candidate is RC1-fix9:
+
+- Win32 portable ZIP SHA-256:
+  `FB01274CB7FF59FD3116E93024232370664331A36FC6E921C0A24934173F611D`
+- x64 portable ZIP SHA-256:
+  `1DAA4E16B20A3BF38F97A74F9FD3F93017726E6B853D58CD802714AA3639C3E0`
+
+Both portable packages passed automated structure checks and manual launch
+testing. The normal-profile Win32 and x64 clients were also tested for about
+12 hours each without reported anomalies.
+
+## Publication blockers
+
+1. Resolve TreeOptionsCtrl and HttpDownloadDlg's non-GPL source-distribution
+   conditions by written permission or replacement.
+2. Resolve use of the `eMule Next` name and mule artwork by permission,
+   specialist review or renaming.
+3. Create the public GitHub repository from a reviewed clean source tree and
+   create an immutable tag.
+4. Regenerate the final portable archives so that they contain the corrected
+   legal documents, then verify and briefly smoke-test them.
+
+No public binary should be uploaded before these items are complete.
