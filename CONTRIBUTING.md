@@ -20,6 +20,11 @@ The main Visual Studio solution is `srchybrid/emule.sln`. Supported release
 targets are Win32 and x64. Build instructions and the last known build status
 are recorded in `BUILD_STATUS.md`.
 
+On Windows, clone into a short path such as `C:\src\Emule-Next`. Some complete
+dependency-source paths become longer than the legacy Windows path limit when
+the repository is placed inside a deeply nested directory. Git for Windows
+may also require long-path support for a deep checkout.
+
 Do not commit Visual Studio user state, caches, executables, libraries, crash
 dumps or release archives. The root `.gitignore` covers the normal generated
 paths.
