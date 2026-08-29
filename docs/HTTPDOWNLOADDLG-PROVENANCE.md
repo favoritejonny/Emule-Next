@@ -21,5 +21,11 @@ a version released by the author:
 
 https://www.naughter.com/httpdownloaddlg.html
 
-Written GPL-2.0-or-later-compatible permission or an independently written GPL
-replacement is required before public source-and-binary distribution.
+On 2026-08-29, in direct response to the project's request identifying both
+HttpDownloadDlg files and the two TreeOptionsCtrl files, P. J. Naughter
+granted written permission to release the modified modules under
+GPL-2.0-or-later in the eMule Next application. The permission is recorded in
+`PERMISSION_REQUEST_PJ_NAUGHTER.md`; the original email is retained privately
+by the project maintainer. This resolves the source-distribution blocker for
+the two HttpDownloadDlg files while their copyright notices and attribution
+remain intact.

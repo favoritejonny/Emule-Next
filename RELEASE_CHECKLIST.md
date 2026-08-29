@@ -17,6 +17,9 @@ Complete every item before publishing a Win32, x64 or portable package.
 - [x] Confirm the released source tree no longer contains the unused legacy
       ResizableLib implementation and that the executable links only the
       in-tree GPL NextResizable module.
+- [x] Retain P. J. Naughter's written GPL-2.0-or-later permission for the
+      modified TreeOptionsCtrl and HttpDownloadDlg modules, preserve their
+      copyright notices, and document the public permission record.
 
 ## Source and binaries
 

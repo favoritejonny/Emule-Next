@@ -19,8 +19,14 @@ with an application only when it is a version released by the author:
 https://www.naughter.com/treeoptions.html
 
 The copyright blocks have been retained. No conclusion of GPL compatibility
-is claimed. Written GPL-compatible permission or a replacement remains
-required before a public source-and-binary release.
+was inferred from the website terms alone. On 2026-08-29, in direct response
+to the project's request identifying both TreeOptionsCtrl files and the two
+HttpDownloadDlg files, P. J. Naughter granted written permission to release
+the modified modules under GPL-2.0-or-later in the eMule Next application.
+The permission is recorded in `PERMISSION_REQUEST_PJ_NAUGHTER.md`; the
+original email is retained privately by the project maintainer. This resolves
+the source-distribution blocker for the two TreeOptionsCtrl files while their
+copyright notices and attribution remain intact.
 
 `TreeOptionsCtrlEx.cpp` and `TreeOptionsCtrlEx.h` are separate eMule extension
 files and retain their GPL notices.

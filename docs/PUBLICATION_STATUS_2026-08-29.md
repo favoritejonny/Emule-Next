@@ -13,22 +13,27 @@ Both portable packages passed automated structure checks and manual launch
 testing. The normal-profile Win32 and x64 clients were also tested for about
 12 hours each without reported anomalies.
 
+## Resolved item
+
+P. J. Naughter granted written permission on 2026-08-29 to release the
+modified modules identified in the project's request under GPL-2.0-or-later
+in the eMule Next application. This resolves the TreeOptionsCtrl and
+HttpDownloadDlg source-distribution blocker. The original email is retained
+privately; the public permission record is in
+`docs/PERMISSION_REQUEST_PJ_NAUGHTER.md`.
+
 ## Publication blockers
 
-1. Resolve TreeOptionsCtrl and HttpDownloadDlg's non-GPL source-distribution
-   conditions by written permission or replacement. The permission request was
-   sent to the author's published contact address on 2026-08-29; a written
-   response is pending and permission is not yet assumed.
-2. Resolve use of the `eMule Next` name and mule artwork by permission,
+1. Resolve use of the `eMule Next` name and mule artwork by permission,
    specialist review or renaming. The official administrative/legal contact
    route has been identified and the request in
    `docs/PERMISSION_REQUEST_EMULE_PROJECT.md` was sent on 2026-08-29. A
    written response is pending and permission is not yet assumed.
-3. The public GitHub repository now exists and is empty. A reviewed local Git
+2. The public GitHub repository now exists and is empty. A reviewed local Git
    repository and clean initial commit were created on 2026-08-29 using the
    maintainer's GitHub no-reply identity. Push only after the legal blockers
    are resolved, then create an immutable source tag.
-4. Regenerate the final portable archives so that they contain the corrected
+3. Regenerate the final portable archives so that they contain the corrected
    legal documents, then verify and briefly smoke-test them.
 
 No public binary should be uploaded before these items are complete.

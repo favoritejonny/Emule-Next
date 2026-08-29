@@ -30,11 +30,15 @@ the corresponding source files and must never be removed.
 `HttpDownloadDlg.h` originate from P. J. Naughter. The author's published
 terms allow binary use and permit source redistribution only for versions
 released by the author. Those terms are more restrictive than
-GPL-2.0-or-later for modified source distribution. These files therefore
-remain public-release blockers until the project has written GPL-compatible
-permission from the author or replaces the components. The separate eMule
-extension files `TreeOptionsCtrlEx.cpp` and `TreeOptionsCtrlEx.h` retain their
-GPL notices.
+GPL-2.0-or-later for modified source distribution. On 2026-08-29, in direct
+response to the project's request identifying all four files, P. J. Naughter
+granted written permission to release the modified modules under the
+GPL-2.0-or-later licence in the eMule Next application. The permission record
+is documented in `docs/PERMISSION_REQUEST_PJ_NAUGHTER.md`; the original email
+is retained privately by the project maintainer. Copyright notices and
+attribution in the four files must remain intact. The separate eMule extension
+files `TreeOptionsCtrlEx.cpp` and `TreeOptionsCtrlEx.h` retain their GPL
+notices.
 
 ## Distribution requirements
 

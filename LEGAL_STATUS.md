@@ -37,19 +37,22 @@ Manual testing now covers both installed-profile Release executables for about
 anomalies. The local recovery copy is outside this project and the root
 `.gitignore` excludes build output and release packages.
 
-## Required verification before clearing a release
+## Resolved third-party permission
 
 - **P. J. Naughter components:** `TreeOptionsCtrl.cpp` and `.h` identify
   themselves as v1.74. `HttpDownloadDlg.cpp` and `.h` are an older eMule-
   adapted implementation. The retained terms allow use in a binary but
   restrict source distribution to author-released versions. This is not a
-  clear GPL-compatible grant for a public fork, and the HTTP dialog is visibly
-  adapted for eMule. Before publishing, either obtain written
-  GPL-2.0-or-later-compatible permission from the author for all four files or
-  replace both components. A permission request was sent to the author's
-  published contact address on 2026-08-29 and a written response is pending.
-  Permission is not assumed while waiting. Do not modify their copyright
-  blocks.
+  clear GPL-compatible grant for a public fork by itself, and the HTTP dialog
+  is visibly adapted for eMule. On 2026-08-29, in response to the request that
+  expressly identified all four files, P. J. Naughter granted written
+  permission to release the modified modules under GPL-2.0-or-later in the
+  eMule Next application. The original email is retained privately and the
+  public record is in `docs/PERMISSION_REQUEST_PJ_NAUGHTER.md`. This blocker is
+  resolved. Do not modify the copyright blocks or remove attribution.
+
+## Required verification before clearing a release
+
 - **Project name:** the official eMule Project reported in 2004 that the eMule
   trademark was transferred to the eMule developers. The current owner and
   permitted use of `eMule Next` have not yet been verified in the relevant

@@ -44,8 +44,9 @@ portable con esito positivo.
 
 ## Verifiche ancora necessarie
 
-1. Risolvere le condizioni di ridistribuzione di TreeOptionsCtrl e
-   HttpDownloadDlg, e chiarire l'uso pubblico del nome `eMule Next`.
+1. L'autorizzazione GPL-2.0-or-later per TreeOptionsCtrl e HttpDownloadDlg e
+   stata ricevuta e registrata. Resta da chiarire l'uso pubblico del nome
+   `eMule Next` e della relativa grafica.
 2. Creare un tag Git immutabile della revisione esatta approvata e pubblicare
    il sorgente corrispondente insieme ai binari, come richiesto dalla GPL.
 3. Rigenerare i due ZIP finali per includere i documenti legali corretti e

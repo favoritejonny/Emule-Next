@@ -1,8 +1,9 @@
 # Fallback replacement plan for restricted third-party components
 
-Status: planning only. Do not start these replacements while written
-permission requests are pending unless the project maintainer explicitly
-chooses the fallback. The tested release candidate must remain recoverable.
+Status: **archived contingency plan; replacement is not currently required.**
+P. J. Naughter granted the requested written GPL-2.0-or-later permission on
+2026-08-29. Retain this plan only as a future maintenance option. The tested
+release candidate must remain recoverable.
 
 The purpose of this plan is to remove the P. J. Naughter source-distribution
 blockers if suitable written permission is not received. Replacement code
@@ -120,6 +121,7 @@ For every migrated page:
 - Do not upload the blocked source or binaries merely because a response is
   delayed.
 
-This plan reduces publication risk without changing the already tested client
-while permission requests are pending. It is a technical plan, not legal
-advice; final clearance may still require qualified legal review.
+Written permission now resolves this component-specific publication blocker,
+so the plan does not need to be executed for the current release. It remains a
+technical contingency plan, not legal advice; final clearance may still
+require qualified legal review.
