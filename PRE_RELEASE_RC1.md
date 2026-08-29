@@ -56,5 +56,6 @@ portable con esito positivo.
 ## Regola per la pubblicazione
 
 Non caricare ancora questa RC1 come release pubblica. Prima si risolvono i
-blocchi legali, si crea la repository pubblica e si congela il sorgente con un
-tag. Solo dopo si generano gli archivi finali con nuovi checksum.
+blocchi legali, si carica nella repository pubblica vuota il sorgente locale
+gia revisionato e lo si congela con un tag. Solo dopo si generano gli archivi
+finali con nuovi checksum.

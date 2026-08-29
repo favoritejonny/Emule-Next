@@ -9,10 +9,12 @@ The intended project repository is:
 
 https://github.com/favoritejonny/Emule-Next
 
-As checked on 2026-08-29, that address was not publicly accessible and this
-working folder was not yet a Git repository. Do not publish binaries until the
-repository is public, contains the reviewed complete source, and has an
-immutable tag for the exact release revision.
+As checked on 2026-08-29, that repository is public but empty. This working
+folder is now a local Git repository with a reviewed initial source commit and
+subsequent documentation commits using the maintainer's GitHub no-reply
+identity. Do not push the source or publish binaries until the recorded legal
+blockers are resolved. The public repository must then contain the reviewed
+complete source and an immutable tag for the exact release revision.
 
 For a public release, create an immutable version tag and publish both of the
 following in the same release location:

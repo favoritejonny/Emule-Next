@@ -1,0 +1,5 @@
+/cryptopp/** linguist-vendored
+/id3lib/** linguist-vendored
+/mbedtls/** linguist-vendored
+/miniupnpc/** linguist-vendored
+/zlib/** linguist-vendored

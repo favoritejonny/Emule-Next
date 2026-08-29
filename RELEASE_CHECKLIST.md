@@ -33,6 +33,8 @@ Complete every item before publishing a Win32, x64 or portable package.
 
 ## Security and privacy
 
+- [x] Enable GitHub private vulnerability reporting and document the private
+      reporting route in [SECURITY.md](SECURITY.md).
 - [ ] Record resolved security issues and known limitations in the release
       notes.
 - [ ] Verify the release contains no private test data, crash dumps, personal
@@ -49,6 +51,8 @@ Complete every item before publishing a Win32, x64 or portable package.
       are authorised to receive or distribute.
 - [ ] Retain the release archive, source archive, build log and checksums for
       reproducibility.
+- [x] Prepare guided bug, feature, pull-request and security-reporting
+      templates for the public repository.
 
 ## Test record
 
