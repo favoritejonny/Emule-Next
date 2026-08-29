@@ -7,8 +7,9 @@ Source:
 <https://www.emule-project.com/home/perl/general.cgi?l=1&rm=contact>
 (select **Administrative issue**; the site requests English or German).
 
-Status: **draft prepared; not yet sent.** No permission is assumed unless an
-explicit written reply is received and retained with the project records.
+Status: **sent by the project maintainer on 2026-08-29; written response
+pending.** No permission is assumed unless an explicit reply is received and
+retained with the project records.
 
 Subject: Permission request for the name eMule Next and mule artwork
 

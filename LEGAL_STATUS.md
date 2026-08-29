@@ -55,9 +55,9 @@ anomalies. The local recovery copy is outside this project and the root
   permitted use of `eMule Next` have not yet been verified in the relevant
   registers. Obtain permission or specialist advice, or adopt a name that does
   not use `eMule`, before a public launch. On 2026-08-29 the official site's
-  administrative/legal contact route was confirmed and a written permission
-  request was prepared in `docs/PERMISSION_REQUEST_EMULE_PROJECT.md`; it has
-  not yet been sent and no permission is assumed.
+  administrative/legal contact route was confirmed and the written permission
+  request in `docs/PERMISSION_REQUEST_EMULE_PROJECT.md` was sent. A written
+  response is pending and no permission is assumed.
 - **Repository:** the intended GitHub repository is now public but empty. This
   working folder was initialized as a local Git repository on 2026-08-29 and
   contains a reviewed clean initial commit using the maintainer's GitHub
