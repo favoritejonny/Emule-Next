@@ -20,7 +20,9 @@ testing. The normal-profile Win32 and x64 clients were also tested for about
    sent to the author's published contact address on 2026-08-29; a written
    response is pending and permission is not yet assumed.
 2. Resolve use of the `eMule Next` name and mule artwork by permission,
-   specialist review or renaming.
+   specialist review or renaming. The official administrative/legal contact
+   route has been identified and a request is prepared in
+   `docs/PERMISSION_REQUEST_EMULE_PROJECT.md`, but it has not yet been sent.
 3. The public GitHub repository now exists and is empty. A reviewed local Git
    repository and clean initial commit were created on 2026-08-29 using the
    maintainer's GitHub no-reply identity. Push only after the legal blockers
