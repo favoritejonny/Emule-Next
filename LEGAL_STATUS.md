@@ -2,8 +2,8 @@
 
 Status as of 2026-08-29: **the identified upstream licence, name and artwork
 issues are documented as resolved for the planned independent non-commercial
-GPL pre-release. Final source publication, rebuild and packaging checks remain
-incomplete.**
+GPL pre-release. The reviewed source history is public; final rebuild,
+exact-source tagging and packaging checks remain incomplete.**
 
 The project now has a GPL licence file, attribution, third-party inventory,
 privacy statement, source-distribution procedure and release checklist. That
@@ -70,12 +70,12 @@ anomalies. The local recovery copy is outside this project and the root
 
 ## Required verification before clearing a release
 
-- **Repository:** the intended GitHub repository is now public but empty. This
-  working folder was initialized as a local Git repository on 2026-08-29 and
-  contains a reviewed clean history using the maintainer's GitHub no-reply
-  identity. Perform a fresh privacy, secret and integrity audit immediately
-  before the first normal, non-forced source push. A public immutable source
-  tag must exist before publishing binaries.
+- **Repository:** the reviewed source history was published to the public
+  GitHub repository on 2026-08-29 with a normal, non-forced push. The first
+  verified public revision was
+  `1626ae05724530939c4724d83b53367cdac2497d`, using the maintainer's GitHub
+  no-reply identity. A public immutable source tag matching the final rebuilt
+  candidate must exist before publishing binaries.
 - Re-audit all linked dependencies after their versions are frozen.
 - Retain the restored full miniupnpc BSD-3-Clause text.
 - Have a lawyer experienced in copyright and open-source licensing review a

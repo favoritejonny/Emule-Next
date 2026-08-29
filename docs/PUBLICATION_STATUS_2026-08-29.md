@@ -32,15 +32,19 @@ registration. `eMule Next` will retain a clear independent/unofficial
 disclaimer. The original email is retained privately; the public record is in
 `docs/PERMISSION_REQUEST_EMULE_PROJECT.md`.
 
+## Source publication completed
+
+The final privacy, credential and integrity audit completed with a clean
+working tree. On 2026-08-29, the reviewed source history was published to the
+public repository with a normal, non-forced push. Local and remote `main` were
+verified at `1626ae05724530939c4724d83b53367cdac2497d` immediately after the
+push.
+
 ## Remaining publication steps
 
-1. The public GitHub repository now exists and is empty. A reviewed local Git
-   repository and clean initial commit were created on 2026-08-29 using the
-   maintainer's GitHub no-reply identity. Repeat the final privacy, credential
-   and integrity audit, then perform the first normal non-forced source push.
-2. Regenerate the final portable archives so that they contain the corrected
+1. Regenerate the final portable archives so that they contain the corrected
    legal documents, then verify and briefly smoke-test them.
-3. Create the immutable source tag on the exact rebuilt revision and publish
+2. Create the immutable source tag on the exact rebuilt revision and publish
    the two portable ZIPs and checksum file as a GitHub pre-release.
 
 No public binary should be uploaded before these items are complete.
