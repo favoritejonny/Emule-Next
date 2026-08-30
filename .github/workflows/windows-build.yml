@@ -1,0 +1,63 @@
+name: Windows build and verification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Release ${{ matrix.platform }}
+    runs-on: windows-2025
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [Win32, x64]
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v3
+        with:
+          msbuild-architecture: x64
+
+      - name: Build Release
+        shell: pwsh
+        run: >-
+          msbuild srchybrid\emule.sln
+          /m:1
+          /t:Rebuild
+          /p:Configuration=Release
+          /p:Platform=${{ matrix.platform }}
+          /p:PlatformToolset=v143
+          /p:PreferredToolArchitecture=x64
+          /verbosity:minimal
+
+      - name: Run security and functional smoke tests
+        shell: pwsh
+        run: ./tests/Invoke-CiTests.ps1 -Platform '${{ matrix.platform }}'
+
+      - name: Build verified portable package, manifest and SBOM
+        shell: pwsh
+        env:
+          PACKAGE_VERSION: 1.0.0-ci.${{ github.run_number }}
+        run: >-
+          ./packaging/Build-PortablePackages.ps1
+          -Platform '${{ matrix.platform }}'
+          -Version $env:PACKAGE_VERSION
+          -OutputDirectory (Join-Path $PWD 'dist\ci')
+
+      - name: Upload verified artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: eMuleNext-${{ matrix.platform }}-${{ github.sha }}
+          path: dist/ci/*
+          if-no-files-found: error
+          retention-days: 14
