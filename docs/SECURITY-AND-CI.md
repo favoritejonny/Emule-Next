@@ -58,3 +58,26 @@ wrong, the manifest is empty, or manifest and SBOM file counts disagree.
 GitHub workflow artifacts are test evidence, not automatically published
 releases. A public release still requires the manual checks in
 `RELEASE_CHECKLIST.md` and a tag identifying the exact source revision.
+
+## First hosted validation
+
+The first complete hosted validation passed on 2026-08-30 for commit
+`57431a43ced74a91462367d8c4f2337470eef41a` in
+[GitHub Actions run 33306093378](https://github.com/favoritejonny/Emule-Next/actions/runs/33306093378).
+Both Release Win32 and Release x64 completed on the Windows Server 2022 image
+with the Visual Studio 2022 `v143` MFC toolchain. The workflow finished in
+4 minutes 52 seconds and uploaded one verified artifact for each architecture.
+
+The two downloaded workflow artifacts were independently opened after the run.
+Each contained exactly the portable ZIP, JSON manifest, SPDX 2.3 JSON SBOM and
+SHA-256 checksum list. The portable archives contained `eMuleNext.exe` and the
+language payload; the manifest and SBOM each described 59 payload files, and
+the checksum lists matched their portable archives. GitHub reported these
+artifact archive digests:
+
+- Win32: `0d45bf67f8338e014f4dd5c38c34bf0f8a79c736084a8e82b68c01b5f7094a89`;
+- x64: `919987542a65f3dcfb5bae8a9a120408c67f416420724c1fb82c2760731120a6`.
+
+These CI artifacts use the temporary version `1.0.0-ci.3` and are retained for
+14 days. They are validation evidence, not a replacement for a tagged public
+release or its manual acceptance tests.
