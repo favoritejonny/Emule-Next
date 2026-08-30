@@ -12,7 +12,7 @@ permissions:
 jobs:
   build:
     name: Release ${{ matrix.platform }}
-    runs-on: windows-2025
+    runs-on: windows-2022
     timeout-minutes: 90
     strategy:
       fail-fast: false
@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v3
@@ -55,7 +55,7 @@ jobs:
           -OutputDirectory (Join-Path $PWD 'dist\ci')
 
       - name: Upload verified artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: eMuleNext-${{ matrix.platform }}-${{ github.sha }}
           path: dist/ci/*
