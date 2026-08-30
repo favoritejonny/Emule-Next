@@ -36,6 +36,13 @@ Complete every item before publishing a Win32, x64 or portable package.
       Search, Servers, Shared Files, Preferences, file details and the
       first-run wizard.
 - [x] Create portable archives and SHA-256 checksums.
+- [ ] Confirm the GitHub Actions Win32 and x64 jobs passed for the exact release
+      commit and retain their build/test logs.
+- [ ] Verify the PE security report passes for both architectures: ASLR, DEP,
+      CFG with a non-empty function table, security cookie, x64 high-entropy
+      ASLR and Win32 large-address awareness.
+- [ ] Include and validate the external and embedded file manifest and SPDX 2.3
+      SBOM for both portable archives.
 - [x] Publish the complete corresponding source from the same tag in the same
       release location as the binaries.
 
@@ -49,6 +56,11 @@ Complete every item before publishing a Win32, x64 or portable package.
       paths, tokens or passwords.
 - [ ] If data collection was added, update [PRIVACY.md](PRIVACY.md) before the
       release and obtain specialist review where required.
+- [ ] Run the isolated automated checks for clean first start, MD4/eD2K hashing,
+      43 languages, upload regression rules and clean shutdown on Win32 and x64.
+- [ ] Separately test real eD2K/Kad connectivity, sustained upload/download,
+      firewall prompts and first-run wizard visuals; automated smoke tests do
+      not replace these network and interface checks.
 
 ## Publication
 

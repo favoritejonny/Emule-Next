@@ -24,6 +24,12 @@
 6. **Distribuzione** — installer e pacchetti portatili separati per Win32 e
    x64, con test di aggiornamento e disinstallazione su Windows pulito. ARM64
    verra valutato in un aggiornamento successivo, se utile.
+7. **Build verificabili** — build GitHub automatiche Win32/x64, controllo delle
+   protezioni PE, test non interattivi di primo avvio, hashing, lingue, upload e
+   chiusura, manifest dei file, SBOM SPDX 2.3 e checksum per ogni pacchetto.
+8. **Prossimo ciclo focalizzato** — soltanto cache per grandi condivisioni e
+   protezione VPN opzionale. IPv6 resta una fase successiva separata; QUIC resta
+   un esperimento senza impatto sulla compatibilita eD2K/Kad.
 
 Nessuna fase modifica il protocollo eD2K/Kad senza analisi di compatibilità e
 test di interoperabilità.

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- /TSAWARE applies to executable images, not resource DLLs. -->
+  <ItemDefinitionGroup Condition="'$(ConfigurationType)'=='Application'">
+    <Link>
+      <TerminalServerAware>true</TerminalServerAware>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

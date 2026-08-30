@@ -703,6 +703,7 @@
     <ClInclude Include="UDPSocket.h" />
     <ClInclude Include="UpdownClient.h" />
     <ClInclude Include="UploadBandwidthThrottler.h" />
+    <ClInclude Include="UploadPolicy.h" />
     <ClInclude Include="UploadDiskIOThread.h" />
     <ClInclude Include="UploadListCtrl.h" />
     <ClInclude Include="UploadQueue.h" />

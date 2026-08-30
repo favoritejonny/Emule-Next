@@ -25,6 +25,7 @@
 #include "Scheduler.h"
 #include "PerfLog.h"
 #include "UploadBandwidthThrottler.h"
+#include "UploadPolicy.h"
 #include "ClientList.h"
 #include "LastCommonRouteFinder.h"
 #include "DownloadQueue.h"
@@ -397,16 +398,7 @@ bool CUploadQueue::AcceptNewClient(INT_PTR curUploadSlots) const
 
 uint32 CUploadQueue::GetTargetClientDataRate(bool bMinDatarate) const
 {
-	uint32 nOpenSlots = (uint32)GetUploadQueueLength();
-	// 3 slots or less - 3KiB/s
-	// 4 slots or more - linear growth by 1 KiB/s steps, cap off at UPLOAD_CLIENT_MAXDATARATE
-	uint32 nResult;
-	if (nOpenSlots <= 3)
-		nResult = 3 * 1024;
-	else
-		nResult = min(UPLOAD_CLIENT_MAXDATARATE, nOpenSlots * 1024);
-
-	return bMinDatarate ? nResult * 3 / 4 : nResult;
+	return UploadPolicy::GetTargetClientDataRate((uint32)GetUploadQueueLength(), bMinDatarate);
 }
 
 bool CUploadQueue::ForceNewClient(bool allowEmptyWaitingQueue)
@@ -446,11 +438,7 @@ bool CUploadQueue::ForceNewClient(bool allowEmptyWaitingQueue)
 		// waiting client from ever being activated, leaving the existing slots
 		// trickling indefinitely. Keep the same small-slot baseline used for a
 		// high, explicit upload limit; this does not impose a bandwidth cap.
-		const uint32 nMinUnlimitedSlots = MIN_UP_CLIENTS_ALLOWED + 3;
-		if ((uint32)curUploadSlots < nMinUnlimitedSlots)
-			return true;
-
-		if ((uint32)curUploadSlots < (datarate / upPerClient))
+		if (UploadPolicy::ShouldOpenUnlimitedSlot((uint32)curUploadSlots, datarate, upPerClient))
 			return true;
 	} else {
 		uint32 nMaxSlots;

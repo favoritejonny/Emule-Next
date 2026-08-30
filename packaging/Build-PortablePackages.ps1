@@ -7,6 +7,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+. (Join-Path $PSScriptRoot 'PackageMetadata.ps1')
 
 $projectRoot = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 if ([string]::IsNullOrWhiteSpace($OutputDirectory)) {
@@ -19,6 +20,10 @@ if (-not $outputRoot.StartsWith($projectRootWithSeparator, [System.StringCompari
 }
 
 New-Item -ItemType Directory -Path $outputRoot -Force | Out-Null
+$hashFile = Join-Path $outputRoot "SHA256SUMS-$Version.txt"
+if (Test-Path -LiteralPath $hashFile) {
+    throw "File di checksum gia presente: $hashFile. Scegli una nuova versione oppure spostalo prima di ricreare i pacchetti."
+}
 
 $portableMarker = Join-Path $PSScriptRoot 'portable\eMuleNext.portable'
 $portableReadme = Join-Path $PSScriptRoot 'PORTABLE.md'
@@ -64,17 +69,27 @@ foreach ($package in $packages) {
     }
     $languageFiles = @(Get-ChildItem -LiteralPath $languageDirectory -File -Filter '*.dll' |
         Where-Object { $_.Name -ne 'eMuleNext-GraphicsTest.dll' })
-    if ($languageFiles.Count -eq 0) {
-        throw "Nessuna lingua distribuibile trovata per $($package.Platform)."
+    if ($languageFiles.Count -ne 43) {
+        throw "Pacchetto incompleto per $($package.Platform): attese 43 lingue, trovate $($languageFiles.Count)."
     }
 
     $archiveName = "eMuleNext-$Version-$($package.Label)-portable.zip"
     $archivePath = Join-Path $outputRoot $archiveName
-    if (Test-Path -LiteralPath $archivePath) {
-        throw "Archivio gia presente: $archivePath. Scegli una nuova versione oppure spostalo prima di ricreare il pacchetto."
+    $metadataBaseName = "eMuleNext-$Version-$($package.Label)-portable"
+    $manifestPath = Join-Path $outputRoot "$metadataBaseName.manifest.json"
+    $sbomPath = Join-Path $outputRoot "$metadataBaseName.sbom.spdx.json"
+    foreach ($newOutput in @($archivePath, $manifestPath, $sbomPath)) {
+        if (Test-Path -LiteralPath $newOutput) {
+            throw "Output gia presente: $newOutput. Scegli una nuova versione oppure spostalo prima di ricreare il pacchetto."
+        }
     }
 
-    $stageDirectory = Join-Path $outputRoot ('.stage-' + [guid]::NewGuid().ToString('N'))
+    $stageDirectory = [System.IO.Path]::GetFullPath(
+        (Join-Path $outputRoot ('.stage-' + [guid]::NewGuid().ToString('N'))))
+    $allowedStagePrefix = $outputRoot.TrimEnd('\') + '\.stage-'
+    if (-not $stageDirectory.StartsWith($allowedStagePrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+        throw "Cartella temporanea non valida: $stageDirectory"
+    }
     New-Item -ItemType Directory -Path $stageDirectory | Out-Null
     try {
         Copy-Item -LiteralPath $executable -Destination (Join-Path $stageDirectory 'eMuleNext.exe')
@@ -93,9 +108,43 @@ foreach ($package in $packages) {
         Copy-Item -LiteralPath $languageFiles.FullName -Destination $stageLanguageDirectory
         Copy-Item -LiteralPath $documentationDirectory -Destination (Join-Path $stageDirectory 'docs') -Recurse
 
+        New-EmuleNextPackageMetadata -StageDirectory $stageDirectory -ProjectRoot $projectRoot `
+            -Version $Version -Platform $package.Platform -ArchiveName $archiveName `
+            -ManifestPath $manifestPath -SbomPath $sbomPath
+        $generatedManifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
+        $generatedSbom = Get-Content -LiteralPath $sbomPath -Raw | ConvertFrom-Json
+        if ($generatedManifest.payloadFileCount -ne $generatedManifest.files.Count -or
+            $generatedManifest.files.Count -eq 0) {
+            throw 'Manifest non valido: elenco dei file mancante o incompleto.'
+        }
+        if ($generatedSbom.spdxVersion -ne 'SPDX-2.3' -or $generatedSbom.files.Count -ne $generatedManifest.files.Count) {
+            throw 'SBOM non valida: formato SPDX o elenco dei file non coerente.'
+        }
+        Copy-Item -LiteralPath $manifestPath -Destination (Join-Path $stageDirectory 'MANIFEST.json')
+        Copy-Item -LiteralPath $sbomPath -Destination (Join-Path $stageDirectory 'SBOM.spdx.json')
+
         Compress-Archive -Path (Join-Path $stageDirectory '*') -DestinationPath $archivePath
-        $hash = (Get-FileHash -LiteralPath $archivePath -Algorithm SHA256).Hash.ToLowerInvariant()
-        $hashLines.Add("$hash *$archiveName")
+        Add-Type -AssemblyName System.IO.Compression.FileSystem
+        $archive = [System.IO.Compression.ZipFile]::OpenRead($archivePath)
+        try {
+            $entryNames = @($archive.Entries | ForEach-Object { $_.FullName.Replace('\', '/') })
+            foreach ($requiredEntry in @('eMuleNext.exe', 'eMuleNext.portable', 'MANIFEST.json', 'SBOM.spdx.json')) {
+                if ($entryNames -notcontains $requiredEntry) {
+                    throw "Archivio non valido: manca $requiredEntry"
+                }
+            }
+            if (@($entryNames | Where-Object { $_ -like 'lang/*.dll' }).Count -ne $languageFiles.Count) {
+                throw "Archivio non valido: il numero delle lingue non corrisponde."
+            }
+        }
+        finally {
+            $archive.Dispose()
+        }
+
+        foreach ($outputFile in @($archivePath, $manifestPath, $sbomPath)) {
+            $hash = (Get-FileHash -LiteralPath $outputFile -Algorithm SHA256).Hash.ToLowerInvariant()
+            $hashLines.Add("$hash *$(Split-Path -Leaf $outputFile)")
+        }
         Write-Host "Creato: $archivePath"
     }
     finally {
@@ -105,9 +154,5 @@ foreach ($package in $packages) {
     }
 }
 
-$hashFile = Join-Path $outputRoot "SHA256SUMS-$Version.txt"
-if (Test-Path -LiteralPath $hashFile) {
-    throw "File di checksum gia presente: $hashFile. Scegli una nuova versione oppure spostalo prima di ricreare i pacchetti."
-}
 [System.IO.File]::WriteAllLines($hashFile, [string[]]$hashLines, [System.Text.UTF8Encoding]::new($false))
 Write-Host "Checksum SHA-256: $hashFile"
