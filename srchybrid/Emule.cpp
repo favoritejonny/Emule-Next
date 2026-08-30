@@ -352,6 +352,20 @@ CemuleApp::CemuleApp(LPCTSTR lpszAppName)
 
 CemuleApp theApp(EMULE_NEXT_PRODUCT_NAME);
 
+static int s_ciSelfTestExitCode;
+
+static bool HasCommandLineSwitch(LPCTSTR expectedSwitch)
+{
+	for (int i = 1; i < __argc; ++i) {
+		LPCTSTR parameter = __targv[i];
+		if (parameter[0] == _T('-') || parameter[0] == _T('/'))
+			++parameter;
+		if (_tcsicmp(parameter, expectedSwitch) == 0)
+			return true;
+	}
+	return false;
+}
+
 
 // Workaround for bugged 'AfxSocketTerm' (needed at least for MFC 7.0 - 14.14)
 static void __cdecl __AfxSocketTerm() noexcept
@@ -401,6 +415,7 @@ static BOOL InitWinsock2(WSADATA *lpwsaData)
 
 BOOL CemuleApp::InitInstance()
 {
+	const bool ciSelfTest = HasCommandLineSwitch(_T("ci-self-test"));
 #ifdef _DEBUG
 	// set Floating Point Processor to throw several exceptions, in particular the 'Floating point divide by zero'
 	UINT uEmCtrlWord = _control87(0, 0) & _MCW_EM;
@@ -441,7 +456,7 @@ BOOL CemuleApp::InitInstance()
 
 	AfxOleInit();
 
-	if (ProcessCommandline())
+	if (!ciSelfTest && ProcessCommandline())
 		return FALSE;
 
 	///////////////////////////////////////////////////////////////////////////
@@ -490,13 +505,19 @@ BOOL CemuleApp::InitInstance()
 		return FALSE; // DO *NOT* START !!!
 	}
 
-	extern bool SelfTest();
-	if (!SelfTest())
+	extern bool SelfTest(bool extended);
+	if (!SelfTest(false))
 		return FALSE; // DO *NOT* START !!!
 
 	// create & initialize all the important stuff
 	thePrefs.Init();
 	theStats.Init();
+	if (ciSelfTest) {
+		// CI runs this only from a fresh, isolated portable directory. Requiring
+		// FirstStart here verifies that no existing user configuration leaked in.
+		s_ciSelfTestExitCode = thePrefs.IsFirstStart() && SelfTest(true) ? 0 : 1;
+		return FALSE;
+	}
 
 	// check if we have to restart eMule as Secure user
 	if (thePrefs.IsRunAsUserEnabled()) {
@@ -630,7 +651,8 @@ int CemuleApp::ExitInstance()
 	if (m_wTimerRes != 0)
 		timeEndPeriod(m_wTimerRes);
 
-	return CWinApp::ExitInstance();
+	const int frameworkExitCode = CWinApp::ExitInstance();
+	return s_ciSelfTestExitCode != 0 ? s_ciSelfTestExitCode : frameworkExitCode;
 }
 
 #ifdef _DEBUG

@@ -4,6 +4,12 @@
 
 Base: eMule Community 0.72a.
 
+- Added GitHub Actions Release builds for Win32 and x64, with isolated
+  clean-start, hashing, language-loading, upload-policy and shutdown checks.
+- Enabled final-binary CFG, ASLR, DEP, security-cookie and
+  architecture-specific Windows hardening, with direct PE verification.
+- Added per-package JSON manifests, SPDX 2.3 SBOMs and SHA-256 checksums, with
+  archive-content validation before an artifact can be uploaded.
 - Replaced the Kad entry in the notification-area quick menu and the legacy
   main-window frame icon with a dedicated scalable copper mule head, without
   changing Kad connection-status symbols.

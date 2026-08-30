@@ -67,6 +67,10 @@ The current distribution does not collect crash reports, analytics or other tele
 
 The Visual Studio solution is [srchybrid/emule.sln](srchybrid/emule.sln). Release executables are built separately for Win32 and x64. The portable package script is [packaging/Build-PortablePackages.ps1](packaging/Build-PortablePackages.ps1).
 
+GitHub Actions rebuilds and checks both architectures on pushes and pull requests. The final executables are inspected for the required Windows security protections, then tested in a clean portable profile. Verified packages include a file manifest, an SPDX 2.3 SBOM and SHA-256 checksums. See [docs/SECURITY-AND-CI.md](docs/SECURITY-AND-CI.md).
+
+The focused post-alpha plan is limited to a cache for large shared collections and optional VPN-interface protection. IPv6 is reserved for a later compatibility release and QUIC remains experimental. See [docs/TECHNICAL_ROADMAP.md](docs/TECHNICAL_ROADMAP.md).
+
 Binary releases must be accompanied by the complete corresponding source code and all notices required by the included third-party components. Maintainers should complete [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) before publishing a new version.
 
 ## License and notices

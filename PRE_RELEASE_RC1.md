@@ -1,10 +1,13 @@
-# eMule Next 1.0.0-alpha.1 RC1
+# eMule Next 1.0.0-alpha.1 RC1 (historical)
 
 Data di preparazione: 24 agosto 2026  
 Ultimo controllo: 29 agosto 2026
 
-La candidata collaudata e RC1-fix9. Tutti i pacchetti RC1 precedenti sono
-superati. I due archivi approvati per il collaudo si trovano nella cartella
+RC1-fix9 was the manually tested candidate. It is retained as a historical
+test record and is superseded for publication by the final candidate recorded
+in `PRE_RELEASE_1.0.0_ALPHA1.md`. Do not upload an RC1-fix9 archive.
+
+The two historical test archives are in
 `dist/prerelease/1.0.0-alpha.1-rc1-fix9-20260828-103711`.
 
 Questa cartella di consegna contiene la prima candidata portatile destinata

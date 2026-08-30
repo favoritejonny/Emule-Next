@@ -1,17 +1,21 @@
 # Publication status - 2026-08-29
 
-## Candidate tested
+## Final candidate generated
 
-The current tested candidate is RC1-fix9:
+The final local candidate was rebuilt from public revision
+`27a14542ef7d02785c83a79e908d7685faa55591`:
 
 - Win32 portable ZIP SHA-256:
-  `FB01274CB7FF59FD3116E93024232370664331A36FC6E921C0A24934173F611D`
+  `8893FDB7AD545FFD9AED892F0FD749B3550F10C10AB5842BCF576DC90D7B54D1`
 - x64 portable ZIP SHA-256:
-  `1DAA4E16B20A3BF38F97A74F9FD3F93017726E6B853D58CD802714AA3639C3E0`
+  `6A2FB77DB00FAC08FE83A8A42AFCE3EA80C7F3CC155202EC0A905B0F1362B455`
 
-Both portable packages passed automated structure checks and manual launch
-testing. The normal-profile Win32 and x64 clients were also tested for about
-12 hours each without reported anomalies.
+Both final portable packages passed complete automated structure, content,
+architecture and checksum checks. The project tester then extracted and tested
+both newly generated final ZIPs and reported both working. The earlier
+RC1-fix9 portable packages also passed manual testing, and the normal-profile
+Win32 and x64 clients were tested for about 12 hours each without reported
+anomalies.
 
 ## Resolved upstream items
 
@@ -37,17 +41,20 @@ disclaimer. The original email is retained privately; the public record is in
 The final privacy, credential and integrity audit completed with a clean
 working tree. On 2026-08-29, the reviewed source history was published to the
 public repository with a normal, non-forced push. Local and remote `main` were
-verified at `1626ae05724530939c4724d83b53367cdac2497d` immediately after the
-push.
+first verified at `1626ae05724530939c4724d83b53367cdac2497d`. Local and remote
+`main` now match at `27a14542ef7d02785c83a79e908d7685faa55591`, the revision
+used for the final binary rebuild.
 
-## Remaining publication steps
+## Publication completed
 
-1. Regenerate the final portable archives so that they contain the corrected
-   legal documents, then verify and briefly smoke-test them.
-2. Create the immutable source tag on the exact rebuilt revision and publish
-   the two portable ZIPs and checksum file as a GitHub pre-release.
+The first public pre-release was published on 2026-08-29:
 
-No public binary should be uploaded before these items are complete.
+`https://github.com/favoritejonny/Emule-Next/releases/tag/v1.0.0-alpha.1`
+
+GitHub identifies it as a pre-release. Tag `v1.0.0-alpha.1` resolves to the
+exact build revision `27a14542ef7d02785c83a79e908d7685faa55591`. The public
+assets are the verified Win32 and x64 portable ZIPs and the matching SHA-256
+file; GitHub supplies the two corresponding source archives from the tag.
 
 ## Repository safety setup
 

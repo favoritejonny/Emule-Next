@@ -1,8 +1,9 @@
-# GitHub pre-release draft
+# GitHub pre-release publication record
 
-Status: **local draft only - do not publish yet.** Replace every bracketed
-field after the legal blockers are resolved, the final tagged source is built
-and the final archives are regenerated and verified.
+Status: **published on 2026-08-29.** The final archives passed automated
+verification and manual testing. The public release is:
+
+`https://github.com/favoritejonny/Emule-Next/releases/tag/v1.0.0-alpha.1`
 
 ## GitHub fields
 
@@ -43,8 +44,8 @@ against the same configuration folder at the same time.
 Download `SHA256SUMS-1.0.0-alpha.1.txt` from this release and compare the
 SHA-256 value before running the program.
 
-- Win32: `[FINAL WIN32 SHA-256]`
-- x64: `[FINAL X64 SHA-256]`
+- Win32: `8893FDB7AD545FFD9AED892F0FD749B3550F10C10AB5842BCF576DC90D7B54D1`
+- x64: `6A2FB77DB00FAC08FE83A8A42AFCE3EA80C7F3CC155202EC0A905B0F1362B455`
 
 The final source for these exact binaries is the immutable
 [`v1.0.0-alpha.1`](https://github.com/favoritejonny/Emule-Next/tree/v1.0.0-alpha.1)
@@ -90,12 +91,13 @@ GPL-2.0-or-later, subject to the notices for included third-party components.
 See `LICENSE`, `NOTICE.md`, `THIRD_PARTY_NOTICES.md`, `PRIVACY.md` and
 `SOURCE-CODE.md` in the tagged source and binary packages.
 
-## Final publication checks for this text
+## Completed publication checks
 
-- Remove this draft header and every bracketed placeholder.
-- Confirm the tag link resolves publicly to the exact build revision.
-- Paste hashes from the newly generated final checksum file, not RC hashes.
-- Confirm uploaded filenames exactly match the names shown above.
-- Attach only the two portable ZIPs and checksum file; GitHub supplies source
+- [x] The local status paragraph was excluded from the public release notes.
+- [x] The tag link resolves publicly to the exact build revision.
+- [x] The published hashes came from the final checksum file, not RC hashes.
+- [x] Uploaded filenames exactly match the names shown above.
+- [x] Only the two portable ZIPs and checksum file were attached; GitHub supplies source
   archives for the tag automatically.
-- Re-read the complete release page while signed out before announcing it.
+- [ ] Re-read the complete release page while signed out before wider
+  announcement.

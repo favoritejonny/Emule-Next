@@ -384,26 +384,23 @@ delle API aggiornate; il processo e' stato fermato solo dal limite di tempo.
   diretti dei moduli revisionati sono stati rimossi senza silenziarli in modo
   globale.
 
-Gli eseguibili Release Win32 e x64 sono stati prodotti e verificati a livello
-di architettura PE, versione e dipendenze. Le modifiche grafiche recenti hanno
-superato compilazione e collegamento completi per entrambe le architetture;
-gli output standard `srchybrid\\x64\\Release\\eMuleNext.exe` e
-`srchybrid\\Win32\\Release\\eMuleNext.exe` sono stati aggiornati il 21 agosto
-2026 e contengono tutte le 43 traduzioni disponibili. Resta da effettuare il
-collaudo interattivo dell'interfaccia e delle funzioni di rete prima della
-distribuzione pubblica.
+Gli eseguibili Release Win32 e x64 sono stati ricompilati in sequenza il 29
+agosto 2026 dalla revisione pubblica
+`27a14542ef7d02785c83a79e908d7685faa55591`. Entrambe le build hanno concluso
+con zero errori; gli output riportano la versione `1.0.0-alpha.1`, le corrette
+architetture PE e tutte le 43 traduzioni distribuibili.
 
 ## Prossimo passo
 
-Il 24 agosto 2026 le Release x64 e Win32 della candidata
-`1.0.0-alpha.1-rc1` sono state ricompilate in sequenza con zero errori. Sono
-stati creati due nuovi ZIP portatili, ciascuno con 43 traduzioni, documenti e
-licenze; entrambi sono stati riaperti e controllati e non contengono profili,
-dump o simboli di debug. Dimensioni e checksum sono registrati nel file
-`PRE_RELEASE_RC1.md` e nella cartella della candidata.
+I due ZIP finali portatili sono stati creati e verificati integralmente. Hanno
+59 elementi e 43 traduzioni ciascuno, non contengono profili, dump, log o
+simboli di debug e i loro eseguibili corrispondono byte per byte alle build
+appena prodotte. Dimensioni e checksum sono registrati in
+`PRE_RELEASE_1.0.0_ALPHA1.md`.
 
-Il prossimo passo e il collaudo interattivo dei due pacchetti. Restano inoltre
-da creare gli installer Win32/x64, firmare eventualmente i binari, congelare
-il sorgente con un tag Git e chiudere la checklist legale prima della
-pubblicazione. ARM64 resta conservato per una fase futura e non blocca questa
-pubblicazione.
+Il progetto tester ha estratto e provato entrambi gli ZIP finali il 29 agosto
+2026 e li ha dichiarati funzionanti. Nella stessa data, il tag immutabile
+`v1.0.0-alpha.1` e la pre-release GitHub sono stati pubblicati sulla revisione
+esatta usata per la build. La prima pubblicazione comprende solo i pacchetti
+portatili Win32 e x64: installer e ARM64 restano obiettivi di un aggiornamento
+futuro e non bloccano questa pre-release.
