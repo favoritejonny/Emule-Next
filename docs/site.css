@@ -518,7 +518,9 @@ a {
 }
 
 .screenshot-window img {
+  display: block;
   width: 100%;
+  height: auto;
 }
 
 .window-dots {
