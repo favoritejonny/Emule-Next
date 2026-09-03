@@ -6,6 +6,8 @@
 
 **eMule Next is an independent, open-source eMule Community fork for Windows, with a modernised interface, Win32 and x64 portable builds, 43 languages, and continued compatibility with the eD2K and Kad networks.**
 
+### [Visit the eMule Next website](https://favoritejonny.github.io/Emule-Next/)
+
 ## Download
 
 ### [Download eMule Next 1.0.0-alpha.1](https://github.com/favoritejonny/Emule-Next/releases/tag/v1.0.0-alpha.1)
