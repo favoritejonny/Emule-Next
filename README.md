@@ -22,6 +22,10 @@ This is an **alpha pre-release** for testing. The portable builds do not require
 
 The current executables are not digitally signed, so Microsoft Defender SmartScreen may display a warning on first launch. Verify that the ZIP came from this repository and compare its SHA-256 checksum before continuing. See [WINDOWS-SMARTSCREEN.md](WINDOWS-SMARTSCREEN.md) for the safe procedure.
 
+## Code signing policy
+
+Free code signing provided by [SignPath.io](https://signpath.io/), certificate by [SignPath Foundation](https://signpath.org/). The public alpha remains unsigned; a future package will be described as signed only after every executable and language DLL has passed Authenticode and timestamp verification. See [CODE_SIGNING_POLICY.md](CODE_SIGNING_POLICY.md) for the controlled build, approval, privacy and verification process.
+
 ## Highlights
 
 - Native Windows Win32 and x64 builds.
