@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/media/github-social-preview-v1.jpg" alt="eMule Next — modern eD2K and Kad client for Windows" width="100%">
+  <img src="docs/media/github-social-preview-v2.jpg" alt="eMule Next — modern eD2K and Kad client for Windows" width="100%">
 </p>
 
 # eMule Next
@@ -50,7 +50,7 @@ Beta 1 is unsigned because the project has not yet qualified for a public code-s
 </table>
 
 <p align="center">
-  <imgithub-social-preview-v2.jpg src="docs/media/screenshots/preferences-modern-light-v2.png" alt="eMule Next preferences with refreshed icons" width="539">
+  <img src="docs/media/screenshots/preferences-modern-light-v2.png" alt="eMule Next preferences with refreshed icons" width="539">
   <br>
   <strong>Modernised preferences and included language selection</strong>
 </p>
