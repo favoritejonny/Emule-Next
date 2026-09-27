@@ -58,6 +58,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Lejupielādēt un ielādēt nodes.dat no interneta, lai palaistu Kad"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP un UPnP lūdz saderīgam maršrutētājam atvērt tikai eMule portus. Automātiskais režīms izvēlas atbalstītu protokolu. Lietojiet to tikai savā mājas tīklā bez VPN. Citādi turpiniet manuāli; esošie iestatījumi saglabājas."
+    IDS_WIZSETUP_PORTTEST "Maršrutētāja automātiskā iestatīšana sākas tikai pēc Pabeigt; pārbaudi veiciet pēc tam."
+    IDS_WIZSETUP_NETWORKS "eD2K izmanto serveru sarakstu. Kad darbojas bez serveriem, bet tam vajag UDP un sākuma kontaktus. Var izmantot abus tīklus. Izslēdzot UDP, tiek izslēgts arī Kad. Serveru sarakstu izvēlas nākamajā lapā."
+    IDS_WIZSETUP_SERVERS_ADD "Lejupielādēt un ielādēt eD2K serveru sarakstu no interneta"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Neobligāti: apturiet citas pārsūtīšanas un atvienojiet VPN, pēc tam palaidiet testu. Tas pārsūta līdz aptuveni 100 MB pagaidu datu caur Cloudflare, kas var redzēt jūsu IP adresi. eMule Next rezultātu nesūta un neglabā. Pirms lietošanas varat rediģēt izmērītās KB/s vērtības."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Ievadiet derīgu lejupielādes un augšupielādes ātrumu KB/s vai noņemiet vērtību lietošanas atzīmi."
+    IDS_WIZSETUP_SERVERS_INFO "Ja izvēlēts eD2K, šos serverus var pievienot ar Pabeigt. Esošie serveri saglabājas. Saraksts netiek lejupielādēts un automātiskā savienošanās netiek ieslēgta. Neatzīmējiet, ja serverus pārvaldīsiet pats vai izmantosiet tikai Kad."
+    IDS_WIZSETUP_PORTS "TCP paredzēts savienojumiem un pārsūtīšanai; UDP vajadzīgs arī Kad. Saglabājiet piedāvātos portus vai izvēlieties savus. Ja maršrutētājs jau pāradresē portus, izmantojiet tos pašus numurus."
     IDS_SOCKETS_INIT_FAILED "Kļūda ievadot Windows ligzdas."
     IDS_ABOUTBOX            "&Par eMule..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s no %s"
@@ -1028,14 +1037,14 @@ BEGIN
                             "Ignore eMule send link protocol messages"
     IDS_CHECK4UPDATE        "Check for new version"
     IDS_STARTUP             "Startup"
-    IDS_NEWVERSIONAVL       "A new version of eMule is available! Check the project-homepage for more information."
-    IDS_NEWVERSIONAVLPOPUP  "A new version of eMule is available. Click here to read about the new version!"
+    IDS_NEWVERSIONAVL       "A new version of eMule Next is available! Check the project-homepage for more information."
+    IDS_NEWVERSIONAVLPOPUP  "A new version of eMule Next is available. Click here to read about the new version!"
     IDS_NEWVERSIONFAILED    "Unable to check for new version."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "New eMule version detected"
+    IDS_CB_TBN_ONNEWVERSION "New eMule Next version detected"
     IDS_NONEWERVERSION      "No new eMule version detected."
     IDS_VERSIONCHECK        "&Versioncheck"
     IDS_VISITVERSIONCHECK   "\n\nDo you want do visit the Informationpage now?"
@@ -1981,6 +1990,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Enable Windows 7 taskbar effects"
     IDS_LANMODE             "LAN Mode"
     IDS_OPENPREFINI         "Open preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Automātiska savienojuma iestatīšana"
+    IDS_CONNSETUP_INFO          "Saglabājiet piedāvātos TCP un UDP portus vai ievadiet savu. Automātiskā iestatīšana var konfigurēt saderīgu mājas maršrutētāju pēc šī vedņa pabeigšanas."
+    IDS_CONNSETUP_BUTTON        "Konfigurēt automātiski"
+    IDS_CONNSETUP_CONSENT       "Vai atļaut eMule Next pārsūtīt savus TCP/UDP portus, izmantojot PCP, NAT-PMP vai UPnP šajā privātajā mājas tīklā pēc vedņa pabeigšanas un vēlākas palaišanas?\n\nApstipriniet tikai jūsu kontrolētajā tīklā bez VPN. Noteikšana nevar atpazīt katru VPN. Windows ugunsmūra atļauja joprojām ir nepieciešama; tīmekļa saskarnes ports ir izslēgts. Augsts ID netiek garantēts. Pagaidu kartējumi var palikt līdz to maršrutētāja piešķirtā derīguma termiņa beigām.\n\nAtceļot vedņa darbību, šī izvēle netiks saglabāta."
+    IDS_CONNSETUP_PENDING       "Atlasīts: maršrutētāja iestatīšana darbosies pēc vedņa pabeigšanas un vēlākas palaišanas laikā tikai piemērotos privātajos tīklos. Joprojām ir nepieciešama Windows ugunsmūra atļauja. Augsts ID un Kad sasniedzamība vēl ir jāpārbauda."
+    IDS_CONNSETUP_MANUAL        "Nav atlasīta neviena jauna automātiskā iestatīšana. Esošie iestatījumi tiek saglabāti. Varat izmantot manuālu portu pārsūtīšanu, pārbaudīt Windows ugunsmūra atļaujas vai pats palaist ārējo pārbaudi."
+    IDS_CONNSETUP_PRIVATE       "Automātiskā iestatīšana apturēta: Windows ziņo par publisku, pārvaldītu vai jauktu tīklu. Maršrutētāja izmaiņas netika pieprasītas. Izmantojiet manuālo iestatīšanu vai pārbaudiet tīkla profilu tikai tad, ja tas ir jūsu uzticamais mājas tīkls."
+    IDS_CONNSETUP_VPN           "Automātiskā iestatīšana apturēta: tika atrasts iespējamais VPN, starpniekservera vai skaidra interfeisa saistījums. Mājas maršrutētājs netiek konfigurēts automātiski. Izmantojiet savienojuma nodrošinātāja portu pārsūtīšanas iestatījumus."
+    IDS_CONNSETUP_UNKNOWN       "Automātiskā iestatīšana apturēta: vietējo tīklu nevarēja droši identificēt. Maršrutētāja izmaiņas netika pieprasītas. Varat turpināt un manuāli konfigurēt savienojumu."
+    IDS_CONNSETUP_SUCCESS       "Maršrutētājs apstiprina TCP %u un UDP %u (0 = atspējots) pārsūtīšanu uz šo datoru.\n\nTas nepierāda interneta pieejamību. Pārbaudiet Windows ugunsmūra atļauju, pēc tam izveidojiet savienojumu un pārbaudiet High ID un Kad statusu vai palaidiet ārējā porta pārbaudi manuāli."
+    IDS_CONNSETUP_FAILED        "Automātiskā maršrutētāja iestatīšana netika pabeigta. PCP, NAT-PMP vai UPnP var nebūt pieejams vai atspējots, vai arī maršrutētājs ir noraidījis pieprasījumu. Pārbaudiet maršrutētāju un Windows ugunsmūri; manuālā iestatīšana joprojām ir pieejama."
+    IDS_CONNSETUP_SHARED        "Maršrutētājs ziņo par nepublisku interneta adresi: iespējams dubultā NAT vai pakalpojumu sniedzējs CGNAT. Ar šī maršrutētāja atvēršanu vien var nepietikt. Jautājiet pakalpojumu sniedzējam par publisko IP vai atbalstīto portu pāradresāciju."
+    IDS_CONNSETUP_CONFLICT      "Pieprasītajam portam jau ir cita vai atspējota maršrutētāja kārtula. Tas netika pārrakstīts. Izvēlieties dažādus klienta portus vai pārbaudiet šo noteikumu manuāli."
+    IDS_CONNSETUP_BADPORT       "Ievadiet TCP portu no 1 līdz 65535 un UDP portu no 1 līdz 65535 vai skaidri atspējojiet UDP."
+    IDS_CONNSETUP_TESTINFO      "Brīvprātīgs tests oficiālajā eMule vietnē. Tas saņem jūsu IP un porta informāciju."
+    IDS_CONNSETUP_FIREWALL      "Atveriet Windows ugunsmūri..."
+    IDS_CONNSETUP_BINDFAILED    "Klients nevarēja klausīties atlasītajos portos. Tos var izmantot cita programma. Iepriekšējie porta iestatījumi ir atjaunoti."
+    IDS_CONNSETUP_BUSY          "Joprojām darbojas cita porta iestatīšana. Pagaidiet, līdz tas beidzas, pirms mēģināt vēlreiz."
+    IDS_CONNSETUP_UNSELECT      "Atsaukt automātisko izvēli"
+    IDS_PORTMAP_WRONGPORT       "Maršrutētājs ir piešķīris citu ārējo portu. Tā netika pieņemta kā strādājoša klienta kartēšana. Klientu porti netika mainīti. Izmantojiet dažādus portus vai pārbaudiet maršrutētāju manuāli. Pagaidu kartējumi var palikt līdz derīguma termiņa beigām."
+    IDS_PORTMAP_REFUSED         "Maršrutētājs atteicās no automātiskās portu pāradresācijas. Netika izmantots alternatīvs protokols, lai apietu šo atteikumu. Pārbaudiet maršrutētāja administratora iestatījumus vai izmantojiet manuālo iestatīšanu."
+    IDS_PORTMAP_NETWORKCHANGED  "Portu kartēšana ir apturēta: mainīts tīkls, vārteja, klienta porti vai ārējā adrese. Iepriekšējie kartējumi var palikt līdz derīguma termiņa beigām. Pārbaudiet savienojumu un, ja nepieciešams, vēlreiz palaidiet automātisko iestatīšanu."
+    IDS_PORTMAP_SHORTLEASE      "Maršrutētājs piešķīra pārāk īsu kartēšanas laiku, lai to varētu droši atjaunot. Automātiskā iestatīšana netika atzīmēta kā veiksmīga. Izmantojiet manuālo iestatīšanu vai pārbaudiet maršrutētāju."
+    IDS_PORTMAP_PROTOCOL        "Protokols: %s"
+    IDS_ADD_UNC_SHARE           "Pievienot tīkla mapi"
 END
 
 #endif    // Latvian resources

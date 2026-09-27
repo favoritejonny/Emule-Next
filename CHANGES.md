@@ -1,6 +1,92 @@
 # eMule Next change record
 
-## 1.0.0-alpha.1 (work in progress, 2026-08-19)
+## 1.0.0-beta.1 (released 2026-09-27)
+
+- Promote the in-development public identity to eMule Next 1.0.0 Beta 1
+  (`1.0.0-beta.1`, numeric Windows build `1.0.0.2`). Use that identity in
+  window titles, ready notifications, Server information, exported statistics
+  and the Web interface while retaining Community 0.72a exclusively as the
+  eD2K/Kad compatibility version. Mark Windows resources as prerelease without
+  enabling the legacy `_BETA` behaviours that create shared test files.
+- Speed up large shared collections without changing `known.met`,
+  `known2_64.met`, eD2K hashes or credit files. Known-file reuse now uses a
+  lazily rebuilt filename index while retaining the exact timestamp, size and
+  name checks, including support for duplicate filenames.
+- Increase sequential hashing reads from 8 KiB to 64 KiB and the file stream
+  buffer to 256 KiB. MD4 and AICH remain in the same single read pass and a
+  new offline regression covers several read-buffer boundaries.
+- Reject a hash result when the file size or last-write time changes while the
+  file is being read, avoiding stale identities for files still being copied
+  or modified. Correct the low 32-bit word used by the HANDLE-based file-size
+  helper, which previously read the unrelated file-index field.
+- Rebuild the visible shared-files list in linear time by skipping redundant
+  duplicate scans when the list has just been cleared, with redraw suspended
+  until the rebuild is complete. Normal incremental additions retain their
+  duplicate checks.
+- Fix first-run auto-connect when the startup timer completes while the modal
+  wizard is still open. Finishing a fresh setup now starts the selected eD2K
+  and Kad networks when `Connect automatically` is checked, including after
+  automatic router setup; clearing the checkbox leaves both networks idle.
+  Add an offline regression test for every timing and checkbox combination.
+- Remove the obsolete Windows Firewall control-panel shortcut and the
+  redundant standalone port-test step from first-run setup. Windows' own
+  permission prompt remains independent; firewall rules and saved preferences
+  are not changed by removing those wizard controls.
+- Restore the main window's resource-template minimum before applying saved
+  placement, matching the upstream sizing behavior instead of introducing a
+  fixed 1200x800 default. Keep larger saved windows and existing show-state
+  choices; leave wizard/secondary dialogs and the shared layout engine alone.
+  Zero-initialize the default WINDOWPLACEMENT, retaining upstream coordinates.
+- Consolidate first-run setup into six clear pages: ports and automatic router
+  setup share one page, while eD2K/Kad and server-list setup share another.
+  Fresh profiles select automatic router negotiation by default; no operation
+  is committed before Finish, and existing profiles retain their preferences.
+- Add a voluntary HTTPS line-speed test with editable KB/s results. Applying
+  them sets the upload limit to 80% of measured capacity and leaves download
+  unlimited; skipping the test leaves existing speeds unchanged. The client
+  does not upload results to the project or call the provider's result logger.
+- Make Internet eD2K server-list refresh a checked first-run choice, applied
+  only on Finish with eD2K selected. Download and merge `server.met` over HTTPS,
+  preserve existing entries and IP filters, and retain the bundled list as an
+  offline fallback. Safe server connection is unchecked only for fresh profiles.
+- Add a checked first-run choice that downloads `nodes.dat` over HTTPS when Kad
+  is selected, so a clean portable profile can obtain initial Kad contacts
+  without a separate manual step.
+- Correct the wizard's Kad checkbox update when UDP is disabled, so the
+  visible checkbox matches the network setting that will be saved.
+- Added an experimental IPv4 PCP/NAT-PMP mapper to the explicit home-network
+  setup, with bounded background requests, verified replies, lease renewal,
+  conservative UPnP fallback and no silent port changes. NAT-PMP mappings
+  expire instead of issuing deletion requests without ownership proof.
+  Added protocol/negotiation tests; real-router validation remains required.
+- Select the Windows display language automatically when no language has
+  been saved, including supported regional variants. Keep existing choices
+  and use embedded English if a translation is unavailable. Add offline
+  language-selection and saved-profile restart tests.
+- Added experimental first-run home-network setup, committed only on Finish,
+  with private-network/VPN safeguards and router diagnostics. Its 32 current
+  messages are present in all 43 shipped language modules; English and Italian
+  were reviewed directly, while the first translations remain open to
+  native-speaker review.
+- Extended source and binary tests to require every connection-setup message,
+  preserve format placeholders and measure all localized visible texts against
+  the real wizard controls. Shortened one Greek firewall label found by the
+  new overflow check.
+- Verify UPnP mapping destination and enabled state; preserve conflicting or
+  disabled rules and restrict cleanup to identified eMule Next mappings.
+- Validate port ranges, preserve existing wizard choices and recover socket
+  port state after failed binding. Add offline policy and native layout checks.
+- Keep upload and download unlimited when the first-run speed test is skipped
+  and when the legacy connection helper is used. Remove the historical hidden
+  upload estimate that behaved like a cap while the visible upload limit was
+  disabled; slot-opening safeguards remain active.
+- Align the completed-file and temporary-file directory fields and their browse
+  buttons in Preferences > Directories without changing either saved path.
+- Fixed Tools > Useful links > Help and discussions to open the eMule Next
+  GitHub Discussions page instead of the repository home page. Other links,
+  official localized Help and user preferences are unchanged.
+
+## 1.0.0-alpha.1 (released 2026-08-29)
 
 Base: eMule Community 0.72a.
 

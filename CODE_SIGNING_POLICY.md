@@ -1,11 +1,12 @@
 # Code signing policy
 
-Free code signing provided by [SignPath.io](https://signpath.io/), certificate
-by [SignPath Foundation](https://signpath.org/).
+The project applied for free code signing through SignPath Foundation. The
+application was not accepted for Beta 1 because the project did not yet have
+enough public reputation, so no SignPath certificate is used by this release.
 
 This policy applies to Windows release artifacts published by the eMule Next
-project. The public 1.0.0-alpha.1 packages predate this policy and are
-unsigned. A future release is described as signed only after every executable
+project. The public 1.0.0-alpha.1 and 1.0.0-beta.1 packages are unsigned.
+A future release is described as signed only after every executable
 and language DLL in both portable packages has passed the verification below.
 
 ## Team roles

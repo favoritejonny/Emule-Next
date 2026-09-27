@@ -59,6 +59,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "从互联网下载并加载 nodes.dat 以启动 Kad"
+    IDS_WIZSETUP_PROTOCOLS "PCP、NAT-PMP 和 UPnP 会请求兼容路由器仅转发 eMule 的端口。自动模式会选择支持的协议。请仅在您自己的家庭网络且未使用 VPN 时启用。否则可继续手动设置；现有设置将保留。"
+    IDS_WIZSETUP_PORTTEST "路由器自动设置仅在点击“完成”后运行；如果选择了自动设置，请在完成后测试。"
+    IDS_WIZSETUP_NETWORKS "eD2K 使用服务器列表。Kad 无需服务器，但需要 UDP 和初始联系人。可以同时使用两种网络。禁用 UDP 也会禁用 Kad。下一页可选择服务器列表。"
+    IDS_WIZSETUP_SERVERS_ADD "从互联网下载并加载 eD2K 服务器列表"
+    IDS_WIZSETUP_SPEEDTEST_INFO "可选：停止其他传输并断开 VPN，然后开始测试。测试会通过 Cloudflare 传输最多约 100 MB 的临时数据，该服务可以看到您的 IP 地址。eMule Next 不会发送或保存测试结果。应用之前，您可以编辑测得的 KB/s 数值。"
+    IDS_WIZSETUP_SPEEDTEST_INVALID "请输入有效的下载和上传速度（KB/s），或取消应用这些数值。"
+    IDS_WIZSETUP_SERVERS_INFO "选择 eD2K 后，可在点击“完成”时添加以下服务器。现有服务器将保留，不会下载列表或启用自动连接。如需自行管理服务器或仅使用 Kad，请勿勾选。"
+    IDS_WIZSETUP_PORTS "TCP 用于连接和传输；Kad 也需要 UDP。可保留建议端口或自行指定。如果已在路由器中转发端口，请使用相同的端口号。"
     IDS_SOCKETS_INIT_FAILED "Socket初始化失败."
     IDS_ABOUTBOX            "关于eMule(&A) ..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s从%s"
@@ -1080,10 +1089,10 @@ BEGIN
                             "忽略eMule发送链接协议消息"
     IDS_CHECK4UPDATE        "检查新版本"
     IDS_STARTUP             "启动"
-    IDS_NEWVERSIONAVL       "已有新版本的eMule可下载!查看主页上的详细信息."
-    IDS_NEWVERSIONAVLPOPUP  "已有新版本的eMule可下载!单击这里查看相关信息."
+    IDS_NEWVERSIONAVL       "已有新版本的eMule Next可下载!查看主页上的详细信息."
+    IDS_NEWVERSIONAVLPOPUP  "已有新版本的eMule Next可下载!单击这里查看相关信息."
     IDS_NEWVERSIONFAILED    "无法检查新版本."
-    IDS_CB_TBN_ONNEWVERSION "侦测到新版本的eMule!"
+    IDS_CB_TBN_ONNEWVERSION "侦测到新版本的eMule Next!"
     IDS_NONEWERVERSION      "未侦测到更新版本的eMule."
 END
 
@@ -1963,6 +1972,35 @@ BEGIN
     IDS_OPENPREFINI         "打开配置文件(preferences.ini)" //"Open preferences.ini"
 END
 
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "自动连接设置"
+    IDS_CONNSETUP_INFO          "保留建议的 TCP 和 UDP 端口，或输入您自己的端口。完成此向导后，自动设置可以配置兼容的家庭路由器。"
+    IDS_CONNSETUP_BUTTON        "自动配置"
+    IDS_CONNSETUP_CONSENT       "向导完成并稍后启动后，允许 eMule Next 在该私人家庭网络上使用 PCP、NAT-PMP 或 UPnP 转发其 TCP/UDP 端口吗？\n\n仅在您控制的网络上确认，无需 VPN。检测无法识别每个 VPN。仍需要Windows防火墙权限； Web 接口端口被排除。不保证高 ID。临时映射可能会保留到路由器分配的到期为止。\n\n取消向导将不会保存此选择。"
+    IDS_CONNSETUP_PENDING       "已选择：路由器设置将在向导完成后以及稍后启动时运行，仅在符合条件的专用网络上运行。仍然需要 Windows 防火墙权限。高ID和Kad可达性还有待验证。"
+    IDS_CONNSETUP_MANUAL        "未选择新的自动设置。现有设置被保留。您可以使用手动端口转发、检查 Windows 防火墙权限或自行运行外部测试。"
+    IDS_CONNSETUP_PRIVATE       "自动安装已暂停：Windows 报告公共、托管或混合网络。没有请求更改路由器。使用手动设置，或者仅在这是您自己的受信任家庭网络时检查网络配置文件。"
+    IDS_CONNSETUP_VPN           "自动设置已暂停：发现可能的 VPN、代理或显式接口绑定。家庭路由器不会自动配置。使用连接提供商的端口转发设置。"
+    IDS_CONNSETUP_UNKNOWN       "自动设置已暂停：无法安全识别本地网络。没有请求更改路由器。您可以继续并手动配置连接。"
+    IDS_CONNSETUP_SUCCESS       "路由器确认将 TCP %u 和 UDP %u（0 = 禁用）转发到此 PC。\n\n这并不能证明互联网的可达性。检查 Windows 防火墙权限，然后连接并检查 High ID 和 Kad 状态，或手动运行外部端口测试。"
+    IDS_CONNSETUP_FAILED        "自动路由器设置未完成。 PCP、NAT-PMP 或 UPnP 可能不可用或被禁用，或者路由器可能拒绝了请求。检查路由器和Windows防火墙；手动设置仍然可用。"
+    IDS_CONNSETUP_SHARED        "路由器报告非公共互联网地址：可以使用双 NAT 或提供商 CGNAT。仅打开此路由器可能还不够。向提供商询问公共 IP 或支持的端口转发。"
+    IDS_CONNSETUP_CONFLICT      "请求的端口已具有不同或禁用的路由器规则。它没有被覆盖。选择不同的客户端端口，或手动检查该规则。"
+    IDS_CONNSETUP_BADPORT       "输入 1 到 65535 之间的 TCP 端口和 1 到 65535 之间的 UDP 端口，或者显式禁用 UDP。"
+    IDS_CONNSETUP_TESTINFO      "在eMule官方网站上自愿测试。它接收您的 IP 和端口信息。"
+    IDS_CONNSETUP_FIREWALL      "打开 Windows 防火墙..."
+    IDS_CONNSETUP_BINDFAILED    "客户端无法侦听所选端口。它们可能正在被另一个程序使用。之前的端口设置已恢复。"
+    IDS_CONNSETUP_BUSY          "另一个端口设置仍在运行。等待其完成后再重试。"
+    IDS_CONNSETUP_UNSELECT      "撤消自动选择"
+    IDS_PORTMAP_WRONGPORT       "路由器分配了不同的外部端口。它未被接受为有效的客户端映射。客户端端口未更改。使用不同的端口或手动检查路由器。临时映射可能会保留到到期为止。"
+    IDS_PORTMAP_REFUSED         "路由器拒绝自动端口转发。没有使用替代协议来绕过这种拒绝。检查路由器管理员的设置或使用手动设置。"
+    IDS_PORTMAP_NETWORKCHANGED  "端口映射已暂停：网络、网关、客户端端口或外部地址发生更改。以前的映射可能会保留到过期为止。检查连接并再次运行自动设置（如果适用）。"
+    IDS_PORTMAP_SHORTLEASE      "路由器授予的映射生命周期太短，无法可靠更新。自动设置未标记为成功。使用手动设置或检查路由器。"
+    IDS_PORTMAP_PROTOCOL        "协议：%s"
+    IDS_ADD_UNC_SHARE           "添加网络文件夹"
+END
 
 #endif    // Chinese (P.R.C.) resources
 /////////////////////////////////////////////////////////////////////////////

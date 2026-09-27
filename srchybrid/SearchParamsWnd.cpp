@@ -501,7 +501,10 @@ void CSearchParamsWnd::InitMethodsCtrl()
 	VERIFY(m_ctlMethod.AddItem(GetResString(IDS_AUTOMATIC), 0) == SearchTypeAutomatic);
 	VERIFY(m_ctlMethod.AddItem(GetResString(IDS_SERVER), 1) == SearchTypeEd2kServer);
 	VERIFY(m_ctlMethod.AddItem(GetResString(IDS_GLOBALSEARCH), 2) == SearchTypeEd2kGlobal);
-	VERIFY(m_ctlMethod.AddItem(GetResString(IDS_KADEMLIA) + _T(' ') + GetResString(IDS_NETWORK), 3) == SearchTypeKademlia);
+	// "Kad" is the protocol's proper name and remains clear in every language.
+	// Concatenating two independently translated nouns produced unnatural labels
+	// such as "Kad Rete" in Italian.
+	VERIFY(m_ctlMethod.AddItem(GetResString(IDS_KADEMLIA), 3) == SearchTypeKademlia);
 	VERIFY(m_ctlMethod.AddItem(GetResString(IDS_CONTENTDB), 4) == SearchTypeContentDB);
 	UpdateHorzExtent(m_ctlMethod, 16); // adjust dropped width to ensure all strings are fully visible
 	m_ctlMethod.SetCurSel(iMethod != CB_ERR ? iMethod : SearchTypeAutomatic);
@@ -588,7 +591,9 @@ void CSearchParamsWnd::Localize()
 
 	m_ctlStart.SetWindowText(GetResString(IDS_SW_START));
 	m_ctlCancel.SetWindowText(GetResString(IDS_CANCEL));
-	m_ctlMore.SetWindowText(GetResString(IDS_MORE));
+	// This button uses custom drawing, so mnemonic ampersands would otherwise
+	// be rendered as visible characters (for example, "&Altro").
+	m_ctlMore.SetWindowText(GetResNoAmp(IDS_MORE));
 
 	SetWindowText(GetResString(IDS_SEARCHPARAMS));
 

@@ -10,21 +10,21 @@
 
 ## Download
 
-### [Download eMule Next 1.0.0-alpha.1](https://github.com/favoritejonny/Emule-Next/releases/tag/v1.0.0-alpha.1)
+### [Download eMule Next 1.0.0 Beta 1](https://github.com/favoritejonny/Emule-Next/releases/tag/v1.0.0-beta.1)
 
 | Windows package | Recommended for | Direct download |
 | --- | --- | --- |
-| x64 portable | Most modern 64-bit Windows PCs | [Download x64 ZIP](https://github.com/favoritejonny/Emule-Next/releases/download/v1.0.0-alpha.1/eMuleNext-1.0.0-alpha.1-x64-portable.zip) |
-| Win32 portable | 32-bit Windows and older compatible systems | [Download Win32 ZIP](https://github.com/favoritejonny/Emule-Next/releases/download/v1.0.0-alpha.1/eMuleNext-1.0.0-alpha.1-win32-portable.zip) |
-| SHA-256 checksums | Verify either downloaded archive | [Download checksums](https://github.com/favoritejonny/Emule-Next/releases/download/v1.0.0-alpha.1/SHA256SUMS-1.0.0-alpha.1.txt) |
+| x64 portable | Most modern 64-bit Windows PCs | [Download x64 ZIP](https://github.com/favoritejonny/Emule-Next/releases/download/v1.0.0-beta.1/eMuleNext-1.0.0-beta.1-x64-portable.zip) |
+| Win32 portable | 32-bit Windows and older compatible systems | [Download Win32 ZIP](https://github.com/favoritejonny/Emule-Next/releases/download/v1.0.0-beta.1/eMuleNext-1.0.0-beta.1-win32-portable.zip) |
+| SHA-256 checksums | Verify all published assets | [Download checksums](https://github.com/favoritejonny/Emule-Next/releases/download/v1.0.0-beta.1/SHA256SUMS-1.0.0-beta.1-ALL.txt) |
 
-This is an **alpha pre-release** for testing. The portable builds do not require installation: extract the ZIP into a writable folder and run `eMuleNext.exe`.
+This is a **Beta pre-release** for testing. The portable builds do not require installation: extract the ZIP into a writable folder and run `eMuleNext.exe`.
 
 The current executables are not digitally signed, so Microsoft Defender SmartScreen may display a warning on first launch. Verify that the ZIP came from this repository and compare its SHA-256 checksum before continuing. See [WINDOWS-SMARTSCREEN.md](WINDOWS-SMARTSCREEN.md) for the safe procedure.
 
 ## Code signing policy
 
-Free code signing provided by [SignPath.io](https://signpath.io/), certificate by [SignPath Foundation](https://signpath.org/). The public alpha remains unsigned; a future package will be described as signed only after every executable and language DLL has passed Authenticode and timestamp verification. See [CODE_SIGNING_POLICY.md](CODE_SIGNING_POLICY.md) for the controlled build, approval, privacy and verification process.
+Beta 1 is unsigned because the project has not yet qualified for a public code-signing certificate. A future package will be described as signed only after every executable and language DLL has passed Authenticode and timestamp verification. See [CODE_SIGNING_POLICY.md](CODE_SIGNING_POLICY.md) for the controlled build, approval, privacy and verification process.
 
 ## Highlights
 
@@ -57,7 +57,7 @@ Free code signing provided by [SignPath.io](https://signpath.io/), certificate b
 
 ## Project status
 
-Both portable packages in `1.0.0-alpha.1` passed the current clean-start and manual stability tests. This remains an early public build: back up important configuration, report reproducible problems through [GitHub Issues](https://github.com/favoritejonny/Emule-Next/issues), and do not treat it as a finished stable release.
+Both portable packages in `1.0.0-beta.1` passed clean-start, automated regression and manual stability tests. This remains a pre-release: back up important configuration, report reproducible problems through [GitHub Issues](https://github.com/favoritejonny/Emule-Next/issues), and do not treat it as a finished stable release.
 
 The project is maintained by Jonny Favorite. It is not an official eMule Project release and is not affiliated with, endorsed by, or sponsored by the original eMule Project.
 
@@ -75,7 +75,7 @@ The Visual Studio solution is [srchybrid/emule.sln](srchybrid/emule.sln). Releas
 
 GitHub Actions rebuilds and checks both architectures on pushes and pull requests. The final executables are inspected for the required Windows security protections, then tested in a clean portable profile. Verified packages include a file manifest, an SPDX 2.3 SBOM and SHA-256 checksums. See [docs/SECURITY-AND-CI.md](docs/SECURITY-AND-CI.md).
 
-The focused post-alpha plan is limited to a cache for large shared collections and optional VPN-interface protection. IPv6 is reserved for a later compatibility release and QUIC remains experimental. See [docs/TECHNICAL_ROADMAP.md](docs/TECHNICAL_ROADMAP.md).
+Future development plans are kept privately until a feature is ready for public review. Published work remains documented in [CHANGES.md](CHANGES.md) and in each release.
 
 Binary releases must be accompanied by the complete corresponding source code and all notices required by the included third-party components. Maintainers should complete [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) before publishing a new version.
 

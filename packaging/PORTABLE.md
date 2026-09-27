@@ -14,8 +14,8 @@ handler, or add itself to Windows startup.
 
 Package each platform separately:
 
-- `eMuleNext-1.0.0-alpha.1-win32-portable.zip`
-- `eMuleNext-1.0.0-alpha.1-x64-portable.zip`
+- `eMuleNext-1.0.0-beta.1-win32-portable.zip`
+- `eMuleNext-1.0.0-beta.1-x64-portable.zip`
 
 ARM64 is intentionally deferred: its preparation remains in the source tree,
 but it is not part of the first portable release.

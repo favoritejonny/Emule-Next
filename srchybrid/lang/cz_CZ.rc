@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Stáhnout a načíst nodes.dat z internetu pro spuštění Kad"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP a UPnP požádají kompatibilní router o otevření pouze portů eMule. Automatický režim vybere podporovaný protokol. Použijte jej jen ve vlastní domácí síti bez VPN. Jinak pokračujte ručně; stávající nastavení zůstane zachováno."
+    IDS_WIZSETUP_PORTTEST "Automatické nastavení routeru začne až po Dokončit; test proveďte potom."
+    IDS_WIZSETUP_NETWORKS "eD2K používá seznam serverů. Kad funguje bez serverů, ale potřebuje UDP a počáteční kontakty. Můžete používat obě sítě. Vypnutí UDP vypne i Kad. Seznam serverů vyberete na další stránce."
+    IDS_WIZSETUP_SERVERS_ADD "Stáhnout a načíst seznam serverů eD2K z Internetu"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Volitelné: zastavte ostatní přenosy a odpojte VPN, potom spusťte test. Přes Cloudflare odešle až přibližně 100 MB dočasných dat; služba může vidět vaši IP adresu. eMule Next výsledek neodesílá ani neukládá. Naměřené hodnoty v KB/s můžete před použitím upravit."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Zadejte platné rychlosti stahování a odesílání v KB/s nebo zrušte použití hodnot."
+    IDS_WIZSETUP_SERVERS_INFO "Je-li vybráno eD2K, můžete tyto servery přidat tlačítkem Dokončit. Stávající servery zůstanou zachovány. Žádný seznam se nestahuje ani se nezapíná automatické připojení. Nechte nezaškrtnuté pro vlastní správu serverů nebo pouze Kad."
+    IDS_WIZSETUP_PORTS "TCP slouží pro spojení a přenosy; UDP je potřeba také pro Kad. Ponechte navržené porty nebo zvolte vlastní. Pokud je již router přesměrovává, použijte stejná čísla."
     IDS_SOCKETS_INIT_FAILED "Chyba při zavedení soketů windows."
     IDS_ABOUTBOX            "&O eMule..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s z %s"
@@ -979,14 +988,14 @@ BEGIN
                             "Ignorovat zprávy protokolu o zasílání odkazů eMule"
     IDS_CHECK4UPDATE        "Zjisti novou verzi"
     IDS_STARTUP             "Po spuštění"
-    IDS_NEWVERSIONAVL       "Nová verze eMule je k dispozici! Pro více informací se podívejte na domovskou stránku eMule projektu."
-    IDS_NEWVERSIONAVLPOPUP  "Nová verze eMule je k dispozici. Pro další informace o nové verzi klikněte zde!"
+    IDS_NEWVERSIONAVL       "Nová verze eMule Next je k dispozici! Pro více informací se podívejte na domovskou stránku eMule Next projektu."
+    IDS_NEWVERSIONAVLPOPUP  "Nová verze eMule Next je k dispozici. Pro další informace o nové verzi klikněte zde!"
     IDS_NEWVERSIONFAILED    "Nelze zjistit novou verzi."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "Nová verze eMule zjištěna"
+    IDS_CB_TBN_ONNEWVERSION "Nová verze eMule Next zjištěna"
     IDS_NONEWERVERSION      "Žádná nová verze eMule nezjištěna."
     IDS_VERSIONCHECK        "&Zjištění verze"
     IDS_VISITVERSIONCHECK   "\n\nChcete nyní navštívit informační stránku?"
@@ -1986,6 +1995,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Povolit efekty hlavního panelu ve Windows 7"
     IDS_LANMODE             "LAN mód"
     IDS_OPENPREFINI         "Otevřít preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Automatické nastavení připojení"
+    IDS_CONNSETUP_INFO          "Ponechte navrhované porty TCP a UDP, nebo zadejte své vlastní. Automatické nastavení může po dokončení tohoto průvodce nakonfigurovat kompatibilní domácí router."
+    IDS_CONNSETUP_BUTTON        "Konfigurovat automaticky"
+    IDS_CONNSETUP_CONSENT       "Povolit eMule Next předávat své porty TCP/UDP pomocí PCP, NAT-PMP nebo UPnP v této soukromé domácí síti po dokončení průvodce a při pozdějším spuštění?\n\nPotvrďte pouze v síti, kterou ovládáte, bez VPN. Detekce nemůže rozpoznat každou VPN. Povolení brány firewall systému Windows je stále vyžadováno; port webového rozhraní je vyloučen. Vysoké ID není zaručeno. Dočasná mapování mohou zůstat, dokud nevyprší platnost jejich routeru.\n\nZrušením průvodce se tato volba neuloží."
+    IDS_CONNSETUP_PENDING       "Vybráno: Nastavení routeru se spustí po dokončení průvodce a při pozdějším spuštění pouze ve vhodných privátních sítích. Povolení brány firewall systému Windows je stále vyžadováno. Vysoké ID a dosažitelnost Kad zbývá ověřit."
+    IDS_CONNSETUP_MANUAL        "Nebylo vybráno žádné nové automatické nastavení. Stávající nastavení jsou zachována. Můžete použít ruční přesměrování portů, zkontrolovat oprávnění brány firewall Windows nebo sami spustit externí test."
+    IDS_CONNSETUP_PRIVATE       "Automatické nastavení pozastaveno: Windows hlásí veřejnou, spravovanou nebo smíšenou síť. Nebyly požadovány žádné změny routeru. Použijte ruční nastavení nebo zkontrolujte síťový profil, pouze pokud se jedná o vaši vlastní důvěryhodnou domácí síť."
+    IDS_CONNSETUP_VPN           "Automatické nastavení pozastaveno: byla nalezena možná VPN, proxy nebo explicitní vazba rozhraní. Domácí router není nakonfigurován automaticky. Použijte nastavení přesměrování portů poskytovatele připojení."
+    IDS_CONNSETUP_UNKNOWN       "Automatické nastavení pozastaveno: místní síť nelze bezpečně identifikovat. Nebyly požadovány žádné změny routeru. Můžete pokračovat a nakonfigurovat připojení ručně."
+    IDS_CONNSETUP_SUCCESS       "Router potvrdí předání TCP %u a UDP %u (0 = zakázáno) do tohoto počítače.\n\nTo nedokazuje dostupnost internetu. Zkontrolujte oprávnění brány firewall systému Windows, poté se připojte a zkontrolujte stav High ID a Kad nebo spusťte test externího portu ručně."
+    IDS_CONNSETUP_FAILED        "Automatické nastavení routeru nebylo dokončeno. PCP, NAT-PMP nebo UPnP mohou být nedostupné nebo deaktivované nebo router mohl požadavek odmítnout. Zkontrolujte router a Windows firewall; ruční nastavení zůstává k dispozici."
+    IDS_CONNSETUP_SHARED        "Router hlásí neveřejnou internetovou adresu: je možný dvojitý NAT nebo poskytovatel CGNAT. Samotné otevření tohoto routeru nemusí stačit. Zeptejte se poskytovatele na veřejnou IP nebo podporované přesměrování portů."
+    IDS_CONNSETUP_CONFLICT      "Požadovaný port již má jiné nebo deaktivované pravidlo směrovače. Nebylo přepsáno. Vyberte jiné klientské porty nebo toto pravidlo zkontrolujte ručně."
+    IDS_CONNSETUP_BADPORT       "Zadejte port TCP od 1 do 65535 a port UDP od 1 do 65535 nebo explicitně zakažte UDP."
+    IDS_CONNSETUP_TESTINFO      "Dobrovolný test na oficiálních stránkách eMule. Přijímá informace o vaší IP a portu."
+    IDS_CONNSETUP_FIREWALL      "Otevřít bránu Windows Firewall..."
+    IDS_CONNSETUP_BINDFAILED    "Klient nemohl poslouchat na vybraných portech. Mohou být používány jiným programem. Předchozí nastavení portu byla obnovena."
+    IDS_CONNSETUP_BUSY          "Další nastavení portu stále běží. Před dalším pokusem počkejte na dokončení."
+    IDS_CONNSETUP_UNSELECT      "Vrátit zpět automatickou volbu"
+    IDS_PORTMAP_WRONGPORT       "Router přidělil jiný externí port. Nebylo přijato jako funkční mapování klienta. Klientské porty nebyly změněny. Použijte jiné porty nebo zkontrolujte router ručně. Dočasná mapování mohou zůstat až do vypršení platnosti."
+    IDS_PORTMAP_REFUSED         "Router odmítl automatické přesměrování portů. K obejití tohoto odmítnutí nebyl použit žádný alternativní protokol. Zkontrolujte nastavení správce routeru nebo použijte ruční nastavení."
+    IDS_PORTMAP_NETWORKCHANGED  "Mapování portů pozastaveno: změnila se síť, brána, klientské porty nebo externí adresa. Předchozí mapování mohou zůstat až do vypršení platnosti. Zkontrolujte připojení a v případě potřeby spusťte znovu automatické nastavení."
+    IDS_PORTMAP_SHORTLEASE      "Router poskytl příliš krátkou životnost mapování pro spolehlivou obnovu. Automatické nastavení nebylo označeno jako úspěšné. Použijte ruční nastavení nebo zkontrolujte router."
+    IDS_PORTMAP_PROTOCOL        "Protokol: %s"
+    IDS_ADD_UNC_SHARE           "Přidat síťovou složku"
 END
 
 #endif    // Czech resources

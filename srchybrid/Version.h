@@ -41,11 +41,17 @@
 #define EMULE_NEXT_VERSION_MJR		1
 #define EMULE_NEXT_VERSION_MIN		0
 #define EMULE_NEXT_VERSION_PATCH	0
-#define EMULE_NEXT_VERSION_BUILD	1
-#define EMULE_NEXT_VERSION_STRING	_T("1.0.0-alpha.1")
+#define EMULE_NEXT_VERSION_BUILD	2
+#define EMULE_NEXT_VERSION_STRING	_T("1.0.0-beta.1")
+#define EMULE_NEXT_PRERELEASE		1
 #define EMULE_NEXT_PRODUCT_NAME		_T("eMule Next")
 #define EMULE_NEXT_PRODUCT_DISPLAY_NAME EMULE_NEXT_PRODUCT_NAME _T(" ") EMULE_NEXT_VERSION_STRING
 #define EMULE_NEXT_PROJECT_URL		_T("https://github.com/favoritejonny/Emule-Next")
+#define EMULE_NEXT_WEBSITE_URL		_T("https://favoritejonny.github.io/Emule-Next/")
+#define EMULE_NEXT_DOWNLOADS_URL	EMULE_NEXT_PROJECT_URL _T("/releases")
+#define EMULE_NEXT_ISSUES_URL		EMULE_NEXT_PROJECT_URL _T("/issues")
+#define EMULE_NEXT_DISCUSSIONS_URL	EMULE_NEXT_PROJECT_URL _T("/discussions")
+#define EMULE_NEXT_SOURCEFORGE_URL	_T("https://sourceforge.net/projects/emule-next/")
 #define EMULE_NEXT_DEFAULT_ALIAS	EMULE_NEXT_PROJECT_URL
 #define EMULE_NEXT_LEGACY_DEFAULT_ALIAS _T("eMule-Next")
 #define EMULE_NEXT_HELP_TOPIC_URL_FORMAT _T("https://www.emule-project.com/home/perl/help.cgi?l=%u&rm=show_topic&topic_id=1267")

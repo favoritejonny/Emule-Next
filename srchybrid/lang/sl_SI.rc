@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Prenesi in naloži nodes.dat iz interneta za zagon Kad"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP in UPnP prosijo združljiv usmerjevalnik, da odpre samo vrata eMule. Samodejni način izbere podprt protokol. Uporabite ga le v lastnem domačem omrežju brez VPN. Sicer nadaljujte ročno; obstoječe nastavitve se ohranijo."
+    IDS_WIZSETUP_PORTTEST "Samodejna nastavitev usmerjevalnika se začne šele po Dokončaj; preizkus opravite zatem."
+    IDS_WIZSETUP_NETWORKS "eD2K uporablja seznam strežnikov. Kad deluje brez strežnikov, vendar potrebuje UDP in začetne stike. Uporabite lahko obe omrežji. Izklop UDP izklopi tudi Kad. Seznam strežnikov izberete na naslednji strani."
+    IDS_WIZSETUP_SERVERS_ADD "Prenesi in naloži seznam strežnikov eD2K iz interneta"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Izbirno: ustavite druge prenose in prekinite povezavo VPN, nato zaženite preizkus. Preko storitve Cloudflare prenese do približno 100 MB začasnih podatkov; storitev lahko vidi vaš naslov IP. eMule Next rezultata ne pošilja in ne shranjuje. Izmerjene vrednosti v KB/s lahko pred uporabo uredite."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Vnesite veljavne hitrosti prenosa in oddajanja v KB/s ali počistite možnost uporabe vrednosti."
+    IDS_WIZSETUP_SERVERS_INFO "Če je izbran eD2K, lahko te strežnike dodate z Dokončaj. Obstoječi strežniki se ohranijo. Seznam se ne prenese in samodejna povezava se ne vključi. Pustite neoznačeno za lastno upravljanje strežnikov ali samo Kad."
+    IDS_WIZSETUP_PORTS "TCP služi povezavam in prenosom; UDP je potreben tudi za Kad. Ohranite predlagana vrata ali izberite svoja. Če usmerjevalnik že posreduje vrata, uporabite iste številke."
     IDS_SOCKETS_INIT_FAILED "Napaka pri inicializaciji Windows vtičnic."
     IDS_ABOUTBOX            "&Vizitka..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s od %s"
@@ -932,14 +941,14 @@ BEGIN
     IDS_WEBSVEDIT           "Uredi spletne storitve"
     IDS_CHECK4UPDATE        "Preveri za novo različico"
     IDS_STARTUP             "Zagon"
-    IDS_NEWVERSIONAVL       "Na voljo je nova različica eMule! Obiščite našo spletno stran za več informacij."
-    IDS_NEWVERSIONAVLPOPUP  "Na voljo je nova različica eMule. Pritisnite tukaj za več informacij!"
+    IDS_NEWVERSIONAVL       "Na voljo je nova različica eMule Next! Obiščite našo spletno stran za več informacij."
+    IDS_NEWVERSIONAVLPOPUP  "Na voljo je nova različica eMule Next. Pritisnite tukaj za več informacij!"
     IDS_NEWVERSIONFAILED    "Pregled za novo različico ni uspel."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "Na voljo je nova različica eMule"
+    IDS_CB_TBN_ONNEWVERSION "Na voljo je nova različica eMule Next"
     IDS_NONEWERVERSION      "Nove različice ni na voljo."
     IDS_VERSIONCHECK        "Pre&verjanje za novo različico"
     IDS_VISITVERSIONCHECK   "\n\nAli žlite obiskati informacijsko stran?"
@@ -1985,6 +1994,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Vklopi efekte orodne vrstice v Windows 7"
     IDS_LANMODE             "LAN Mode"
     IDS_OPENPREFINI         "Open preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Samodejna nastavitev povezave"
+    IDS_CONNSETUP_INFO          "Ohranite predlagana vrata TCP in UDP ali vnesite svoja. Samodejna nastavitev lahko konfigurira združljiv domači usmerjevalnik, ko končate s tem čarovnikom."
+    IDS_CONNSETUP_BUTTON        "Konfiguriraj samodejno"
+    IDS_CONNSETUP_CONSENT       "Dovoliti eMule Next, da posreduje svoja vrata TCP/UDP z uporabo PCP, NAT-PMP ali UPnP v tem zasebnem domačem omrežju, ko se čarovnik konča in ob poznejših zagonih?\n\nPotrdite samo v omrežju, ki ga nadzirate, brez VPN-ja. Zaznavanje ne more prepoznati vsakega VPN-ja. Še vedno je potrebno dovoljenje požarnega zidu Windows; vrata spletnega vmesnika so izključena. Visok ID ni zagotovljen. Začasne preslikave lahko ostanejo, dokler jim ne poteče veljavnost, ki jo dodeli usmerjevalnik.\n\nPreklic čarovnika ne bo shranil te izbire."
+    IDS_CONNSETUP_PENDING       "Izbrano: nastavitev usmerjevalnika se bo zagnala, ko se čarovnik konča in ob poznejših zagonih, samo v ustreznih zasebnih omrežjih. Še vedno je potrebno dovoljenje požarnega zidu Windows. Še vedno je treba preveriti visoko ID in dosegljivost Kad."
+    IDS_CONNSETUP_MANUAL        "Izbrana ni nobena nova samodejna nastavitev. Obstoječe nastavitve se ohranijo. Uporabite lahko ročno posredovanje vrat, preverite dovoljenja požarnega zidu Windows ali sami zaženete zunanji preizkus."
+    IDS_CONNSETUP_PRIVATE       "Samodejna nastavitev je zaustavljena: Windows poroča o javnem, upravljanem ali mešanem omrežju. Zahtevana ni bila nobena sprememba usmerjevalnika. Uporabite ročno nastavitev ali preverite omrežni profil samo, če je to vaše zaupanja vredno domače omrežje."
+    IDS_CONNSETUP_VPN           "Samodejna nastavitev je zaustavljena: najdena je bila možna povezava VPN, posrednika ali izrecnega vmesnika. Domači usmerjevalnik ni samodejno konfiguriran. Uporabite nastavitve posredovanja vrat ponudnika povezave."
+    IDS_CONNSETUP_UNKNOWN       "Samodejna nastavitev je zaustavljena: lokalnega omrežja ni bilo mogoče varno prepoznati. Zahtevana ni bila nobena sprememba usmerjevalnika. Lahko nadaljujete in ročno konfigurirate povezavo."
+    IDS_CONNSETUP_SUCCESS       "Usmerjevalnik potrdi posredovanje TCP %u in UDP %u (0 = onemogočeno) v ta računalnik.\n\nTo ne dokazuje dostopnosti interneta. Preverite dovoljenje požarnega zidu Windows, nato se povežite in preverite High ID in stanje Kad ali ročno zaženite preizkus zunanjih vrat."
+    IDS_CONNSETUP_FAILED        "Samodejna nastavitev usmerjevalnika ni dokončana. PCP, NAT-PMP ali UPnP morda niso na voljo ali onemogočeni ali pa je usmerjevalnik zahtevo zavrnil. Preverite usmerjevalnik in požarni zid Windows; ročna nastavitev ostaja na voljo."
+    IDS_CONNSETUP_SHARED        "Usmerjevalnik poroča o nejavnem internetnem naslovu: možen je dvojni NAT ali ponudnik CGNAT. Samo odpiranje tega usmerjevalnika morda ne bo dovolj. Vprašajte ponudnika o javnem IP-ju ali podprtem posredovanju vrat."
+    IDS_CONNSETUP_CONFLICT      "Zahtevana vrata že imajo drugačno ali onemogočeno pravilo usmerjevalnika. Ni bilo prepisano. Izberite drugačna vrata odjemalca ali to pravilo preglejte ročno."
+    IDS_CONNSETUP_BADPORT       "Vnesite vrata TCP od 1 do 65535 in vrata UDP od 1 do 65535 ali izrecno onemogočite UDP."
+    IDS_CONNSETUP_TESTINFO      "Prostovoljni test na uradni spletni strani eMule. Prejme vaš IP in podatke o vratih."
+    IDS_CONNSETUP_FIREWALL      "Odpri požarni zid Windows ..."
+    IDS_CONNSETUP_BINDFAILED    "Odjemalec ni mogel poslušati na izbranih vratih. Morda jih uporablja drug program. Prejšnje nastavitve vrat so bile obnovljene."
+    IDS_CONNSETUP_BUSY          "Druga nastavitev vrat še vedno poteka. Počakajte, da se konča, preden poskusite znova."
+    IDS_CONNSETUP_UNSELECT      "Razveljavi samodejno izbiro"
+    IDS_PORTMAP_WRONGPORT       "Usmerjevalnik je dodelil druga zunanja vrata. Ni bil sprejet kot delujoča preslikava odjemalca. Vrata odjemalca niso bila spremenjena. Uporabite druga vrata ali ročno preverite usmerjevalnik. Začasne preslikave lahko ostanejo do izteka."
+    IDS_PORTMAP_REFUSED         "Usmerjevalnik je zavrnil samodejno posredovanje vrat. Za obhod te zavrnitve ni bil uporabljen noben alternativni protokol. Preverite nastavitve skrbnika usmerjevalnika ali uporabite ročno nastavitev."
+    IDS_PORTMAP_NETWORKCHANGED  "Preslikava vrat je zaustavljena: omrežje, prehod, vrata odjemalca ali zunanji naslov so spremenjeni. Prejšnje preslikave lahko ostanejo do izteka. Preverite povezavo in po potrebi znova zaženite samodejno nastavitev."
+    IDS_PORTMAP_SHORTLEASE      "Usmerjevalnik je odobril prekratko življenjsko dobo preslikave za zanesljivo obnovo. Samodejna nastavitev ni bila označena kot uspešna. Uporabite ročno nastavitev ali preverite usmerjevalnik."
+    IDS_PORTMAP_PROTOCOL        "Protokol: %s"
+    IDS_ADD_UNC_SHARE           "Dodaj omrežno mapo"
 END
 
 #endif    // Slovenian resources

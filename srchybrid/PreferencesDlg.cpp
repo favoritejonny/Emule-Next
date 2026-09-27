@@ -393,6 +393,10 @@ void CPreferencesDlg::LocalizeItemText(int i, UINT strid)
 void CPreferencesDlg::Localize()
 {
 	SetTitle(GetResNoAmp(IDS_EM_PREFS));
+	SetDlgItemText(IDOK, GetResString(IDS_TREEOPTIONS_OK));
+	SetDlgItemText(IDCANCEL, GetResString(IDS_CANCEL));
+	SetDlgItemText(ID_APPLY_NOW, GetResString(IDS_PW_APPLY));
+	SetDlgItemText(ID_HELP, GetResString(IDS_EM_HELP));
 
 	m_wndGeneral.Localize();
 	m_wndDisplay.Localize();

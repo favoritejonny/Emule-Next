@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Pobierz i wczytaj nodes.dat z Internetu, aby uruchomić Kad"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP i UPnP proszą zgodny router o otwarcie tylko portów eMule. Tryb automatyczny wybiera obsługiwany protokół. Używaj go tylko we własnej sieci domowej bez VPN. W przeciwnym razie przejdź do ustawień ręcznych; obecne ustawienia pozostaną bez zmian."
+    IDS_WIZSETUP_PORTTEST "Automatyczna konfiguracja routera ruszy dopiero po Zakończ; test wykonaj później."
+    IDS_WIZSETUP_NETWORKS "eD2K korzysta z listy serwerów. Kad działa bez serwerów, ale wymaga UDP i kontaktów początkowych. Możesz używać obu sieci. Wyłączenie UDP wyłącza też Kad. Listę serwerów wybierzesz na następnej stronie."
+    IDS_WIZSETUP_SERVERS_ADD "Pobierz i wczytaj listę serwerów eD2K z Internetu"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Opcjonalnie: zatrzymaj inne transfery i rozłącz VPN, a następnie uruchom test. Przesyła on do około 100 MB danych tymczasowych przez Cloudflare, który może zobaczyć Twój adres IP. eMule Next nie wysyła ani nie zapisuje wyniku. Przed zastosowaniem możesz zmienić zmierzone wartości w KB/s."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Podaj prawidłowe prędkości pobierania i wysyłania w KB/s albo wyłącz zastosowanie wartości."
+    IDS_WIZSETUP_SERVERS_INFO "Po wybraniu eD2K możesz dodać te serwery przyciskiem Zakończ. Obecne serwery zostaną zachowane. Lista nie jest pobierana, a automatyczne łączenie nie zostanie włączone. Nie zaznaczaj, aby samodzielnie zarządzać serwerami lub używać tylko Kad."
+    IDS_WIZSETUP_PORTS "TCP służy do połączeń i przesyłania; UDP jest też potrzebny dla Kad. Zachowaj proponowane porty lub wybierz własne. Jeśli porty są już przekierowane w routerze, użyj tych samych numerów."
     IDS_SOCKETS_INIT_FAILED "Błąd inicjalizacji gniazd Windows."
     IDS_ABOUTBOX            "&O eMule..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s od %s"
@@ -1083,10 +1092,10 @@ BEGIN
                             "Ignoruj wiadmomości protokołu eMule (wysyłanie linków)"
     IDS_CHECK4UPDATE        "Sprawdź czy jest nowa wersja"
     IDS_STARTUP             "Uruchamianie"
-    IDS_NEWVERSIONAVL       "Nowe werjsa eMule jest dostępna! Szczególy na stronie domowej projektu."
-    IDS_NEWVERSIONAVLPOPUP  "Nowe werjsa eMule jest dostępna! Kliknij tutaj po wiecej informacji!"
+    IDS_NEWVERSIONAVL       "Nowe werjsa eMule Next jest dostępna! Szczególy na stronie domowej projektu."
+    IDS_NEWVERSIONAVLPOPUP  "Nowe werjsa eMule Next jest dostępna! Kliknij tutaj po wiecej informacji!"
     IDS_NEWVERSIONFAILED    "Sprawdzenie nowej wersji nie powiodło się."
-    IDS_CB_TBN_ONNEWVERSION "Wykryto nową werjse eMule"
+    IDS_CB_TBN_ONNEWVERSION "Wykryto nową werjse eMule Next"
     IDS_NONEWERVERSION      "Nie znaleziono nowej wersji eMula'a."
 END
 
@@ -1961,6 +1970,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Włącz efekty pasku zadań Windows 7"
     IDS_LANMODE             "Tryb LAN"
     IDS_OPENPREFINI         "Otwórz preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Automatyczna konfiguracja połączenia"
+    IDS_CONNSETUP_INFO          "Zachowaj proponowane porty TCP i UDP lub wprowadź własne. Po zakończeniu pracy kreatora konfiguracja automatyczna umożliwia skonfigurowanie kompatybilnego routera domowego."
+    IDS_CONNSETUP_BUTTON        "Skonfiguruj automatycznie"
+    IDS_CONNSETUP_CONSENT       "Zezwolić eMule Next na przekazywanie swoich portów TCP/UDP przy użyciu PCP, NAT-PMP lub UPnP w tej prywatnej sieci domowej po zakończeniu działania kreatora i ponownym uruchomieniu go później?\n\nPotwierdź tylko w sieci, którą kontrolujesz, bez VPN. Wykrywanie nie może rozpoznać każdej sieci VPN. Nadal potrzebne są uprawnienia zapory systemu Windows; port interfejsu sieciowego jest wykluczony. Wysoki identyfikator nie jest gwarantowany. Mapowania tymczasowe mogą pozostać do czasu wygaśnięcia przypisanego do routera.\n\nAnulowanie kreatora nie zapisze tego wyboru."
+    IDS_CONNSETUP_PENDING       "Wybrano: konfiguracja routera zostanie uruchomiona po zakończeniu pracy kreatora i ponownym uruchomieniu, tylko w kwalifikujących się sieciach prywatnych. Nadal wymagane jest zezwolenie na zaporę systemu Windows. Dostępność High ID i Kad pozostaje do sprawdzenia."
+    IDS_CONNSETUP_MANUAL        "Nie wybrano nowej automatycznej konfiguracji. Istniejące ustawienia zostaną zachowane. Możesz użyć ręcznego przekierowania portów, sprawdzić uprawnienia zapory Windows lub samodzielnie przeprowadzić test zewnętrzny."
+    IDS_CONNSETUP_PRIVATE       "Automatyczna konfiguracja wstrzymana: Windows zgłasza sieć publiczną, zarządzaną lub mieszaną. Nie żądano żadnych zmian w routerze. Użyj konfiguracji ręcznej lub sprawdź profil sieciowy tylko wtedy, gdy jest to Twoja zaufana sieć domowa."
+    IDS_CONNSETUP_VPN           "Automatyczna konfiguracja wstrzymana: znaleziono możliwe VPN, proxy lub jawne powiązanie interfejsu. Router domowy nie jest konfigurowany automatycznie. Użyj ustawień przekierowania portów dostawcy połączenia."
+    IDS_CONNSETUP_UNKNOWN       "Automatyczna konfiguracja wstrzymana: nie można bezpiecznie zidentyfikować sieci lokalnej. Nie żądano żadnych zmian w routerze. Możesz kontynuować i skonfigurować połączenie ręcznie."
+    IDS_CONNSETUP_SUCCESS       "Router potwierdza przekazywanie TCP %u i UDP %u (0 = wyłączone) do tego komputera.\n\nNie świadczy to o dostępności Internetu. Sprawdź uprawnienia zapory systemu Windows, a następnie podłącz i sprawdź status High ID i Kad lub ręcznie uruchom test portu zewnętrznego."
+    IDS_CONNSETUP_FAILED        "Automatyczna konfiguracja routera nie została ukończona. PCP, NAT-PMP lub UPnP mogą być niedostępne lub wyłączone albo router mógł odrzucić żądanie. Sprawdź router i zaporę sieciową Windows; konfiguracja ręczna pozostaje dostępna."
+    IDS_CONNSETUP_SHARED        "Router zgłasza niepubliczny adres internetowy: możliwy jest podwójny NAT lub dostawca CGNAT. Samo otwarcie tego routera może nie wystarczyć. Zapytaj dostawcę o publiczny adres IP lub obsługiwane przekierowanie portów."
+    IDS_CONNSETUP_CONFLICT      "Żądany port ma już inną lub wyłączoną regułę routera. Nie zostało nadpisane. Wybierz inne porty klienta lub sprawdź tę regułę ręcznie."
+    IDS_CONNSETUP_BADPORT       "Wprowadź port TCP od 1 do 65535 i port UDP od 1 do 65535 lub jawnie wyłącz UDP."
+    IDS_CONNSETUP_TESTINFO      "Dobrowolny test na oficjalnej stronie eMule. Otrzymuje informacje o Twoim adresie IP i porcie."
+    IDS_CONNSETUP_FIREWALL      "Otwórz Zaporę systemu Windows..."
+    IDS_CONNSETUP_BINDFAILED    "Klient nie mógł nasłuchiwać na wybranych portach. Mogą być używane przez inny program. Przywrócono poprzednie ustawienia portu."
+    IDS_CONNSETUP_BUSY          "Konfiguracja innego portu nadal trwa. Poczekaj, aż zakończy się, zanim spróbujesz ponownie."
+    IDS_CONNSETUP_UNSELECT      "Cofnij automatyczny wybór"
+    IDS_PORTMAP_WRONGPORT       "Router przypisał inny port zewnętrzny. Nie zostało zaakceptowane jako działające mapowanie klienta. Porty klienta nie zostały zmienione. Użyj innych portów lub sprawdź router ręcznie. Mapowania tymczasowe mogą pozostać do czasu wygaśnięcia."
+    IDS_PORTMAP_REFUSED         "Router odmówił automatycznego przekierowania portów. Aby ominąć tę odmowę, nie zastosowano żadnego alternatywnego protokołu. Sprawdź ustawienia administratora routera lub użyj konfiguracji ręcznej."
+    IDS_PORTMAP_NETWORKCHANGED  "Mapowanie portów wstrzymane: zmieniono sieć, bramę, porty klienta lub adres zewnętrzny. Poprzednie mapowania mogą pozostać do momentu wygaśnięcia. Sprawdź połączenie i w razie potrzeby ponownie przeprowadź konfigurację automatyczną."
+    IDS_PORTMAP_SHORTLEASE      "Router przyznał okres ważności mapowania zbyt krótki, aby zapewnić niezawodne odnowienie. Konfiguracja automatyczna nie została oznaczona jako pomyślna. Użyj konfiguracji ręcznej lub sprawdź router."
+    IDS_PORTMAP_PROTOCOL        "Protokół: %s"
+    IDS_ADD_UNC_SHARE           "Dodaj folder sieciowy"
 END
 
 #endif    // Polish resources

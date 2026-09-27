@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Baixar e carregar nodes.dat da Internet para iniciar a Kad"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP e UPnP pedem a um roteador compatível para abrir somente as portas do eMule. O modo automático escolhe um protocolo compatível. Use-o apenas na sua rede doméstica, sem VPN. Caso contrário, prossiga manualmente; as configurações existentes serão mantidas."
+    IDS_WIZSETUP_PORTTEST "A configuração automática do roteador só começa após Concluir; faça o teste depois."
+    IDS_WIZSETUP_NETWORKS "eD2K usa uma lista de servidores. Kad funciona sem servidores, mas precisa de UDP e contatos iniciais. Você pode usar ambas as redes. Desativar UDP também desativa Kad. A lista de servidores é escolhida na próxima página."
+    IDS_WIZSETUP_SERVERS_ADD "Baixar e carregar uma lista de servidores eD2K da Internet"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Opcional: interrompa outras transferências e desconecte qualquer VPN antes de iniciar o teste. Ele transfere até cerca de 100 MB de dados temporários pela Cloudflare, que pode ver seu endereço IP. O eMule Next não envia nem armazena o resultado. Você pode editar os valores medidos em KB/s antes de aplicá-los."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Informe velocidades válidas de download e upload em KB/s ou desmarque a aplicação dos valores."
+    IDS_WIZSETUP_SERVERS_INFO "Com eD2K selecionado, você pode adicionar estes servidores ao concluir. Os existentes são mantidos. Nenhuma lista é baixada nem a conexão automática é ativada. Deixe desmarcado para gerenciar os servidores ou usar somente Kad."
+    IDS_WIZSETUP_PORTS "TCP serve para conexões e transferências; UDP também é necessário para Kad. Mantenha as portas propostas ou escolha as suas. Se já encaminhou portas no roteador, use esses números."
     IDS_SOCKETS_INIT_FAILED "Erro inicializando Windows Sockets."
     IDS_ABOUTBOX            "&Sobre o eMule..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s de %s"
@@ -944,10 +953,10 @@ BEGIN
                             "Ignorar mensagens de envio de links do eMule"
     IDS_CHECK4UPDATE        "Verificar se há uma nova versão"
     IDS_STARTUP             "Iniciando"
-    IDS_NEWVERSIONAVL       "Uma nova versão do eMule está disponível. Verifique a página do projeto para maiores informações."
-    IDS_NEWVERSIONAVLPOPUP  "Uma nova versão do eMule está disponível. Clique aqui para ler sobre a nova versão!"
+    IDS_NEWVERSIONAVL       "Uma nova versão do eMule Next está disponível. Verifique a página do projeto para maiores informações."
+    IDS_NEWVERSIONAVLPOPUP  "Uma nova versão do eMule Next está disponível. Clique aqui para ler sobre a nova versão!"
     IDS_NEWVERSIONFAILED    "Não é possível verificar se há uma nova versão."
-    IDS_CB_TBN_ONNEWVERSION "Nova versão do eMule encontrada"
+    IDS_CB_TBN_ONNEWVERSION "Nova versão do eMule Next encontrada"
     IDS_NONEWERVERSION      "Nenhuma nova versão do eMule encontrada."
 END
 
@@ -1980,6 +1989,35 @@ STRINGTABLE
 BEGIN
     IDS_WEB_GENERATE        "Criar novo certificado"
     IDS_CERT_ERR_CREATE     "Certificado não criado (veja Verbose log)"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Configuração automática de conexão"
+    IDS_CONNSETUP_INFO          "Mantenha as portas TCP e UDP propostas ou insira as suas próprias. A configuração automática pode configurar um roteador doméstico compatível após concluir este assistente."
+    IDS_CONNSETUP_BUTTON        "Configurar automaticamente"
+    IDS_CONNSETUP_CONSENT       "Permitir que o eMule Next encaminhe suas portas TCP/UDP usando PCP, NAT-PMP ou UPnP nesta rede doméstica privada após o assistente terminar e iniciar posteriormente?\n\nConfirme apenas em uma rede que você controla, sem VPN. A detecção não pode reconhecer todas as VPNs. A permissão do firewall do Windows ainda é necessária; a porta da interface web é excluída. ID alto não é garantido. Os mapeamentos temporários podem permanecer até a expiração atribuída ao roteador.\n\nCancelar o assistente não salvará esta escolha."
+    IDS_CONNSETUP_PENDING       "Selecionado: a configuração do roteador será executada após a conclusão do assistente e em inícios posteriores, somente em redes privadas qualificadas. A permissão do firewall do Windows ainda é necessária. A alta acessibilidade do ID e do Kad ainda precisa ser verificada."
+    IDS_CONNSETUP_MANUAL        "Nenhuma nova configuração automática selecionada. As configurações existentes são mantidas. Você pode usar o encaminhamento manual de porta, verificar as permissões do firewall Windows ou executar o teste externo você mesmo."
+    IDS_CONNSETUP_PRIVATE       "Configuração automática pausada: Windows relata uma rede pública, gerenciada ou mista. Nenhuma alteração de roteador foi solicitada. Use a configuração manual ou verifique o perfil de rede somente se esta for sua rede doméstica confiável."
+    IDS_CONNSETUP_VPN           "Configuração automática pausada: uma possível ligação de VPN, proxy ou interface explícita foi encontrada. O roteador doméstico não é configurado automaticamente. Use as configurações de encaminhamento de porta do provedor de conexão."
+    IDS_CONNSETUP_UNKNOWN       "Configuração automática pausada: a rede local não pôde ser identificada com segurança. Nenhuma alteração de roteador foi solicitada. Você pode continuar e configurar a conexão manualmente."
+    IDS_CONNSETUP_SUCCESS       "O roteador confirma o encaminhamento de TCP %u e UDP %u (0 = desabilitado) para este PC.\n\nIsso não prova a acessibilidade da Internet. Verifique a permissão do firewall do Windows, conecte-se e verifique o status do High ID e do Kad ou execute o teste da porta externa manualmente."
+    IDS_CONNSETUP_FAILED        "A configuração automática do roteador não foi concluída. PCP, NAT-PMP ou UPnP podem estar indisponíveis ou desabilitados, ou o roteador pode ter recusado a solicitação. Verifique o roteador e o firewall Windows; a configuração manual permanece disponível."
+    IDS_CONNSETUP_SHARED        "O roteador relata um endereço de Internet não público: NAT duplo ou provedor CGNAT é possível. Abrir este roteador sozinho pode não ser suficiente. Pergunte ao provedor sobre um IP público ou encaminhamento de porta compatível."
+    IDS_CONNSETUP_CONFLICT      "Uma porta solicitada já possui uma regra de roteador diferente ou desabilitada. Não foi substituído. Escolha diferentes portas de cliente ou inspecione essa regra manualmente."
+    IDS_CONNSETUP_BADPORT       "Insira uma porta TCP de 1 a 65535 e uma porta UDP de 1 a 65535 ou desative explicitamente UDP."
+    IDS_CONNSETUP_TESTINFO      "Teste voluntário no site oficial do eMule. Ele recebe suas informações de IP e porta."
+    IDS_CONNSETUP_FIREWALL      "Abra o Firewall do Windows..."
+    IDS_CONNSETUP_BINDFAILED    "O cliente não pôde escutar nas portas selecionadas. Eles podem estar em uso por outro programa. As configurações de porta anteriores foram restauradas."
+    IDS_CONNSETUP_BUSY          "Outra configuração de porta ainda está em execução. Espere que termine antes de tentar novamente."
+    IDS_CONNSETUP_UNSELECT      "Desfazer escolha automática"
+    IDS_PORTMAP_WRONGPORT       "O roteador atribuiu uma porta externa diferente. Não foi aceito como um mapeamento de cliente funcional. As portas do cliente não foram alteradas. Use portas diferentes ou verifique o roteador manualmente. Os mapeamentos temporários podem permanecer até expirarem."
+    IDS_PORTMAP_REFUSED         "O roteador recusou o encaminhamento automático de porta. Nenhum protocolo alternativo foi utilizado para contornar esta recusa. Verifique as configurações do administrador do roteador ou use a configuração manual."
+    IDS_PORTMAP_NETWORKCHANGED  "Mapeamento de porta pausado: a rede, gateway, portas do cliente ou endereço externo foram alterados. Os mapeamentos anteriores podem permanecer até o vencimento. Verifique a conexão e execute a configuração automática novamente, se apropriado."
+    IDS_PORTMAP_SHORTLEASE      "O roteador concedeu uma vida útil de mapeamento muito curta para uma renovação confiável. A configuração automática não foi marcada como bem-sucedida. Use a configuração manual ou verifique o roteador."
+    IDS_PORTMAP_PROTOCOL        "Protocolo: %s"
+    IDS_ADD_UNC_SHARE           "Adicionar pasta de rede"
 END
 
 #endif    // Portuguese (Brazil) resources

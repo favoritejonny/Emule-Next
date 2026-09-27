@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "從網際網路下載並載入 nodes.dat 以啟動 Kad"
+    IDS_WIZSETUP_PROTOCOLS "PCP、NAT-PMP 和 UPnP 會請求相容路由器僅轉送 eMule 的連接埠。自動模式會選擇支援的協定。請僅在您自己的家用網路且未使用 VPN 時啟用。否則可繼續手動設定；現有設定將保留。"
+    IDS_WIZSETUP_PORTTEST "路由器自動設定僅在按下「完成」後執行；若選擇自動設定，請在完成後測試。"
+    IDS_WIZSETUP_NETWORKS "eD2K 使用伺服器清單。Kad 無需伺服器，但需要 UDP 和初始聯絡人。可以同時使用兩種網路。停用 UDP 也會停用 Kad。下一頁可選擇伺服器清單。"
+    IDS_WIZSETUP_SERVERS_ADD "從網際網路下載並載入 eD2K 伺服器清單"
+    IDS_WIZSETUP_SPEEDTEST_INFO "選用：停止其他傳輸並中斷 VPN，然後開始測試。測試會透過 Cloudflare 傳輸最多約 100 MB 的暫存資料，該服務可以看到您的 IP 位址。eMule Next 不會傳送或儲存測試結果。套用之前，您可以編輯測得的 KB/s 數值。"
+    IDS_WIZSETUP_SPEEDTEST_INVALID "請輸入有效的下載和上傳速度（KB/s），或取消套用這些數值。"
+    IDS_WIZSETUP_SERVERS_INFO "選擇 eD2K 後，可在按下「完成」時新增下列伺服器。現有伺服器將保留，不會下載清單或啟用自動連線。若要自行管理伺服器或僅使用 Kad，請勿勾選。"
+    IDS_WIZSETUP_PORTS "TCP 用於連線與傳輸；Kad 也需要 UDP。可保留建議連接埠或自行指定。若已在路由器中轉送連接埠，請使用相同的號碼。"
     IDS_SOCKETS_INIT_FAILED "Windows-Sockets 初始化失敗."
     IDS_ABOUTBOX            "關於 eMule..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s 從 %s"
@@ -905,14 +914,14 @@ BEGIN
     IDS_IRC_EMULEPROTO_IGNORESENDLINK "忽略 eMule 送出連結的協定訊息"
     IDS_CHECK4UPDATE        "檢查是否有新版本"
     IDS_STARTUP             "啟動"
-    IDS_NEWVERSIONAVL       "一個新版的 eMule 已可取得! 按這裡到 專案-首頁 取得更多資訊."
-    IDS_NEWVERSIONAVLPOPUP  "一個新版的 eMule 已可取得. 按這裡來讀取新版的相關資訊!"
+    IDS_NEWVERSIONAVL       "一個新版的 eMule Next 已可取得! 按這裡到 專案-首頁 取得更多資訊."
+    IDS_NEWVERSIONAVLPOPUP  "一個新版的 eMule Next 已可取得. 按這裡來讀取新版的相關資訊!"
     IDS_NEWVERSIONFAILED    "無法檢查是否有新版本."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "已偵測到新版的 eMule"
+    IDS_CB_TBN_ONNEWVERSION "已偵測到新版的 eMule Next"
     IDS_NONEWERVERSION      "未偵測到新版的 eMule."
     IDS_VERSIONCHECK        "版本檢查"
     IDS_VISITVERSIONCHECK   "\n\n您現在想要參觀通知網頁嗎?"
@@ -1964,6 +1973,35 @@ BEGIN
 END
 
 /////////////////////////////////////////////////////////////////////////////
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "自動連線設定"
+    IDS_CONNSETUP_INFO          "保留建議的 TCP 和 UDP 端口，或輸入您自己的端口。完成此精靈後，自動設定可以設定相容的家庭路由器。"
+    IDS_CONNSETUP_BUTTON        "自動配置"
+    IDS_CONNSETUP_CONSENT       "精靈完成並稍後啟動後，允許 eMule Next 在該私人家庭網路上使用 PCP、NAT-PMP 或 UPnP 轉送其 TCP/UDP 連接埠嗎？\n\n僅在您控制的網路上確認，無需 VPN。偵測無法辨識每個 VPN。仍需要Windows防火牆權限；Web 介面連接埠被排除。不保證高 ID。臨時映射可能會保留到路由器分配的到期為止。\n\n取消精靈將不會儲存此選擇。"
+    IDS_CONNSETUP_PENDING       "已選擇：路由器設定將在精靈完成後以及稍後啟動時運行，僅在符合條件的專用網路上運行。仍然需要 Windows 防火牆權限。高ID和Kad可達性還有待驗證。"
+    IDS_CONNSETUP_MANUAL        "未選擇新的自動設定。現有設定被保留。您可以使用手動連接埠轉送、檢查 Windows 防火牆權限或自行執行外部測試。"
+    IDS_CONNSETUP_PRIVATE       "自動安裝已暫停：Windows 報告公共、託管或混合網路。沒有請求更改路由器。使用手動設置，或僅在這是您自己的受信任家庭網路時檢查網路設定檔。"
+    IDS_CONNSETUP_VPN           "自動設定已暫停：發現可能的 VPN、代理或明確介面綁定。家庭路由器不會自動設定。使用連接提供者的連接埠轉送設定。"
+    IDS_CONNSETUP_UNKNOWN       "自動設定已暫停：無法安全地識別本地網路。沒有請求更改路由器。您可以繼續並手動設定連線。"
+    IDS_CONNSETUP_SUCCESS       "路由器確認將 TCP %u 和 UDP %u（0 = 停用）轉送到此 PC。\n\n這並不能證明網路的可及性。檢查 Windows 防火牆權限，然後連線並檢查 High ID 和 Kad 狀態，或手動執行外部連接埠測試。"
+    IDS_CONNSETUP_FAILED        "自動路由器設定未完成。 PCP、NAT-PMP 或 UPnP 可能無法使用或停用，或者路由器可能拒絕了請求。檢查路由器和Windows防火牆；手動設定仍然可用。"
+    IDS_CONNSETUP_SHARED        "路由器回報非公共網際網路位址：可以使用雙 NAT 或供應商 CGNAT。僅開啟此路由器可能還不夠。向提供者詢問公共 IP 或支援的連接埠轉送。"
+    IDS_CONNSETUP_CONFLICT      "請求的連接埠已具有不同或停用的路由器規則。它沒有被覆蓋。選擇不同的客戶端端口，或手動檢查該規則。"
+    IDS_CONNSETUP_BADPORT       "輸入 1 到 65535 之間的 TCP 連接埠和 1 到 65535 之間的 UDP 端口，或明確停用 UDP。"
+    IDS_CONNSETUP_TESTINFO      "在eMule官方網站上自願測試。它接收您的 IP 和連接埠資訊。"
+    IDS_CONNSETUP_FIREWALL      "開啟 Windows 防火牆..."
+    IDS_CONNSETUP_BINDFAILED    "客戶端無法偵聽所選連接埠。它們可能正在被另一個程式使用。之前的連接埠設定已恢復。"
+    IDS_CONNSETUP_BUSY          "另一個連接埠設定仍在運作。等待其完成後再重試。"
+    IDS_CONNSETUP_UNSELECT      "撤銷自動選擇"
+    IDS_PORTMAP_WRONGPORT       "路由器分配了不同的外部連接埠。它未被接受為有效的客戶端映射。客戶端連接埠未更改。使用不同的連接埠或手動檢查路由器。臨時映射可能會保留到到期為止。"
+    IDS_PORTMAP_REFUSED         "路由器拒絕自動連接埠轉送。沒有使用替代協議來繞過這種拒絕。檢查路由器管理員的設定或使用手動設定。"
+    IDS_PORTMAP_NETWORKCHANGED  "連接埠對映已暫停：網路、網關、用戶端連接埠或外部位址發生變更。先前的映射可能會保留到過期為止。檢查連接並再次運行自動設定（如果適用）。"
+    IDS_PORTMAP_SHORTLEASE      "路由器授予的映射生命週期太短，無法可靠更新。自動設定未標記為成功。使用手動設定或檢查路由器。"
+    IDS_PORTMAP_PROTOCOL        "協定：%s"
+    IDS_ADD_UNC_SHARE           "新增網路資料夾"
+END
+
 #endif    // Chinese (Taiwan) resources
 
 
@@ -1978,4 +2016,3 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

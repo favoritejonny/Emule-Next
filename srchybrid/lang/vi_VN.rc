@@ -58,6 +58,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Tải xuống và nạp nodes.dat từ Internet để khởi động Kad"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP và UPnP yêu cầu bộ định tuyến tương thích chỉ mở các cổng eMule. Chế độ tự động chọn giao thức được hỗ trợ. Chỉ dùng trên mạng nhà của bạn, không có VPN. Nếu không, hãy tiếp tục thủ công; cài đặt hiện có được giữ nguyên."
+    IDS_WIZSETUP_PORTTEST "Thiết lập bộ định tuyến tự động chỉ chạy sau Hoàn tất; hãy kiểm tra sau đó."
+    IDS_WIZSETUP_NETWORKS "eD2K dùng danh sách máy chủ. Kad hoạt động không cần máy chủ, nhưng cần UDP và liên hệ ban đầu. Có thể dùng cả hai mạng. Tắt UDP cũng tắt Kad. Danh sách máy chủ được chọn ở trang tiếp theo."
+    IDS_WIZSETUP_SERVERS_ADD "Tải và nạp danh sách máy chủ eD2K từ Internet"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Tùy chọn: dừng các truyền tải khác và ngắt VPN trước khi bắt đầu kiểm tra. Kiểm tra truyền tối đa khoảng 100 MB dữ liệu tạm thời qua Cloudflare, dịch vụ này có thể thấy địa chỉ IP của bạn. eMule Next không gửi hoặc lưu kết quả. Bạn có thể sửa các giá trị KB/s đo được trước khi áp dụng."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Nhập tốc độ tải xuống và tải lên hợp lệ theo KB/s hoặc bỏ chọn áp dụng các giá trị."
+    IDS_WIZSETUP_SERVERS_INFO "Nếu chọn eD2K, bạn có thể thêm các máy chủ dưới đây khi nhấn Hoàn tất. Máy chủ hiện có được giữ lại. Không tải danh sách hay bật kết nối tự động. Bỏ chọn để tự quản lý máy chủ hoặc chỉ dùng Kad."
+    IDS_WIZSETUP_PORTS "TCP dùng cho kết nối và truyền dữ liệu; Kad cũng cần UDP. Giữ các cổng đề xuất hoặc chọn cổng riêng. Nếu đã chuyển tiếp cổng trên bộ định tuyến, dùng cùng số cổng."
     IDS_SOCKETS_INIT_FAILED "Không thể khởi tạo Windows sockets."
     IDS_ABOUTBOX            "&Giới thiệu eMule..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s từ %s"
@@ -1028,14 +1037,14 @@ BEGIN
                             "Bỏ qua Thông điệp gởi Liên kết"
     IDS_CHECK4UPDATE        "Kiểm tra Phiên bản mới"
     IDS_STARTUP             "Khởi động"
-    IDS_NEWVERSIONAVL       "Đã có Phiên bản eMule mới! Truy cập trang chủ eMule để biết thêm thông tin."
-    IDS_NEWVERSIONAVLPOPUP  "Đã có Phiên bản eMule mới! Nhấn vào đây để xem chi tiết!"
+    IDS_NEWVERSIONAVL       "Đã có Phiên bản eMule Next mới! Truy cập trang chủ eMule Next để biết thêm thông tin."
+    IDS_NEWVERSIONAVLPOPUP  "Đã có Phiên bản eMule Next mới! Nhấn vào đây để xem chi tiết!"
     IDS_NEWVERSIONFAILED    "Không thể kiểm tra phiên bản mới"
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "Đã có Phiên bản eMule mới"
+    IDS_CB_TBN_ONNEWVERSION "Đã có Phiên bản eMule Next mới"
     IDS_NONEWERVERSION      "Không có phiên bản eMule mới."
     IDS_VERSIONCHECK        "&Kiểm tra Phiên bản"
     IDS_VISITVERSIONCHECK   "\n\nBạn có muốn truy cập trang thông tin Phiên bản bây giờ không?"
@@ -1981,6 +1990,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Cho phép hiệu ứng thanh công cụ Windows 7"
     IDS_LANMODE             "Chế độ Mạng nội bộ"
     IDS_OPENPREFINI         "Mở preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Thiết lập kết nối tự động"
+    IDS_CONNSETUP_INFO          "Giữ các cổng TCP và UDP được đề xuất hoặc nhập cổng của riêng bạn. Thiết lập tự động có thể định cấu hình bộ định tuyến gia đình tương thích sau khi bạn hoàn thành trình hướng dẫn này."
+    IDS_CONNSETUP_BUTTON        "Định cấu hình tự động"
+    IDS_CONNSETUP_CONSENT       "Cho phép eMule Next chuyển tiếp các cổng TCP/UDP bằng PCP, NAT-PMP hoặc UPnP trên mạng gia đình riêng này sau khi trình hướng dẫn kết thúc và khởi động sau này?\n\nChỉ xác nhận trên mạng mà bạn kiểm soát, không có VPN. Tính năng phát hiện không thể nhận ra mọi VPN. Vẫn cần có sự cho phép của tường lửa Windows; cổng giao diện web bị loại trừ. ID cao không được đảm bảo. Ánh xạ tạm thời có thể vẫn còn cho đến khi hết hạn do bộ định tuyến chỉ định.\n\nViệc hủy trình hướng dẫn sẽ không lưu lựa chọn này."
+    IDS_CONNSETUP_PENDING       "Đã chọn: thiết lập bộ định tuyến sẽ chạy sau khi trình hướng dẫn kết thúc và khởi động sau, chỉ trên các mạng riêng đủ điều kiện. Sự cho phép tường lửa của Windows vẫn được yêu cầu. Khả năng tiếp cận ID và Kad cao vẫn đang được xác minh."
+    IDS_CONNSETUP_MANUAL        "Không có thiết lập tự động mới nào được chọn. Các cài đặt hiện tại được giữ nguyên. Bạn có thể sử dụng tính năng chuyển tiếp cổng thủ công, kiểm tra quyền của tường lửa Windows hoặc tự mình chạy thử nghiệm bên ngoài."
+    IDS_CONNSETUP_PRIVATE       "Quá trình thiết lập tự động bị tạm dừng: Windows báo cáo mạng công cộng, được quản lý hoặc hỗn hợp. Không có thay đổi bộ định tuyến nào được yêu cầu. Sử dụng thiết lập thủ công hoặc chỉ kiểm tra cấu hình mạng nếu đây là mạng gia đình đáng tin cậy của riêng bạn."
+    IDS_CONNSETUP_VPN           "Quá trình thiết lập tự động đã tạm dừng: đã tìm thấy VPN, proxy hoặc liên kết giao diện rõ ràng. Bộ định tuyến gia đình không được cấu hình tự động. Sử dụng cài đặt chuyển tiếp cổng của nhà cung cấp kết nối."
+    IDS_CONNSETUP_UNKNOWN       "Quá trình thiết lập tự động bị tạm dừng: không thể xác định mạng cục bộ một cách an toàn. Không có thay đổi bộ định tuyến nào được yêu cầu. Bạn có thể tiếp tục và định cấu hình kết nối theo cách thủ công."
+    IDS_CONNSETUP_SUCCESS       "Bộ định tuyến xác nhận việc chuyển tiếp TCP %u và UDP %u (0 = bị tắt) tới PC này.\n\nĐiều này không chứng minh khả năng tiếp cận Internet. Kiểm tra quyền của tường lửa Windows, sau đó kết nối và kiểm tra trạng thái High ID và Kad hoặc chạy kiểm tra cổng bên ngoài theo cách thủ công."
+    IDS_CONNSETUP_FAILED        "Quá trình thiết lập bộ định tuyến tự động chưa hoàn tất. PCP, NAT-PMP hoặc UPnP có thể không khả dụng hoặc bị vô hiệu hóa hoặc bộ định tuyến có thể đã từ chối yêu cầu. Kiểm tra bộ định tuyến và tường lửa Windows; thiết lập thủ công vẫn có sẵn."
+    IDS_CONNSETUP_SHARED        "Bộ định tuyến báo cáo một địa chỉ Internet không công cộng: có thể sử dụng NAT kép hoặc nhà cung cấp CGNAT. Chỉ mở bộ định tuyến này có thể là không đủ. Hỏi nhà cung cấp về IP công cộng hoặc chuyển tiếp cổng được hỗ trợ."
+    IDS_CONNSETUP_CONFLICT      "Cổng được yêu cầu đã có quy tắc bộ định tuyến khác hoặc bị vô hiệu hóa. Nó không bị ghi đè. Chọn các cổng máy khách khác nhau hoặc kiểm tra quy tắc đó theo cách thủ công."
+    IDS_CONNSETUP_BADPORT       "Nhập cổng TCP từ 1 đến 65535 và cổng UDP từ 1 đến 65535 hoặc tắt rõ ràng UDP."
+    IDS_CONNSETUP_TESTINFO      "Kiểm tra tự nguyện trên trang web chính thức của eMule. Nó nhận được thông tin IP và cổng của bạn."
+    IDS_CONNSETUP_FIREWALL      "Mở Tường lửa Windows..."
+    IDS_CONNSETUP_BINDFAILED    "Máy khách không thể nghe trên các cổng đã chọn. Chúng có thể được sử dụng bởi một chương trình khác. Cài đặt cổng trước đó đã được khôi phục."
+    IDS_CONNSETUP_BUSY          "Một thiết lập cổng khác vẫn đang chạy. Đợi nó hoàn tất trước khi thử lại."
+    IDS_CONNSETUP_UNSELECT      "Hoàn tác lựa chọn tự động"
+    IDS_PORTMAP_WRONGPORT       "Bộ định tuyến đã chỉ định một cổng bên ngoài khác. Nó không được chấp nhận như một bản đồ khách hàng đang hoạt động. Cổng khách hàng không được thay đổi. Sử dụng các cổng khác nhau hoặc kiểm tra bộ định tuyến theo cách thủ công. Ánh xạ tạm thời có thể vẫn còn cho đến khi hết hạn."
+    IDS_PORTMAP_REFUSED         "Bộ định tuyến từ chối chuyển tiếp cổng tự động. Không có giao thức thay thế nào được sử dụng để bỏ qua sự từ chối này. Kiểm tra cài đặt của quản trị viên bộ định tuyến hoặc sử dụng thiết lập thủ công."
+    IDS_PORTMAP_NETWORKCHANGED  "Ánh xạ cổng bị tạm dừng: mạng, cổng, cổng máy khách hoặc địa chỉ bên ngoài đã thay đổi. Các ánh xạ trước đó có thể vẫn còn cho đến khi hết hạn. Kiểm tra kết nối và chạy lại thiết lập tự động nếu thích hợp."
+    IDS_PORTMAP_SHORTLEASE      "Bộ định tuyến cho phép thời gian tồn tại của bản đồ quá ngắn để có thể gia hạn đáng tin cậy. Thiết lập tự động không được đánh dấu là thành công. Sử dụng thiết lập thủ công hoặc kiểm tra bộ định tuyến."
+    IDS_PORTMAP_PROTOCOL        "Giao thức: %s"
+    IDS_ADD_UNC_SHARE           "Thêm thư mục mạng"
 END
 
 #endif    // Vietnamese resources

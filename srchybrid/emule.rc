@@ -1,4 +1,4 @@
-// Microsoft Visual C++ generated resource script.
+﻿// Microsoft Visual C++ generated resource script.
 // eMule Next modification notice: modified on 2026-08-19; see ../CHANGES.md.
 //
 #pragma code_page(65001)
@@ -125,7 +125,7 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     CONTROL         "",IDC_SEARCHLIST,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | LVS_OWNERDRAWFIXED | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,5,30,275,82
     CONTROL         "",IDC_TAB1,"SysTabControl32",WS_TABSTOP,5,17,157,16
-    LTEXT           "Do *NOT* resize this dlg resource!",IDC_STATIC,108,2,55,16,NOT WS_VISIBLE
+    LTEXT           "",IDC_STATIC,108,2,55,16,NOT WS_VISIBLE
     PUSHBUTTON      "Search Parameters...",IDC_OPEN_PARAMS_WND,164,1,116,14
     EDITTEXT        IDC_FILTER,164,17,116,14,ES_MULTILINE | ES_AUTOHSCROLL
     CONTROL         "",IDC_PROGRESS1,"msctls_progress32",WS_BORDER,5,112,275,7
@@ -215,18 +215,18 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     GROUPBOX        "Settings",IDC_AUTH_LBL2,4,2,223,75
     CONTROL         "Enable proxy",IDC_ENABLEPROXY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,13,178,9
-    RTEXT           "Proxy Type",IDC_PROXYTYPE_LBL,11,27,58,8
-    COMBOBOX        IDC_PROXYTYPE,73,26,147,71,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    RTEXT           "Proxy Address",IDC_PROXYNAME_LBL,11,43,58,8
-    EDITTEXT        IDC_PROXYNAME,73,42,147,13,ES_AUTOHSCROLL
-    RTEXT           "Proxy Port",IDC_PROXYPORT_LBL,11,59,58,8
-    EDITTEXT        IDC_PROXYPORT,73,58,34,13,ES_AUTOHSCROLL | ES_NUMBER
+    RTEXT           "Proxy Type",IDC_PROXYTYPE_LBL,7,27,70,8
+    COMBOBOX        IDC_PROXYTYPE,81,26,139,71,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    RTEXT           "Proxy Address",IDC_PROXYNAME_LBL,7,43,70,8
+    EDITTEXT        IDC_PROXYNAME,81,42,139,13,ES_AUTOHSCROLL
+    RTEXT           "Proxy Port",IDC_PROXYPORT_LBL,7,59,70,8
+    EDITTEXT        IDC_PROXYPORT,81,58,34,13,ES_AUTOHSCROLL | ES_NUMBER
     GROUPBOX        "Authentication",IDC_AUTH_LBL,4,79,223,60
     CONTROL         "Enable authentication",IDC_ENABLEAUTH,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,90,187,9
-    RTEXT           "User Name",IDC_USERNAME_LBL,11,105,58,8
-    EDITTEXT        IDC_USERNAME_A,73,104,147,13,ES_AUTOHSCROLL
-    RTEXT           "Password",IDC_PASSWORD_LBL,11,121,58,8
-    EDITTEXT        IDC_PASSWORD,73,120,147,13,ES_PASSWORD | ES_AUTOHSCROLL
+    RTEXT           "User Name",IDC_USERNAME_LBL,7,105,70,8
+    EDITTEXT        IDC_USERNAME_A,81,104,139,13,ES_AUTOHSCROLL
+    RTEXT           "Password",IDC_PASSWORD_LBL,7,121,70,8
+    EDITTEXT        IDC_PASSWORD,81,120,139,13,ES_PASSWORD | ES_AUTOHSCROLL
 END
 
 IDD_PPG_SERVER DIALOGEX 0, 0, 231, 130
@@ -337,15 +337,15 @@ CAPTION "Directories"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     GROUPBOX        "Incoming Files",IDC_INCOMING_FRM,4,2,223,30
-    EDITTEXT        IDC_INCFILES,11,13,210,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "...",IDC_SELINCDIR,208,7,14,14
+    EDITTEXT        IDC_INCFILES,11,13,198,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_SELINCDIR,194,7,14,14
     GROUPBOX        "Temporary Files",IDC_TEMP_FRM,4,34,223,30
     EDITTEXT        IDC_TEMPFILES,11,45,198,12,ES_AUTOHSCROLL
     PUSHBUTTON      "...",IDC_SELTEMPDIR,194,39,14,14
     PUSHBUTTON      "+",IDC_SELTEMPDIRADD,210,45,11,12,BS_CENTER
     GROUPBOX        "Shared Directories (Ctrl-Click includes subdirectories)",IDC_SHARED_FRM,4,65,223,172
     CONTROL         "",IDC_SHARESELECTOR,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | TVS_CHECKBOXES | TVS_INFOTIP | WS_BORDER | WS_TABSTOP,11,77,209,136
-    PUSHBUTTON      "Add UNC share",IDC_UNCADD,10,218,64,14,BS_CENTER
+    PUSHBUTTON      "Add network folder",IDC_UNCADD,10,218,150,14,BS_CENTER
 END
 
 IDD_PPG_CONNECTION DIALOGEX 0, 0, 231, 228
@@ -823,7 +823,7 @@ CAPTION "General"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     LTEXT           "User Name:",IDC_NICK_FRM,0,7,309,8
-    EDITTEXT        IDC_NICK,0,16,148,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_NICK,0,16,309,12,ES_AUTOHSCROLL
     CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,0,38,317,1
     CONTROL         "Do you want eMule to run when you start windows?",IDC_AUTOSTART,
                     "Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,0,44,318,19
@@ -836,18 +836,61 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Connection/Ports"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    LTEXT           "What is a port...",IDC_PORTINFO,0,0,317,58
-    LTEXT           "TCP:",IDC_TCP_LABEL,0,59,60,8
-    EDITTEXT        IDC_TCP,0,68,38,12,ES_AUTOHSCROLL | ES_NUMBER
-    LTEXT           "UDP:",IDC_UDP_LABEL,58,59,60,8
-    EDITTEXT        IDC_UDP,58,68,38,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Check1",IDC_UDPDISABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,100,70,84,10
-    GROUPBOX        "Connection Test",IDC_TESTFRAME,0,101,317,55
-    LTEXT           "Description of the test...",IDC_TESTINFO,4,111,309,36
-    PUSHBUTTON      "Start test...",IDC_STARTTEST,247,139,67,14
-    CONTROL         "",IDC_UPNPPROGRESS,"msctls_progress32",WS_BORDER,193,76,118,8
-    PUSHBUTTON      "Use UPnP to Setup Ports",IDC_UPNPSTART,192,60,119,14
-    CTEXT           "UPnP Status",IDC_UPNPSTATUS,0,85,317,17
+    LTEXT           "Client ports",IDC_PORTINFO,0,0,317,35
+    LTEXT           "TCP:",IDC_TCP_LABEL,0,47,28,10
+    EDITTEXT        IDC_TCP,32,44,52,16,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "UDP:",IDC_UDP_LABEL,105,47,28,10
+    EDITTEXT        IDC_UDP,137,44,52,16,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "Configure automatically",IDC_WIZ_AUTO_PORTS,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,0,70,317,20
+    LTEXT           "PCP / NAT-PMP / UPnP information",IDC_WIZ_SETUP_INFO,0,98,317,60
+END
+
+IDD_WIZ1_ROUTER DIALOGEX 0, 0, 317, 158
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Router"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    LTEXT           "Automatic or manual setup",IDC_WIZ_SETUP_INFO,0,0,317,66
+    PUSHBUTTON      "Automatic setup",IDC_UPNPSTART,0,72,210,20
+    LTEXT           "Setup status",IDC_UPNPSTATUS,0,100,317,58
+END
+
+IDD_WIZ1_SPEEDTEST DIALOGEX 0, 0, 317, 158
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Connection speed"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    LTEXT           "Optional speed-test information",IDC_WIZ_SPEED_INFO,0,0,317,47
+    PUSHBUTTON      "Connection Test",IDC_WIZ_SPEED_START,0,52,112,20
+    LTEXT           "",IDC_WIZ_SPEED_STATUS,120,52,197,22
+    LTEXT           "Download",IDC_WIZ_SPEED_DOWNLOAD_LABEL,0,82,110,10
+    EDITTEXT        IDC_WIZ_SPEED_DOWNLOAD,114,79,65,16,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "KB/s",IDC_STATIC,184,82,45,10
+    LTEXT           "Upload Speed",IDC_WIZ_SPEED_UPLOAD_LABEL,0,105,110,10
+    EDITTEXT        IDC_WIZ_SPEED_UPLOAD,114,102,65,16,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "KB/s",IDC_STATIC,184,105,45,10
+    CONTROL         "Apply: Speed Limits",IDC_WIZ_SPEED_APPLY,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,0,128,317,25
+END
+
+IDD_WIZ1_PORTTEST DIALOGEX 0, 0, 317, 158
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Connection Test"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    GROUPBOX        "Connection Test",IDC_TESTFRAME,0,0,317,70
+    LTEXT           "Manual external test",IDC_TESTINFO,8,14,301,26
+    PUSHBUTTON      "Start test...",IDC_STARTTEST,8,46,210,20
+    LTEXT           "When to test automatic setup",IDC_WIZ_SETUP_INFO,0,80,317,66
+END
+
+IDD_WIZ1_SERVERLIST DIALOGEX 0, 0, 317, 158
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Server list"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    LTEXT           "Network bootstrap",IDC_WIZ_SETUP_INFO,0,0,317,58
+    CONTROL         "Download and load an eD2K server list from the Internet",IDC_WIZ_SERVERS_ADD,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,0,63,317,22
+    EDITTEXT        IDC_WIZ_SERVERS_PREVIEW,0,90,317,68,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
 END
 
 IDD_WIZ1_ULDL_PRIO DIALOGEX 0, 0, 317, 143
@@ -871,7 +914,7 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | BS_TOP | BS_MULTILINE,0,3,317,57
 END
 
-IDD_WIZ1_SERVER DIALOGEX 0, 0, 317, 143
+IDD_WIZ1_SERVER DIALOGEX 0, 0, 317, 158
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Server Settings"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
@@ -879,9 +922,11 @@ BEGIN
     GROUPBOX        "Choose which Network(s) you want to use",IDC_WIZARD_NETWORK,0,0,317,32
     CONTROL         "eD2K",IDC_WIZARD_NETWORK_ED2K,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,8,14,144,10
     CONTROL         "Kad",IDC_WIZARD_NETWORK_KADEMLIA,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,158,14,145,10
-    GROUPBOX        "eD2K Setting",IDC_WIZARD_ED2K,0,38,317,63
+    GROUPBOX        "eD2K / Kad",IDC_WIZARD_ED2K,0,38,317,120
     CONTROL         "Do you want eMule to connect using Safe Connect?\n\nTurning this feature off allows eMule to connect to servers a little faster, but can cause you to get more false low ID connects.",IDC_SAFESERVERCONNECT,
-                    "Button",BS_AUTOCHECKBOX | BS_TOP | BS_MULTILINE | WS_TABSTOP,8,53,289,45
+                    "Button",BS_AUTOCHECKBOX | BS_TOP | BS_MULTILINE | WS_TABSTOP,8,51,301,48
+    CONTROL         "Download and load an eD2K server list from the Internet",IDC_WIZ_SERVERS_ADD,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,8,103,301,20
+    CONTROL         "Download and load nodes.dat from the Internet to start Kad",IDC_WIZ_NODES_ADD,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,8,128,301,20
 END
 
 IDD_WIZ1_END DIALOGEX 0, 0, 317, 193
@@ -2928,10 +2973,10 @@ BEGIN
                             "Ignore eMule send link protocol messages"
     IDS_CHECK4UPDATE        "Check for new version"
     IDS_STARTUP             "Startup"
-    IDS_NEWVERSIONAVL       "A new version of eMule is available! Check the project-homepage for more information."
-    IDS_NEWVERSIONAVLPOPUP  "A new version of eMule is available. Click here to read about the new version!"
+    IDS_NEWVERSIONAVL       "A new version of eMule Next is available! Check the project homepage for more information."
+    IDS_NEWVERSIONAVLPOPUP  "A new version of eMule Next is available. Click here to read about the new version!"
     IDS_NEWVERSIONFAILED    "Unable to check for new version."
-    IDS_CB_TBN_ONNEWVERSION "New eMule version detected"
+    IDS_CB_TBN_ONNEWVERSION "New eMule Next version detected"
     IDS_NONEWERVERSION      "No new eMule version detected."
 END
 
@@ -3225,6 +3270,7 @@ BEGIN
     IDS_ALWAYS              "Always"
     IDS_ONSHUTDOWN          "On shutdown"
     IDS_UNCFOLDERS          "UNC Paths"
+    IDS_ADD_UNC_SHARE       "Add network folder"
     IDS_USESECIDENT         "Use secure identification"
     IDS_ADVSPAMFILTER       "Advanced spam filter"
     IDS_CUT                 "Cut"
@@ -3745,6 +3791,43 @@ BEGIN
     IDS_PROTOCOLVERSION     "Protocol Version"
     IDS_FOUNDNODESUSEFUL    "Found Nodes (useful)"
     IDS_NORESPONSE          "No Response"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE     "Automatic connection setup"
+    IDS_CONNSETUP_INFO      "Keep the proposed TCP and UDP ports, or enter your own. Automatic setup can configure a compatible home router after you finish this wizard."
+    IDS_CONNSETUP_BUTTON    "Configure automatically"
+    IDS_CONNSETUP_CONSENT   "Allow eMule Next to forward its TCP/UDP ports using PCP, NAT-PMP or UPnP on this private home network after the wizard finishes and on later starts?\n\nConfirm only on a network you control, without a VPN. Detection cannot recognize every VPN. Windows firewall permission is still needed; the web interface port is excluded. High ID is not guaranteed. Temporary mappings may remain until their router-assigned expiry.\n\nCanceling the wizard will not save this choice."
+    IDS_CONNSETUP_PENDING   "Selected: router setup will run after the wizard finishes and on later starts, only on eligible private networks. Windows firewall permission is still required. High ID and Kad reachability remain to be verified."
+    IDS_CONNSETUP_MANUAL    "No new automatic setup selected. Existing settings are kept. You can use manual port forwarding, check Windows firewall permissions, or run the external test yourself."
+    IDS_CONNSETUP_PRIVATE   "Automatic setup paused: Windows reports a public, managed or mixed network. No router changes were requested. Use manual setup, or check the network profile only if this is your own trusted home network."
+    IDS_CONNSETUP_VPN       "Automatic setup paused: a possible VPN, proxy or explicit interface binding was found. The home router is not configured automatically. Use the connection provider's port-forwarding settings."
+    IDS_CONNSETUP_UNKNOWN   "Automatic setup paused: the local network could not be identified safely. No router changes were requested. You can continue and configure the connection manually."
+    IDS_CONNSETUP_SUCCESS   "The router confirms forwarding of TCP %u and UDP %u (0 = disabled) to this PC.\n\nThis does not prove Internet reachability. Check Windows firewall permission, then connect and check High ID and Kad status, or run the external port test manually."
+    IDS_CONNSETUP_FAILED    "Automatic router setup did not complete. PCP, NAT-PMP or UPnP may be unavailable or disabled, or the router may have refused the request. Check the router and Windows firewall; manual setup remains available."
+    IDS_CONNSETUP_SHARED    "The router reports a non-public Internet address: double NAT or provider CGNAT is possible. Opening this router alone may not be enough. Ask the provider about a public IP or supported port forwarding."
+    IDS_CONNSETUP_CONFLICT  "A requested port already has a different or disabled router rule. It was not overwritten. Choose different client ports, or inspect that rule manually."
+    IDS_CONNSETUP_BADPORT   "Enter a TCP port from 1 to 65535 and a UDP port from 1 to 65535, or explicitly disable UDP."
+    IDS_CONNSETUP_TESTINFO  "Voluntary test on the official eMule website. It receives your IP and port information."
+    IDS_CONNSETUP_FIREWALL  "Open Windows Firewall..."
+    IDS_CONNSETUP_BINDFAILED "The client could not listen on the selected ports. They may be in use by another program. Previous port settings have been restored."
+    IDS_CONNSETUP_BUSY      "Another port setup is still running. Wait for it to finish before retrying."
+    IDS_CONNSETUP_UNSELECT  "Undo automatic choice"
+    IDS_PORTMAP_WRONGPORT   "The router assigned a different external port. It was not accepted as a working client mapping. Client ports were not changed. Use different ports or check the router manually. Temporary mappings may remain until expiry."
+    IDS_PORTMAP_REFUSED     "The router refused automatic port forwarding. No alternative protocol was used to bypass this refusal. Check the router administrator's settings or use manual setup."
+    IDS_PORTMAP_NETWORKCHANGED "Port mapping paused: the network, gateway, client ports or external address changed. Previous mappings may remain until expiry. Check the connection and run automatic setup again if appropriate."
+    IDS_PORTMAP_SHORTLEASE  "The router granted a mapping lifetime too short for reliable renewal. Automatic setup was not marked successful. Use manual setup or check the router."
+    IDS_PORTMAP_PROTOCOL    "Protocol: %s"
+    IDS_WIZSETUP_PROTOCOLS  "PCP, NAT-PMP and UPnP ask a compatible router to forward only eMule's ports. Automatic mode chooses a supported protocol. Select it only on your own home network without a VPN. Otherwise continue for manual setup; existing settings are kept."
+    IDS_WIZSETUP_PORTTEST   "Automatic router setup runs only after Finish, so test afterwards if you selected it."
+    IDS_WIZSETUP_NETWORKS   "eD2K uses a server list. Kad works without servers, but needs UDP and initial contacts. You can use both. Disabling UDP also disables Kad. Server-list selection follows on the next page."
+    IDS_WIZSETUP_SERVERS_ADD "Download and load an eD2K server list from the Internet"
+    IDS_WIZSETUP_SERVERS_INFO "With eD2K selected, Finish downloads a current server list over HTTPS and merges it with existing servers. If the download is unavailable, the bundled list is used as a fallback. This does not enable automatic connection. Leave unchecked to manage servers yourself or use only Kad."
+    IDS_WIZSETUP_PORTS      "TCP carries connections and transfers; UDP is also needed for Kad. Keep the proposed ports or enter your own. If you already forward ports in your router, use those numbers."
+    IDS_WIZSETUP_SPEEDTEST_INFO "Optional: stop other transfers and disconnect any VPN, then run the test. It sends up to about 100 MB of temporary data through Cloudflare, which can see your IP address. eMule Next neither sends nor stores the result. You may edit the measured KB/s values before applying them."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Enter valid download and upload capacities in KB/s, or clear the apply option."
+    IDS_WIZSETUP_NODES_ADD "Download and load nodes.dat from the Internet to start Kad"
 END
 
 #endif    // English (United States) resources

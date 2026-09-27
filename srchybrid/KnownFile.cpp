@@ -325,6 +325,8 @@ void CKnownFile::SetFileName(LPCTSTR pszFileName, bool bReplaceInvalidFileSystem
 {
 	// The shared files object may not exist early in startup sequence.
 	bool bSharedFiles = theApp.sharedfiles && theApp.sharedfiles->GetFileByID(GetFileHash()) == this;
+	if (theApp.knownfiles)
+		theApp.knownfiles->InvalidateKnownFileLookup();
 
 	if (bSharedFiles)
 		theApp.sharedfiles->RemoveKeywords(this);
@@ -374,9 +376,12 @@ bool CKnownFile::CreateFromFile(LPCTSTR in_directory, LPCTSTR in_filename, LPVOI
 		return false; // not supported by network
 	}
 	SetFileSize((EMFileSize)(uint64)llFileSize);
+	struct _stat64 initialFileState = {};
+	const bool initialFileStateValid = statUTC((HANDLE)_get_osfhandle(_fileno(file)), initialFileState) == 0;
 
-	// we are reading the file data later in 8K blocks, adjust the internal file stream buffer accordingly
-	::setvbuf(file, NULL, _IOFBF, 1024 * 8 * 2);
+	// Keep sequential hashing efficient on modern disks without changing the
+	// protocol hashes or reading an entire eD2K part into memory.
+	::setvbuf(file, NULL, _IOFBF, 256 * 1024);
 
 	m_AvailPartFrequency.SetSize(GetPartCount());
 	if (GetPartCount())
@@ -443,6 +448,17 @@ bool CKnownFile::CreateFromFile(LPCTSTR in_directory, LPCTSTR in_filename, LPVOI
 		}
 	}
 
+	struct _stat64 finalFileState = {};
+	const bool finalFileStateValid = statUTC((HANDLE)_get_osfhandle(_fileno(file)), finalFileState) == 0;
+	if (initialFileStateValid && (!finalFileStateValid
+		|| initialFileState.st_size != finalFileState.st_size
+		|| initialFileState.st_mtime != finalFileState.st_mtime))
+	{
+		LogError(_T("Hashing cancelled because the file changed while it was being read: \"%s\""), (LPCTSTR)strFilePath);
+		fclose(file);
+		return false;
+	}
+
 	if (hashcount)
 		m_FileIdentifier.CalculateMD4HashByHashSet(false);
 
@@ -471,9 +487,8 @@ bool CKnownFile::CreateFromFile(LPCTSTR in_directory, LPCTSTR in_filename, LPVOI
 	}
 
 	// set last write date
-	struct _stat64 st;
-	if (statUTC((HANDLE)_get_osfhandle(_fileno(file)), st) == 0) {
-		m_tUtcLastModified = (time_t)st.st_mtime;
+	if (finalFileStateValid) {
+		m_tUtcLastModified = (time_t)finalFileState.st_mtime;
 		AdjustNTFSDaylightFileTime(m_tUtcLastModified, (LPCTSTR)strFilePath);
 	}
 
@@ -924,7 +939,9 @@ void CKnownFile::CreateHash(CFile *pFile, uint64 Length, uchar *pMd4HashOut, CAI
 	ASSERT(!Length || pFile);
 	ASSERT(pMd4HashOut != NULL || pShaHashOut != NULL);
 
-	uchar   X[64 * 128];
+	// AICH blocks are 180 KiB, so a 64 KiB chunk cannot cross more than one
+	// AICH boundary and preserves the established single-pass MD4/AICH logic.
+	uchar   X[64 * 1024];
 	uint64	posCurrentEMBlock = 0;
 	uint64	nIACHPos = 0;
 	CMD4	md4;

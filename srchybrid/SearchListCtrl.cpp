@@ -259,7 +259,7 @@ void CSearchListCtrl::Init(CSearchList *in_searchlist)
 	InsertColumn(0,		_T(""),	LVCFMT_LEFT,	DFLT_FILENAME_COL_WIDTH);			//IDS_DL_FILENAME
 	InsertColumn(1,		_T(""),	LVCFMT_RIGHT,	DFLT_SIZE_COL_WIDTH);				//IDS_DL_SIZE
 	InsertColumn(2,		_T(""),	LVCFMT_RIGHT,	60);								//IDS_SEARCHAVAIL
-	InsertColumn(3,		_T(""),	LVCFMT_RIGHT,	70);								//IDS_COMPLSOURCES
+	InsertColumn(3,		_T(""),	LVCFMT_RIGHT,	90);								//IDS_COMPLSOURCES
 	InsertColumn(4,		_T(""),	LVCFMT_LEFT,	DFLT_FILETYPE_COL_WIDTH);			//IDS_TYPE
 	InsertColumn(5,		_T(""),	LVCFMT_LEFT,	DFLT_HASH_COL_WIDTH, -1, true);		//IDS_FILEID
 	InsertColumn(6,		_T(""),	LVCFMT_LEFT,	DFLT_ARTIST_COL_WIDTH);				//IDS_ARTIST

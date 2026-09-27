@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Transferir e carregar nodes.dat da Internet para iniciar a Kad"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP e UPnP pedem a um router compatível para abrir apenas as portas do eMule. O modo automático escolhe um protocolo compatível. Utilize-o apenas na sua rede doméstica, sem VPN. Caso contrário, prossiga manualmente; as definições existentes são mantidas."
+    IDS_WIZSETUP_PORTTEST "A configuração automática do router só começa após Concluir; faça o teste depois."
+    IDS_WIZSETUP_NETWORKS "eD2K usa uma lista de servidores. Kad funciona sem servidores, mas precisa de UDP e contactos iniciais. Pode usar ambas as redes. Desativar UDP também desativa Kad. A lista de servidores é escolhida na página seguinte."
+    IDS_WIZSETUP_SERVERS_ADD "Transferir e carregar uma lista de servidores eD2K da Internet"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Opcional: pare as outras transferências e desligue qualquer VPN antes de iniciar o teste. Este transfere até cerca de 100 MB de dados temporários através da Cloudflare, que pode ver o seu endereço IP. O eMule Next não envia nem guarda o resultado. Pode editar os valores medidos em KB/s antes de os aplicar."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Introduza velocidades válidas de receção e envio em KB/s ou desmarque a aplicação dos valores."
+    IDS_WIZSETUP_SERVERS_INFO "Com eD2K selecionado, pode adicionar estes servidores ao concluir. Os existentes são mantidos. Não é transferida nenhuma lista nem ativada a ligação automática. Deixe desmarcado para gerir os servidores ou usar apenas Kad."
+    IDS_WIZSETUP_PORTS "TCP serve para ligações e transferências; UDP também é necessário para Kad. Mantenha as portas propostas ou escolha as suas. Se já encaminhou portas no router, use esses números."
     IDS_SOCKETS_INIT_FAILED "Erro ao iniciar os sockets do windows."
     IDS_ABOUTBOX            "&Sobre o eMule..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s de %s"
@@ -938,14 +947,14 @@ BEGIN
     IDS_WEBSVEDIT           "Editar Serviços Web"
     IDS_CHECK4UPDATE        "Verificar existência de nova versão"
     IDS_STARTUP             "Arranque"
-    IDS_NEWVERSIONAVL       "Está disponível uma nova versão do eMule! Venha à nossa página para mais informações."
-    IDS_NEWVERSIONAVLPOPUP  "Está disponível uma nova versão do eMule! Clique aqui para saber mais acerca da nova versão!"
+    IDS_NEWVERSIONAVL       "Está disponível uma nova versão do eMule Next! Venha à nossa página para mais informações."
+    IDS_NEWVERSIONAVLPOPUP  "Está disponível uma nova versão do eMule Next! Clique aqui para saber mais acerca da nova versão!"
     IDS_NEWVERSIONFAILED    "Não foi possível verificar a existência de uma nova versão."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "For detectada uma nova versão do eMule"
+    IDS_CB_TBN_ONNEWVERSION "For detectada uma nova versão do eMule Next"
     IDS_NONEWERVERSION      "Não foi detectada nenhuma nova versão do eMule."
     IDS_VERSIONCHECK        "&Verificar Versão"
     IDS_VISITVERSIONCHECK   "\n\nDeseja visitar a página de informações neste momento?"
@@ -1994,6 +2003,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Enable Windows 7 taskbar effects"
     IDS_LANMODE             "LAN Mode"
     IDS_OPENPREFINI         "Open preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Configuração automática de ligação"
+    IDS_CONNSETUP_INFO          "Mantenha as portas TCP e UDP propostas ou insira as suas próprias. A configuração automática pode configurar um router doméstico compatível após concluir este assistente."
+    IDS_CONNSETUP_BUTTON        "Configurar automaticamente"
+    IDS_CONNSETUP_CONSENT       "Permitir que o eMule Next reencaminhe as suas portas TCP/UDP utilizando PCP, NAT-PMP ou UPnP nesta rede doméstica privada após o assistente terminar e iniciar posteriormente?\n\nConfirme apenas numa rede que controla, sem VPN. A deteção não consegue reconhecer todas as VPN. A permissão da firewall do Windows continua a ser necessária; a porta da interface web é eliminada. O ID elevado não é garantido. Os mapeamentos temporários podem permanecer até à expiração atribuída ao router.\n\nCancelar o assistente não guardará esta escolha."
+    IDS_CONNSETUP_PENDING       "Selecionado: a configuração do router será executada após a conclusão do assistente e em inícios posteriores, apenas em redes privadas qualificadas. A permissão da firewall do Windows ainda é necessária. A elevada acessibilidade do ID e do Kad ainda tem de ser verificada."
+    IDS_CONNSETUP_MANUAL        "Nenhuma nova configuração automática selecionada. As definições existentes são mantidas. Pode utilizar o encaminhamento manual de portas, verificar as permissões da firewall do Windows ou executar você mesmo o teste externo."
+    IDS_CONNSETUP_PRIVATE       "Configuração automática pausada: o Windows reporta uma rede pública, gerida ou mista. Nenhuma alteração de router foi solicitada. Utilize a configuração manual ou verifique o perfil de rede apenas se esta for a sua rede doméstica fidedigna."
+    IDS_CONNSETUP_VPN           "Configuração automática pausada: foi encontrada uma possível ligação VPN, proxy ou interface explícita. O router doméstico não é configurado automaticamente. Utilize as definições de encaminhamento de porta do fornecedor de ligação."
+    IDS_CONNSETUP_UNKNOWN       "Configuração automática em pausa: a rede local não pôde ser identificada em segurança. Nenhuma alteração de router foi solicitada. Pode continuar e configurar a ligação manualmente."
+    IDS_CONNSETUP_SUCCESS       "O router confirma o encaminhamento de TCP %u e UDP %u (0 = desativado) para este PC.\n\nIsto não prova a acessibilidade da Internet. Verifique a permissão da firewall do Windows, ligue-se e verifique o estado do High ID e do Kad ou execute o teste da porta externa manualmente."
+    IDS_CONNSETUP_FAILED        "A configuração automática do router não foi concluída. PCP, NAT-PMP ou UPnP podem estar indisponíveis ou desativados, ou o router pode ter recusado o pedido. Verifique o router e a firewall do Windows; a configuração manual continua disponível."
+    IDS_CONNSETUP_SHARED        "O router informa um endereço de Internet não público: é possível NAT duplo ou CGNAT de fornecedor. Abrir este router sozinho pode não ser suficiente. Pergunte ao fornecedor sobre um IP público ou encaminhamento de porta compatível."
+    IDS_CONNSETUP_CONFLICT      "Uma porta solicitada já tem uma regra de router diferente ou desativada. Não foi substituído. Escolha diferentes portas de cliente ou inspecione esta regra manualmente."
+    IDS_CONNSETUP_BADPORT       "Introduza uma porta TCP de 1 a 65535 e uma porta UDP de 1 a 65535 ou desative explicitamente o UDP."
+    IDS_CONNSETUP_TESTINFO      "Teste voluntário no site oficial do eMule. Recebe as suas informações de IP e porta."
+    IDS_CONNSETUP_FIREWALL      "Abra o Firewall do Windows..."
+    IDS_CONNSETUP_BINDFAILED    "O cliente não conseguiu escutar nas portas selecionadas. Podem estar em uso por outro programa. As definições de porta anteriores foram restauradas."
+    IDS_CONNSETUP_BUSY          "Outra configuração de porta ainda está em execução. Espere que termine antes de tentar novamente."
+    IDS_CONNSETUP_UNSELECT      "Desfazer escolha automática"
+    IDS_PORTMAP_WRONGPORT       "O router atribuiu uma porta externa diferente. Não foi aceite como um mapeamento de cliente funcional. As portas do cliente não foram alteradas. Utilize portas diferentes ou verifique o router manualmente. Os mapeamentos temporários podem permanecer até expirarem."
+    IDS_PORTMAP_REFUSED         "O router recusou o encaminhamento automático de portas. Não foi utilizado nenhum protocolo alternativo para contornar esta recusa. Verifique as definições do administrador do router ou utilize a configuração manual."
+    IDS_PORTMAP_NETWORKCHANGED  "Mapeamento de portas em pausa: a rede, gateway, portas do cliente ou endereço externo foram alterados. Os mapeamentos anteriores podem permanecer até à data de vencimento. Verifique a ligação e execute novamente a configuração automática, se apropriado."
+    IDS_PORTMAP_SHORTLEASE      "O router concedeu uma vida útil de mapeamento muito curta para uma renovação fiável. A configuração automática não foi marcada como bem-sucedida. Utilize a configuração manual ou verifique o router."
+    IDS_PORTMAP_PROTOCOL        "Protocolo: %s"
+    IDS_ADD_UNC_SHARE           "Adicionar pasta de rede"
 END
 
 #endif    // Portuguese (Portugal) resources

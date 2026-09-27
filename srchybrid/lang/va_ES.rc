@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Descarrega i carrega nodes.dat d'Internet per iniciar Kad"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP i UPnP demanen a un encaminador compatible que òbriga només els ports d'eMule. El mode automàtic tria un protocol compatible. Useu-lo només a la vostra xarxa domèstica, sense VPN. Si no, continueu manualment; es conserva la configuració existent."
+    IDS_WIZSETUP_PORTTEST "La configuració automàtica de l'encaminador comença després de Finalitza; feu la prova després."
+    IDS_WIZSETUP_NETWORKS "eD2K usa una llista de servidors. Kad funciona sense servidors, però necessita UDP i contactes inicials. Podeu usar les dos xarxes. Desactivar UDP també desactiva Kad. La llista de servidors es tria a la pàgina següent."
+    IDS_WIZSETUP_SERVERS_ADD "Baixa i carrega una llista de servidors eD2K d'Internet"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Opcional: para les atres transferències i desconnecta qualsevol VPN abans d'iniciar la prova. Envia fins a uns 100 MB de dades temporals per Cloudflare, que pot vore la teua adreça IP. eMule Next no envia ni guarda el resultat. Pots editar els valors mesurats en KB/s abans d'aplicar-los."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Introduïx velocitats de baixada i pujada vàlides en KB/s o desmarca l'opció d'aplicar-les."
+    IDS_WIZSETUP_SERVERS_INFO "Si heu triat eD2K, podeu afegir estos servidors en finalitzar. Es conserven els existents. No es baixa cap llista ni s'activa la connexió automàtica. Deixeu-ho desmarcat per a gestionar els servidors o usar només Kad."
+    IDS_WIZSETUP_PORTS "TCP servix per a connexions i transferències; UDP també cal per a Kad. Manteniu els ports proposats o trieu els vostres. Si ja heu obert ports a l'encaminador, useu els mateixos números."
     IDS_SOCKETS_INIT_FAILED "S'ha produït un error en iniciar els sòcols del Windows."
     IDS_ABOUTBOX            "&Quant a l'eMule..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s de %s"
@@ -938,14 +947,14 @@ BEGIN
                             "Ignora els missatges en enviar un enllaç de l'eMule"
     IDS_CHECK4UPDATE        "Comprova si hi ha una nova versió"
     IDS_STARTUP             "A l'inici"
-    IDS_NEWVERSIONAVL       "Hi ha una nova versió de l'eMule disponible. Aneu a la pàgina web del projecte per a obtindre més informació."
-    IDS_NEWVERSIONAVLPOPUP  "Hi ha una nova versió de l'eMule disponible. Feu clic ací per a veure les novetats d'esta versió."
+    IDS_NEWVERSIONAVL       "Hi ha una nova versió de l'eMule Next disponible. Aneu a la pàgina web del projecte per a obtindre més informació."
+    IDS_NEWVERSIONAVLPOPUP  "Hi ha una nova versió de l'eMule Next disponible. Feu clic ací per a veure les novetats d'esta versió."
     IDS_NEWVERSIONFAILED    "No es pot comprovar si hi ha una versió nova."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "En detectar nova versió de l'eMule"
+    IDS_CB_TBN_ONNEWVERSION "En detectar nova versió de l'eMule Next"
     IDS_NONEWERVERSION      "No s'ha detectat cap versió nova de l'eMule."
     IDS_VERSIONCHECK        "Comprova si hi ha &versions noves"
     IDS_VISITVERSIONCHECK   "\n\nVoleu anar a la pàgina d'informació?"
@@ -1990,6 +1999,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Enable Windows 7 taskbar effects"
     IDS_LANMODE             "LAN Mode"
     IDS_OPENPREFINI         "Open preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Configuració de connexió automàtica"
+    IDS_CONNSETUP_INFO          "Conserveu els ports TCP i UDP proposats o introduïu el vostre. La configuració automàtica pot configurar un encaminador domèstic compatible després d'haver acabat aquest assistent."
+    IDS_CONNSETUP_BUTTON        "Configura automàticament"
+    IDS_CONNSETUP_CONSENT       "Permetre que eMule Next reenviï els seus ports TCP/UDP mitjançant PCP, NAT-PMP o UPnP en aquesta xarxa domèstica privada un cop finalitzi l'assistent i s'iniciï més tard?\n\nConfirmeu només a una xarxa que controleu, sense VPN. La detecció no pot reconèixer totes les VPN. Encara es necessita permís del tallafoc de Windows; el port de la interfície web està exclòs. No es garanteix una identificació alta. Els mapes temporals poden romandre fins a la caducitat assignada per l'encaminador.\n\nLa cancel·lació de l'assistent no desarà aquesta opció."
+    IDS_CONNSETUP_PENDING       "Seleccionat: la configuració de l'encaminador s'executarà un cop finalitzi l'assistent i s'iniciï més tard, només a les xarxes privades elegibles. Encara es requereix permís del tallafoc de Windows. Queda per verificar l'identificació alta i l'accessibilitat de Kad."
+    IDS_CONNSETUP_MANUAL        "No s'ha seleccionat cap configuració automàtica nova. Es conserven les configuracions existents. Podeu utilitzar el reenviament de ports manual, comprovar els permisos del tallafoc Windows o executar la prova externa vosaltres mateixos."
+    IDS_CONNSETUP_PRIVATE       "Configuració automàtica en pausa: Windows informa d'una xarxa pública, gestionada o mixta. No s'han demanat canvis d'encaminador. Utilitzeu la configuració manual o comproveu el perfil de xarxa només si aquesta és la vostra pròpia xarxa domèstica de confiança."
+    IDS_CONNSETUP_VPN           "S'ha posat en pausa la configuració automàtica: s'ha trobat una possible VPN, proxy o enllaç d'interfície explícit. L'encaminador domèstic no es configura automàticament. Utilitzeu la configuració de reenviament de ports del proveïdor de connexió."
+    IDS_CONNSETUP_UNKNOWN       "La configuració automàtica s'ha posat en pausa: la xarxa local no s'ha pogut identificar de manera segura. No s'han demanat canvis d'encaminador. Podeu continuar i configurar la connexió manualment."
+    IDS_CONNSETUP_SUCCESS       "L'encaminador confirma el reenviament de TCP %u i UDP %u (0 = desactivat) a aquest ordinador.\n\nAixò no demostra l'accessibilitat a Internet. Comproveu el permís del tallafoc de Windows, connecteu-vos i comproveu l'estat d'identificació alta i Kad, o executeu la prova del port extern manualment."
+    IDS_CONNSETUP_FAILED        "La configuració automàtica de l'encaminador no s'ha completat. És possible que PCP, NAT-PMP o UPnP no estiguin disponibles o estiguin desactivats, o bé que l'encaminador hagi rebutjat la sol·licitud. Comproveu l'encaminador i el tallafoc Windows; la configuració manual continua disponible."
+    IDS_CONNSETUP_SHARED        "L'encaminador informa d'una adreça d'Internet no pública: és possible el doble NAT o el proveïdor CGNAT. Obrir aquest encaminador sol pot no ser suficient. Pregunteu al proveïdor sobre una IP pública o un reenviament de ports compatible."
+    IDS_CONNSETUP_CONFLICT      "Un port sol·licitat ja té una regla d'encaminador diferent o desactivada. No es va sobreescriure. Trieu diferents ports de client o inspeccioneu aquesta regla manualment."
+    IDS_CONNSETUP_BADPORT       "Introduïu un port TCP de l'1 al 65535 i un port UDP de l'1 al 65535, o desactiveu explícitament UDP."
+    IDS_CONNSETUP_TESTINFO      "Prova voluntària al lloc web oficial d'eMule. Rep la vostra informació IP i port."
+    IDS_CONNSETUP_FIREWALL      "Obriu el tallafoc de Windows..."
+    IDS_CONNSETUP_BINDFAILED    "El client no ha pogut escoltar als ports seleccionats. Poden estar utilitzades per un altre programa. La configuració del port anterior s'ha restaurat."
+    IDS_CONNSETUP_BUSY          "Un altre port de configuració encara s'està executant. Espereu que acabi abans de tornar-ho a provar."
+    IDS_CONNSETUP_UNSELECT      "Desfés l'elecció automàtica"
+    IDS_PORTMAP_WRONGPORT       "L'encaminador ha assignat un port extern diferent. No es va acceptar com a mapeig de client en funcionament. Els ports de client no s'han canviat. Utilitzeu diferents ports o comproveu l'encaminador manualment. Els mapes temporals poden romandre fins al seu venciment."
+    IDS_PORTMAP_REFUSED         "L'encaminador va rebutjar el reenviament automàtic de ports. No es va utilitzar cap protocol alternatiu per evitar aquesta negativa. Comproveu la configuració de l'administrador de l'encaminador o utilitzeu la configuració manual."
+    IDS_PORTMAP_NETWORKCHANGED  "Mapeig de ports en pausa: la xarxa, la passarel·la, els ports del client o l'adreça externa han canviat. Els mapes anteriors poden romandre fins a la caducitat. Comproveu la connexió i torneu a executar la configuració automàtica si escau."
+    IDS_PORTMAP_SHORTLEASE      "L'encaminador va concedir una vida útil de mapes massa curta per a una renovació fiable. La configuració automàtica no s'ha marcat correctament. Utilitzeu la configuració manual o comproveu l'encaminador."
+    IDS_PORTMAP_PROTOCOL        "Protocol: %s"
+    IDS_ADD_UNC_SHARE           "Afig una carpeta de xarxa"
 END
 
 #endif    // Catalan resources

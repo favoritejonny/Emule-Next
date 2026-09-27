@@ -38,6 +38,7 @@
 #include "TaskbarNotifier.h"
 #include "MenuCmds.h"
 #include "Log.h"
+#include "PrivateDiagnostics.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -303,6 +304,8 @@ void CDownloadQueue::AddToResolved(const CPartFile *pFile, SUnresolvedHostname *
 
 void CDownloadQueue::AddDownload(CPartFile *newfile, bool paused)
 {
+	PrivateDiagnostics::LogEvent("download", "added", static_cast<uint64>(newfile->GetFileSize()),
+		paused ? 1 : 0, static_cast<uint64>(filelist.GetCount() + 1));
 	// Barry - Add in paused mode if required
 	if (paused)
 		newfile->PauseFile();

@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Atsisiųsti ir įkelti nodes.dat iš interneto Kad paleidimui"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP ir UPnP prašo suderinamo maršrutizatoriaus atverti tik eMule prievadus. Automatinis režimas parenka palaikomą protokolą. Naudokite jį tik savo namų tinkle be VPN. Kitu atveju tęskite rankiniu būdu; esamos nuostatos išsaugomos."
+    IDS_WIZSETUP_PORTTEST "Automatinis maršrutizatoriaus nustatymas prasideda tik po Baigti; bandykite tada."
+    IDS_WIZSETUP_NETWORKS "eD2K naudoja serverių sąrašą. Kad veikia be serverių, bet reikia UDP ir pradinių kontaktų. Galite naudoti abu tinklus. Išjungus UDP išjungiamas ir Kad. Serverių sąrašas pasirenkamas kitame puslapyje."
+    IDS_WIZSETUP_SERVERS_ADD "Atsisiųsti ir įkelti eD2K serverių sąrašą iš interneto"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Pasirinktinai: sustabdykite kitus siuntimus ir atjunkite VPN, tada paleiskite testą. Per „Cloudflare“ perduodama iki maždaug 100 MB laikinų duomenų, todėl paslauga gali matyti jūsų IP adresą. „eMule Next“ rezultato nesiunčia ir nesaugo. Prieš taikydami galite pakeisti išmatuotas KB/s reikšmes."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Įveskite tinkamą atsisiuntimo ir išsiuntimo spartą KB/s arba išjunkite reikšmių taikymą."
+    IDS_WIZSETUP_SERVERS_INFO "Pasirinkę eD2K galite pridėti šiuos serverius paspausdami Baigti. Esami serveriai išsaugomi. Sąrašas neatsisiunčiamas ir automatinis prisijungimas neįjungiamas. Nežymėkite, jei serverius tvarkysite patys arba naudosite tik Kad."
+    IDS_WIZSETUP_PORTS "TCP skirtas ryšiams ir perdavimui; UDP taip pat reikalingas Kad. Palikite siūlomus prievadus arba pasirinkite savo. Jei maršrutizatorius jau persiunčia prievadus, naudokite tuos pačius numerius."
     IDS_SOCKETS_INIT_FAILED "Klaida aktivuojant windows soketus."
     IDS_ABOUTBOX            "&Apie eMule..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s nuo %s"
@@ -937,14 +946,14 @@ BEGIN
                             "Ignoruoti eMule nuorodų siuntimo protokolo pranešimus"
     IDS_CHECK4UPDATE        "Tikrinti ar yra nauja versija kas"
     IDS_STARTUP             "Startuojant"
-    IDS_NEWVERSIONAVL       "Išleista nauja eMule versija! Patikrinkite eMule projekto puslapį norėdami gauti daugiau informacijos."
-    IDS_NEWVERSIONAVLPOPUP  "Išleista nauja eMule versija! Spauskite čia, kad sužinoti apie naują versiją!"
+    IDS_NEWVERSIONAVL       "Išleista nauja eMule Next versija! Patikrinkite eMule Next projekto puslapį norėdami gauti daugiau informacijos."
+    IDS_NEWVERSIONAVLPOPUP  "Išleista nauja eMule Next versija! Spauskite čia, kad sužinoti apie naują versiją!"
     IDS_NEWVERSIONFAILED    "Negaliu patikrinti ar yra nauja versija."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "Aptikta nauja eMule versija"
+    IDS_CB_TBN_ONNEWVERSION "Aptikta nauja eMule Next versija"
     IDS_NONEWERVERSION      "Neaptikta nauja eMule versija."
     IDS_VERSIONCHECK        "&Versijos tikrinimas"
     IDS_VISITVERSIONCHECK   "\n\nAr jūs norite aplankyti informacinį puslapį dabar?"
@@ -1987,6 +1996,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Įjungti Windows 7 užduočių juostos efektus"
     IDS_LANMODE             "LAN Mode"
     IDS_OPENPREFINI         "Open preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Automatinis ryšio nustatymas"
+    IDS_CONNSETUP_INFO          "Išsaugokite siūlomus TCP ir UDP prievadus arba įveskite savo. Kai baigsite šį vedlį, automatinė sąranka gali sukonfigūruoti suderinamą namų maršruto parinktuvą."
+    IDS_CONNSETUP_BUTTON        "Konfigūruoti automatiškai"
+    IDS_CONNSETUP_CONSENT       "Leisti „eMule Next“ persiųsti savo TCP/UDP prievadus naudojant PCP, NAT-PMP arba UPnP šiame privačiame namų tinkle, kai vedlys baigsis ir vėliau paleis?\n\nPatvirtinkite tik jūsų valdomame tinkle, be VPN. Aptikimas negali atpažinti kiekvieno VPN. Vis dar reikalingas Windows ugniasienės leidimas; žiniatinklio sąsajos prievadas neįtrauktas. Aukštas ID negarantuojamas. Laikini atvaizdai gali likti tol, kol baigsis maršruto parinktuvo priskirtas jų galiojimo laikas.\n\nAtšaukus vedlį šis pasirinkimas nebus išsaugotas."
+    IDS_CONNSETUP_PENDING       "Pasirinkta: maršruto parinktuvo sąranka bus vykdoma pasibaigus vedliui ir vėliau, tik tinkamuose privačiuose tinkluose. Vis dar reikalingas „Windows“ ugniasienės leidimas. Dar reikia patikrinti aukštą ID ir Kad pasiekiamumą."
+    IDS_CONNSETUP_MANUAL        "Nauja automatinė sąranka nepasirinkta. Esami nustatymai išsaugomi. Galite naudoti rankinį prievadų persiuntimą, patikrinti Windows ugniasienės leidimus arba patys paleisti išorinį testą."
+    IDS_CONNSETUP_PRIVATE       "Automatinė sąranka pristabdyta: Windows praneša apie viešą, valdomą arba mišrų tinklą. Nebuvo prašoma pakeisti maršrutizatoriaus. Naudokite rankinę sąranką arba tikrinkite tinklo profilį, tik jei tai jūsų patikimas namų tinklas."
+    IDS_CONNSETUP_VPN           "Automatinė sąranka pristabdyta: rastas galimas VPN, tarpinio serverio arba aiškios sąsajos susiejimas. Namų maršrutizatorius nėra sukonfigūruotas automatiškai. Naudokite ryšio teikėjo prievado persiuntimo nustatymus."
+    IDS_CONNSETUP_UNKNOWN       "Automatinė sąranka pristabdyta: vietinio tinklo nepavyko saugiai identifikuoti. Nebuvo prašoma pakeisti maršrutizatoriaus. Galite tęsti ir sukonfigūruoti ryšį rankiniu būdu."
+    IDS_CONNSETUP_SUCCESS       "Maršrutizatorius patvirtina TCP %u ir UDP %u (0 = išjungtas) persiuntimą į šį kompiuterį.\n\nTai neįrodo interneto pasiekiamumo. Patikrinkite „Windows“ užkardos leidimą, tada prisijunkite ir patikrinkite „High ID“ ir „Kad“ būseną arba rankiniu būdu paleiskite išorinio prievado testą."
+    IDS_CONNSETUP_FAILED        "Automatinis maršruto parinktuvo sąranka nebuvo baigta. PCP, NAT-PMP arba UPnP gali būti nepasiekiamas arba išjungtas, arba maršruto parinktuvas atmetė užklausą. Patikrinkite maršrutizatorių ir Windows ugniasienę; rankinis nustatymas išlieka prieinamas."
+    IDS_CONNSETUP_SHARED        "Maršrutizatorius praneša apie neviešą interneto adresą: galimas dvigubas NAT arba teikėjas CGNAT. Vien tik šio maršrutizatoriaus atidarymo gali nepakakti. Paklauskite teikėjo apie viešąjį IP arba palaikomą prievado persiuntimą."
+    IDS_CONNSETUP_CONFLICT      "Prašomas prievadas jau turi skirtingą arba išjungtą maršrutizatoriaus taisyklę. Jis nebuvo perrašytas. Pasirinkite skirtingus kliento prievadus arba patikrinkite tą taisyklę rankiniu būdu."
+    IDS_CONNSETUP_BADPORT       "Įveskite TCP prievadą nuo 1 iki 65535 ir UDP prievadą nuo 1 iki 65535 arba aiškiai išjunkite UDP."
+    IDS_CONNSETUP_TESTINFO      "Savanoriškas testas oficialioje eMule svetainėje. Jis gauna jūsų IP ir prievado informaciją."
+    IDS_CONNSETUP_FIREWALL      "Atidarykite Windows ugniasienę..."
+    IDS_CONNSETUP_BINDFAILED    "Klientas negalėjo klausytis pasirinktų prievadų. Juos gali naudoti kita programa. Ankstesni prievado nustatymai buvo atkurti."
+    IDS_CONNSETUP_BUSY          "Kitas prievado sąranka vis dar veikia. Prieš bandydami dar kartą, palaukite, kol baigsis."
+    IDS_CONNSETUP_UNSELECT      "Anuliuoti automatinį pasirinkimą"
+    IDS_PORTMAP_WRONGPORT       "Maršrutizatorius priskyrė kitą išorinį prievadą. Jis nebuvo priimtas kaip veikiantis kliento žemėlapis. Klientų prievadai nebuvo pakeisti. Naudokite skirtingus prievadus arba patikrinkite maršrutizatorių rankiniu būdu. Laikini atvaizdai gali likti iki galiojimo pabaigos."
+    IDS_PORTMAP_REFUSED         "Maršrutizatorius atsisakė automatinio prievado persiuntimo. Šiam atsisakymui apeiti nebuvo naudojamas joks alternatyvus protokolas. Patikrinkite maršrutizatoriaus administratoriaus nustatymus arba naudokite rankinę sąranką."
+    IDS_PORTMAP_NETWORKCHANGED  "Prievado susiejimas pristabdytas: pakeistas tinklas, šliuzas, kliento prievadai arba išorinis adresas. Ankstesni atvaizdai gali likti iki galiojimo pabaigos. Patikrinkite ryšį ir, jei reikia, dar kartą paleiskite automatinę sąranką."
+    IDS_PORTMAP_SHORTLEASE      "Maršrutizatorius suteikė per trumpą žemėlapių naudojimo laiką, kad būtų galima patikimai atnaujinti. Automatinė sąranka nebuvo pažymėta kaip sėkminga. Naudokite rankinį nustatymą arba patikrinkite maršrutizatorių."
+    IDS_PORTMAP_PROTOCOL        "Protokolas: %s"
+    IDS_ADD_UNC_SHARE           "Pridėti tinklo aplanką"
 END
 
 #endif    // Lithuanian resources

@@ -37,7 +37,7 @@ public:
 	bool ContactAdd(const Kademlia::CContact *contact);
 	void ContactRem(const Kademlia::CContact *contact);
 	void ContactRef(const Kademlia::CContact *contact);
-	void UpdateNodesDatFromURL(const CString &strURL);
+	void UpdateNodesDatFromURL(const CString &strURL, bool startKad = true);
 	void UpdateSearchGraph(Kademlia::CLookupHistory *pLookupHistory);
 	void SetSearchGraph(Kademlia::CLookupHistory *pLookupHistory, bool bMakeVisible);
 	void ShowLookupGraph(bool bShow);

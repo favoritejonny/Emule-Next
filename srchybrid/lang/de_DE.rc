@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "nodes.dat aus dem Internet laden, um Kad zu starten"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP und UPnP öffnen auf einem kompatiblen Router nur die eMule-Ports. Die Automatik wählt ein unterstütztes Protokoll. Nutzen Sie sie nur im eigenen Heimnetz ohne VPN. Sonst können Sie manuell fortfahren; bisherige Einstellungen bleiben erhalten."
+    IDS_WIZSETUP_PORTTEST "Die Router-Automatik beginnt erst nach Fertigstellen. Testen Sie daher anschließend."
+    IDS_WIZSETUP_NETWORKS "eD2K nutzt eine Serverliste. Kad arbeitet ohne Server, benötigt aber UDP und erste Kontakte. Beide Netze sind nutzbar. Ohne UDP ist auch Kad deaktiviert. Die Serverliste wählen Sie auf der nächsten Seite."
+    IDS_WIZSETUP_SERVERS_ADD "eD2K-Serverliste aus dem Internet laden"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Optional: Beenden Sie andere Übertragungen und trennen Sie eine VPN-Verbindung, bevor Sie den Test starten. Dabei werden bis zu etwa 100 MB temporäre Daten über Cloudflare übertragen; der Dienst kann Ihre IP-Adresse sehen. eMule Next sendet oder speichert das Ergebnis nicht. Sie können die gemessenen KB/s-Werte vor dem Anwenden bearbeiten."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Geben Sie gültige Download- und Uploadwerte in KB/s ein oder deaktivieren Sie das Anwenden."
+    IDS_WIZSETUP_SERVERS_INFO "Bei aktiviertem eD2K können die folgenden Server nach Fertigstellen hinzugefügt werden. Vorhandene Server bleiben erhalten. Es wird keine Liste heruntergeladen und keine automatische Verbindung aktiviert. Ohne Häkchen verwalten Sie Server selbst oder nutzen nur Kad."
+    IDS_WIZSETUP_PORTS "TCP dient Verbindungen und Übertragungen; UDP wird auch für Kad benötigt. Behalten Sie die vorgeschlagenen Ports oder wählen Sie eigene. Bei vorhandenen Router-Freigaben verwenden Sie deren Portnummern."
     IDS_SOCKETS_INIT_FAILED "Fehler beim Initialisieren der Windows-Sockets."
     IDS_ABOUTBOX            "&Über eMule..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s von %s"
@@ -941,10 +950,10 @@ BEGIN
                             "Ignoriere eMule Protokollnachrichten für Link-Senden"
     IDS_CHECK4UPDATE        "Auf neuere Version prüfen"
     IDS_STARTUP             "Programmstart"
-    IDS_NEWVERSIONAVL       "Eine neuere Version von eMule ist verfügbar. Besuche die Projekt-Homepage um mehr Informationen zu erhalten."
-    IDS_NEWVERSIONAVLPOPUP  "Eine neuere Version von eMule ist verfügbar. Klicke hier um mehr über die neue Version zu erfahren!"
+    IDS_NEWVERSIONAVL       "Eine neuere Version von eMule Next ist verfügbar. Besuche die Projekt-Homepage um mehr Informationen zu erhalten."
+    IDS_NEWVERSIONAVLPOPUP  "Eine neuere Version von eMule Next ist verfügbar. Klicke hier um mehr über die neue Version zu erfahren!"
     IDS_NEWVERSIONFAILED    "Ein Fehler trat bei der Versionsüberprüfung auf."
-    IDS_CB_TBN_ONNEWVERSION "Neuere eMule Version gefunden"
+    IDS_CB_TBN_ONNEWVERSION "Neuere eMule Next Version gefunden"
     IDS_NONEWERVERSION      "Es ist keine neuere eMule Version verfügbar."
 END
 
@@ -1964,6 +1973,35 @@ BEGIN
     IDS_OPENPREFINI         "Öffne preferences.ini"
 END
 
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Automatischer Verbindungsaufbau"
+    IDS_CONNSETUP_INFO          "Behalten Sie die vorgeschlagenen Ports TCP und UDP bei oder geben Sie Ihre eigenen ein. Nach Abschluss dieses Assistenten kann durch die automatische Einrichtung ein kompatibler Heimrouter konfiguriert werden."
+    IDS_CONNSETUP_BUTTON        "Automatisch konfigurieren"
+    IDS_CONNSETUP_CONSENT       "Erlauben Sie eMule Next, seine TCP/UDP-Ports über PCP, NAT-PMP oder UPnP in diesem privaten Heimnetzwerk weiterzuleiten, nachdem der Assistent abgeschlossen ist und bei späteren Starts?\n\nBestätigen Sie nur in einem von Ihnen kontrollierten Netzwerk, ohne VPN. Die Erkennung kann nicht jedes VPN erkennen. Es ist weiterhin eine Windows-Firewall-Berechtigung erforderlich; Der Webinterface-Port ist ausgeschlossen. Eine hohe ID ist nicht garantiert. Temporäre Zuordnungen können bis zum Ablauf ihres vom Router zugewiesenen Ablaufs bestehen bleiben.\n\nDurch Abbrechen des Assistenten wird diese Auswahl nicht gespeichert."
+    IDS_CONNSETUP_PENDING       "Ausgewählt: Das Router-Setup wird nach Abschluss des Assistenten und bei späteren Starts nur in geeigneten privaten Netzwerken ausgeführt. Es ist weiterhin eine Windows-Firewall-Berechtigung erforderlich. Die Erreichbarkeit von High ID und Kad muss noch überprüft werden."
+    IDS_CONNSETUP_MANUAL        "Kein neues automatisches Setup ausgewählt. Vorhandene Einstellungen bleiben erhalten. Sie können die manuelle Portweiterleitung verwenden, die Firewall-Berechtigungen von Windows überprüfen oder den externen Test selbst durchführen."
+    IDS_CONNSETUP_PRIVATE       "Automatische Einrichtung angehalten: Windows meldet ein öffentliches, verwaltetes oder gemischtes Netzwerk. Es wurden keine Routeränderungen angefordert. Verwenden Sie die manuelle Einrichtung oder überprüfen Sie das Netzwerkprofil nur, wenn es sich um Ihr eigenes vertrauenswürdiges Heimnetzwerk handelt."
+    IDS_CONNSETUP_VPN           "Automatische Einrichtung angehalten: Es wurde eine mögliche VPN-, Proxy- oder explizite Schnittstellenbindung gefunden. Der Heimrouter wird nicht automatisch konfiguriert. Verwenden Sie die Portweiterleitungseinstellungen des Verbindungsanbieters."
+    IDS_CONNSETUP_UNKNOWN       "Automatische Einrichtung angehalten: Das lokale Netzwerk konnte nicht sicher identifiziert werden. Es wurden keine Routeränderungen angefordert. Sie können fortfahren und die Verbindung manuell konfigurieren."
+    IDS_CONNSETUP_SUCCESS       "Der Router bestätigt die Weiterleitung von TCP %u und UDP %u (0 = deaktiviert) an diesen PC.\n\nDies ist kein Beweis für die Erreichbarkeit im Internet. Überprüfen Sie die Windows-Firewall-Berechtigung, stellen Sie dann eine Verbindung her und überprüfen Sie den High-ID- und Kad-Status oder führen Sie den externen Porttest manuell durch."
+    IDS_CONNSETUP_FAILED        "Die automatische Router-Einrichtung wurde nicht abgeschlossen. PCP, NAT-PMP oder UPnP sind möglicherweise nicht verfügbar oder deaktiviert, oder der Router hat die Anfrage möglicherweise abgelehnt. Überprüfen Sie den Router und die Windows-Firewall. Die manuelle Einrichtung bleibt weiterhin verfügbar."
+    IDS_CONNSETUP_SHARED        "Der Router meldet eine nicht öffentliche Internetadresse: Double NAT oder Provider CGNAT ist möglich. Das Öffnen dieses Routers allein reicht möglicherweise nicht aus. Fragen Sie den Anbieter nach einer öffentlichen IP oder einer unterstützten Portweiterleitung."
+    IDS_CONNSETUP_CONFLICT      "Für einen angeforderten Port gilt bereits eine andere oder deaktivierte Router-Regel. Es wurde nicht überschrieben. Wählen Sie andere Client-Ports aus oder überprüfen Sie diese Regel manuell."
+    IDS_CONNSETUP_BADPORT       "Geben Sie einen TCP-Port von 1 bis 65535 und einen UDP-Port von 1 bis 65535 ein oder deaktivieren Sie UDP explizit."
+    IDS_CONNSETUP_TESTINFO      "Freiwilliger Test auf der offiziellen eMule-Website. Es empfängt Ihre IP- und Portinformationen."
+    IDS_CONNSETUP_FIREWALL      "Öffnen Sie die Windows-Firewall..."
+    IDS_CONNSETUP_BINDFAILED    "Der Client konnte die ausgewählten Ports nicht abhören. Möglicherweise werden sie von einem anderen Programm verwendet. Die vorherigen Porteinstellungen wurden wiederhergestellt."
+    IDS_CONNSETUP_BUSY          "Es läuft noch ein weiteres Port-Setup. Warten Sie, bis der Vorgang abgeschlossen ist, bevor Sie es erneut versuchen."
+    IDS_CONNSETUP_UNSELECT      "Automatische Auswahl rückgängig machen"
+    IDS_PORTMAP_WRONGPORT       "Der Router hat einen anderen externen Port zugewiesen. Es wurde nicht als funktionierende Client-Zuordnung akzeptiert. Client-Ports wurden nicht geändert. Verwenden Sie andere Ports oder überprüfen Sie den Router manuell. Temporäre Zuordnungen können bis zum Ablauf bestehen bleiben."
+    IDS_PORTMAP_REFUSED         "Der Router hat die automatische Portweiterleitung abgelehnt. Es wurde kein alternatives Protokoll verwendet, um diese Ablehnung zu umgehen. Überprüfen Sie die Einstellungen des Router-Administrators oder verwenden Sie die manuelle Einrichtung."
+    IDS_PORTMAP_NETWORKCHANGED  "Portzuordnung angehalten: Das Netzwerk, das Gateway, die Client-Ports oder die externe Adresse wurden geändert. Bisherige Zuordnungen können bis zum Ablauf bestehen bleiben. Überprüfen Sie die Verbindung und führen Sie ggf. das automatische Setup erneut durch."
+    IDS_PORTMAP_SHORTLEASE      "Der Router hat eine Mapping-Lebensdauer gewährt, die für eine zuverlässige Erneuerung zu kurz ist. Die automatische Einrichtung wurde als nicht erfolgreich markiert. Verwenden Sie die manuelle Einrichtung oder überprüfen Sie den Router."
+    IDS_PORTMAP_PROTOCOL        "Protokoll: %s"
+    IDS_ADD_UNC_SHARE           "Netzwerkordner hinzufügen"
+END
 
 #endif    // German (Germany) resources
 /////////////////////////////////////////////////////////////////////////////

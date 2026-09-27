@@ -98,6 +98,8 @@
 #include "CollectionViewDialog.h"
 #include "UPnPImpl.h"
 #include "UPnPImplWrapper.h"
+#include "ConnectionSetup.h"
+#include "PrivateDiagnostics.h"
 #include "ExitBox.h"
 #include "UploadDiskIOThread.h"
 #include "PartFileWriteThread.h"
@@ -132,6 +134,43 @@ namespace
 			dc->ExcludeClipRect(&childRect);
 		}
 		return savedDc;
+	}
+
+	int ClampInitialWindowDimension(int desired, int minimum, int available, int comfortableMaximum)
+	{
+		available = max(1, available);
+		minimum = min(max(1, minimum), available);
+		int maximum = available;
+		if (comfortableMaximum >= minimum)
+			maximum = min(maximum, comfortableMaximum);
+		return min(max(desired, minimum), maximum);
+	}
+
+	CRect CalculateInitialMainWindowRect(const CRect& workArea, const CSize& minimumSize, UINT dpiX, UINT dpiY)
+	{
+		const int workWidth = max(1, workArea.Width());
+		const int workHeight = max(1, workArea.Height());
+		dpiX = dpiX != 0 ? dpiX : 96;
+		dpiY = dpiY != 0 ? dpiY : 96;
+		const int horizontalMargin = max(8, ::MulDiv(16, dpiX, 96));
+		const int verticalMargin = max(8, ::MulDiv(16, dpiY, 96));
+		const int availableWidth = workWidth > horizontalMargin * 2 ? workWidth - horizontalMargin * 2 : workWidth;
+		const int availableHeight = workHeight > verticalMargin * 2 ? workHeight - verticalMargin * 2 : workHeight;
+		const int width = ClampInitialWindowDimension(::MulDiv(workWidth, 84, 100), minimumSize.cx,
+			availableWidth, ::MulDiv(1600, dpiX, 96));
+		const int height = ClampInitialWindowDimension(::MulDiv(workHeight, 88, 100), minimumSize.cy,
+			availableHeight, ::MulDiv(1000, dpiY, 96));
+		const int left = workArea.left + (workWidth - width) / 2;
+		const int top = workArea.top + (workHeight - height) / 2;
+		return CRect(left, top, left + width, top + height);
+	}
+
+	bool IsLegacyMainWindowDefault(const WINDOWPLACEMENT& placement)
+	{
+		return placement.rcNormalPosition.left == 10
+			&& placement.rcNormalPosition.top == 10
+			&& placement.rcNormalPosition.right == 700
+			&& placement.rcNormalPosition.bottom == 500;
 	}
 }
 
@@ -425,6 +464,11 @@ BOOL CemuleDlg::OnInitDialog()
 	m_wndTaskbarNotifier.SetTextDefaultFont();
 	CTrayDialog::OnInitDialog();
 	InitWindowStyles(this);
+	// Keep the main dialog's resource size as its minimum, as in upstream
+	// eMule. Apply this only here, before restoring any saved placement.
+	CRect mainTemplateRect;
+	GetWindowRect(&mainTemplateRect);
+	SetMinTrackSize(mainTemplateRect.Size());
 	CreateToolbarCmdIconMap();
 
 	CMenu *pSysMenu = GetSystemMenu(FALSE);
@@ -588,6 +632,25 @@ BOOL CemuleDlg::OnInitDialog()
 	WINDOWPLACEMENT wp;
 	wp.length = (UINT)sizeof wp;
 	wp = thePrefs.GetEmuleWindowPlacement();
+	// Scale only a new profile or the untouched historical 700x500 default.
+	// Any placement chosen and saved by the user remains exactly as it was.
+	if (thePrefs.IsFirstStart() || IsLegacyMainWindowDefault(wp)) {
+		MONITORINFO monitorInfo = {};
+		monitorInfo.cbSize = sizeof monitorInfo;
+		if (::GetMonitorInfo(::MonitorFromWindow(m_hWnd, MONITOR_DEFAULTTOPRIMARY), &monitorInfo)) {
+			UINT dpiX = 96;
+			UINT dpiY = 96;
+			HDC dc = ::GetDC(m_hWnd);
+			if (dc != NULL) {
+				dpiX = (UINT)::GetDeviceCaps(dc, LOGPIXELSX);
+				dpiY = (UINT)::GetDeviceCaps(dc, LOGPIXELSY);
+				::ReleaseDC(m_hWnd, dc);
+			}
+			const CRect workArea(monitorInfo.rcWork);
+			wp.rcNormalPosition = CalculateInitialMainWindowRect(workArea, mainTemplateRect.Size(), dpiX, dpiY);
+		}
+	}
+	const WINDOWPLACEMENT restorePlacement = wp;
 	if (m_bStartMinimized) {
 		// To avoid the window flickering during startup we try to set the proper window show state right here.
 		if (*thePrefs.GetMinTrayPTR()) {
@@ -617,7 +680,7 @@ BOOL CemuleDlg::OnInitDialog()
 			m_bStartMinimizedChecked = false;
 
 			// to get properly restored from tray bar (after attempt #3) we have to use a patched 'restore' window cmd
-			m_wpFirstRestore = thePrefs.GetEmuleWindowPlacement();
+			m_wpFirstRestore = restorePlacement;
 			m_wpFirstRestore.length = (UINT)sizeof m_wpFirstRestore;
 			if (m_wpFirstRestore.showCmd != SW_SHOWMAXIMIZED)
 				m_wpFirstRestore.showCmd = SW_SHOWNORMAL;
@@ -735,10 +798,16 @@ void CALLBACK CemuleDlg::StartupTimer(HWND /*hwnd*/, UINT /*uiMsg*/, UINT_PTR /*
 						theApp.emuledlg->ShowNotifier(strError, TBN_IMPORTANTEVENT);
 				}
 
-				if (!bError) // show the success msg, only if we had no serious error
-					AddLogLine(true, GetResString(IDS_MAIN_READY), (LPCTSTR)theApp.m_strCurVersionLong);
+				if (!bError) { // show the success msg, only if we had no serious error
+					CString readyText(GetResString(IDS_MAIN_READY));
+					if (readyText.Find(EMULE_NEXT_PRODUCT_NAME) < 0)
+						readyText.Replace(_T("eMule"), EMULE_NEXT_PRODUCT_NAME);
+					AddLogLine(true, readyText, theApp.GetProductVersion());
+				}
 
 				theApp.m_app_state = APP_STATE_RUNNING; //initialization completed
+				PrivateDiagnostics::LogEvent("lifecycle", "ready", bError ? 1 : 0,
+					thePrefs.DoAutoConnect() ? 1 : 0, thePrefs.IsFirstStart() ? 1 : 0);
 				theApp.emuledlg->toolbar->EnableButton(TBBTN_CONNECT, TRUE);
 				theApp.emuledlg->m_SysMenuOptions.EnableMenuItem(MP_CONNECT, MF_ENABLED);
 				theApp.emuledlg->serverwnd->GetDlgItem(IDC_ED2KCONNECT)->EnableWindow();
@@ -1151,9 +1220,16 @@ CString CemuleDlg::GetTransferRateString()
 			, static_cast<double>(m_uDownDatarate) / 1024.0, static_cast<double>(theStats.GetDownDatarateOverhead()) / 1024.0);
 	else
 		szBuff.Format(GetResString(IDS_UPDOWNSMALL), static_cast<double>(m_uUpDatarate) / 1024.0, static_cast<double>(m_uDownDatarate) / 1024.0);
-	// The status bar always displays rates in kilobytes per second. Keep that
-	// unit visible instead of leaving the two values without a scale.
-	szBuff.AppendFormat(_T(" %s"), (LPCTSTR)GetResString(IDS_KBYTESPERSEC));
+	// The status bar always displays rates in kilobytes per second. Show the
+	// unit beside both values so upload and download cannot be misread.
+	const CString unit(_T(" ") + GetResString(IDS_KBYTESPERSEC));
+	int separator = szBuff.Find(_T('|'));
+	if (separator >= 0) {
+		while (separator > 0 && _istspace(szBuff[separator - 1]))
+			--separator;
+		szBuff.Insert(separator, unit);
+	}
+	szBuff += unit;
 	return szBuff;
 }
 
@@ -1678,6 +1754,7 @@ void CemuleDlg::OnClose()
 	static LONG closing = 0;
 	if (::InterlockedExchange(&closing, 1))
 		return; //already closing
+	PrivateDiagnostics::LogEvent("lifecycle", "close-requested");
 	if (!CanClose()) {
 		::InterlockedExchange(&closing, 0);
 		return;
@@ -2571,6 +2648,7 @@ int CemuleDlg::GetRecMaxUpload()
 
 BOOL CemuleDlg::OnCommand(WPARAM wParam, LPARAM lParam)
 {
+	PrivateDiagnostics::LogUiCommand(LOWORD(wParam), HIWORD(wParam), lParam != 0);
 	switch (wParam) {
 	case TBBTN_CONNECT:
 	case MP_HM_CON:
@@ -2617,6 +2695,9 @@ BOOL CemuleDlg::OnCommand(WPARAM wParam, LPARAM lParam)
 	case TBBTN_TOOLS:
 		ShowToolPopup(true);
 		break;
+	case TBBTN_PROJECT:
+		ShowProjectLinksPopup();
+		break;
 	case MP_HM_OPENINC:
 		ShellOpenFile(thePrefs.GetMuleDirectory(EMULE_INCOMINGDIR));
 		break;
@@ -2636,10 +2717,31 @@ BOOL CemuleDlg::OnCommand(WPARAM wParam, LPARAM lParam)
 		BrowserOpen(EMULE_NEXT_PROJECT_URL, thePrefs.GetMuleDirectory(EMULE_EXECUTABLEDIR));
 		break;
 	case MP_HM_LINK2:
-		BrowserOpen(EMULE_NEXT_PROJECT_URL, thePrefs.GetMuleDirectory(EMULE_EXECUTABLEDIR));
+		BrowserOpen(EMULE_NEXT_DISCUSSIONS_URL, thePrefs.GetMuleDirectory(EMULE_EXECUTABLEDIR));
 		break;
 	case MP_HM_LINK3:
+		BrowserOpen(EMULE_NEXT_DOWNLOADS_URL, thePrefs.GetMuleDirectory(EMULE_EXECUTABLEDIR));
+		break;
+	case MP_PROJECT_WEBSITE:
+		BrowserOpen(EMULE_NEXT_WEBSITE_URL, thePrefs.GetMuleDirectory(EMULE_EXECUTABLEDIR));
+		break;
+	case MP_PROJECT_DOWNLOADS:
+		BrowserOpen(EMULE_NEXT_DOWNLOADS_URL, thePrefs.GetMuleDirectory(EMULE_EXECUTABLEDIR));
+		break;
+	case MP_PROJECT_GITHUB:
 		BrowserOpen(EMULE_NEXT_PROJECT_URL, thePrefs.GetMuleDirectory(EMULE_EXECUTABLEDIR));
+		break;
+	case MP_PROJECT_SOURCEFORGE:
+		BrowserOpen(EMULE_NEXT_SOURCEFORGE_URL, thePrefs.GetMuleDirectory(EMULE_EXECUTABLEDIR));
+		break;
+	case MP_PROJECT_ISSUES:
+		BrowserOpen(EMULE_NEXT_ISSUES_URL, thePrefs.GetMuleDirectory(EMULE_EXECUTABLEDIR));
+		break;
+	case MP_PROJECT_DISCUSSIONS:
+		BrowserOpen(EMULE_NEXT_DISCUSSIONS_URL, thePrefs.GetMuleDirectory(EMULE_EXECUTABLEDIR));
+		break;
+	case MP_PROJECT_HELP:
+		theApp.ShowHelp(0, HELP_CONTENTS);
 		break;
 	case MP_WEBSVC_EDIT:
 		theWebServices.Edit();
@@ -2757,7 +2859,8 @@ void CemuleDlg::ShowToolPopup(bool toolsonly)
 	menu.AppendMenu(MF_STRING, MP_HM_DIRECT_DOWNLOAD, GetResString(IDS_SW_DIRECTDOWNLOAD) + _T("..."), _T("NEXT_LINK"));
 
 	menu.AppendMenu(MF_SEPARATOR);
-	menu.AppendMenu(MF_STRING | MF_POPUP, (UINT_PTR)Links.m_hMenu, GetResString(IDS_LINKS), _T("NEXT_WEB"));
+	if (!toolsonly)
+		menu.AppendMenu(MF_STRING | MF_POPUP, (UINT_PTR)Links.m_hMenu, GetResString(IDS_LINKS), _T("NEXT_WEB"));
 	menu.AppendMenu(MF_STRING | MF_POPUP, (UINT_PTR)scheduler.m_hMenu, GetResString(IDS_SCHEDULER), _T("NEXT_SCHEDULER"));
 
 	if (!toolsonly) {
@@ -2767,6 +2870,36 @@ void CemuleDlg::ShowToolPopup(bool toolsonly)
 	menu.TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
 	VERIFY(Links.DestroyMenu());
 	VERIFY(scheduler.DestroyMenu());
+	VERIFY(menu.DestroyMenu());
+}
+
+void CemuleDlg::ShowProjectLinksPopup()
+{
+	CTitledMenu menu;
+	menu.CreatePopupMenu();
+	menu.AddMenuTitle(CemuleApp::GetProductName(), true);
+
+	menu.AppendMenu(MF_STRING, MP_PROJECT_WEBSITE, CemuleApp::GetProductName(), _T("NEXT_WEB"));
+	menu.AppendMenu(MF_STRING, MP_PROJECT_DOWNLOADS, GetResString(IDS_HM_LINKVC), _T("DOWNLOAD"));
+	menu.AppendMenu(MF_SEPARATOR);
+	menu.AppendMenu(MF_STRING, MP_PROJECT_GITHUB, GetResString(IDS_HM_LINKHP), _T("NEXT_LINK"));
+	menu.AppendMenu(MF_STRING, MP_PROJECT_SOURCEFORGE, _T("SourceForge"), _T("NEXT_WEB"));
+	menu.AppendMenu(MF_SEPARATOR);
+	menu.AppendMenu(MF_STRING, MP_PROJECT_ISSUES, GetResString(IDS_REPORT_BUG), _T("NOTIFICATIONS"));
+	menu.AppendMenu(MF_STRING, MP_PROJECT_DISCUSSIONS, GetResString(IDS_HM_LINKFAQ), _T("CHAT"));
+	menu.AppendMenu(MF_STRING, MP_PROJECT_HELP, GetResString(IDS_EM_HELP), _T("HELP"));
+
+	CRect rcButton;
+	if (toolbar != NULL && toolbar->GetRect(TBBTN_PROJECT, &rcButton)) {
+		toolbar->ClientToScreen(&rcButton);
+		menu.TrackPopupMenu(TPM_RIGHTALIGN | TPM_TOPALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON,
+			rcButton.right, rcButton.bottom, this);
+	}
+	else {
+		CPoint point;
+		::GetCursorPos(&point);
+		menu.TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
+	}
 	VERIFY(menu.DestroyMenu());
 }
 
@@ -2841,6 +2974,38 @@ static void ApplySystemFont(CWnd *pWnd)
 
 static bool s_bIsXPStyle;
 
+static CString NormalizeStandardButtonText(CString text)
+{
+	text.Replace(_T("&"), _T(""));
+	text.Trim();
+	return text;
+}
+
+static void LocalizeStandardDialogButton(CWnd *pWnd, UINT controlID, LPCTSTR englishText, UINT resourceID)
+{
+	CWnd *pButton = pWnd->GetDlgItem(controlID);
+	if (pButton == NULL)
+		return;
+
+	CString currentText;
+	pButton->GetWindowText(currentText);
+	if (NormalizeStandardButtonText(currentText).CompareNoCase(englishText) == 0)
+		pButton->SetWindowText(GetResString(resourceID));
+}
+
+static void LocalizeStandardDialogButtons(CWnd *pWnd)
+{
+	// Change only genuine standard captions.  Several legacy dialogs reuse
+	// IDOK/IDCANCEL for actions such as Save or Close and must keep that text.
+	LocalizeStandardDialogButton(pWnd, IDOK, _T("OK"), IDS_TREEOPTIONS_OK);
+	LocalizeStandardDialogButton(pWnd, IDCANCEL, _T("Cancel"), IDS_CANCEL);
+	LocalizeStandardDialogButton(pWnd, ID_APPLY_NOW, _T("Apply"), IDS_PW_APPLY);
+#ifdef IDHELP
+	LocalizeStandardDialogButton(pWnd, IDHELP, _T("Help"), IDS_EM_HELP);
+#endif
+	LocalizeStandardDialogButton(pWnd, ID_HELP, _T("Help"), IDS_EM_HELP);
+}
+
 static void FlatWindowStyles(CWnd *pWnd)
 {
 	for (CWnd *pWndChild = pWnd->GetWindow(GW_CHILD); pWndChild != NULL; pWndChild = pWndChild->GetNextWindow())
@@ -2857,6 +3022,7 @@ static void FlatWindowStyles(CWnd *pWnd)
 
 void InitWindowStyles(CWnd *pWnd)
 {
+	LocalizeStandardDialogButtons(pWnd);
 	//ApplySystemFont(pWnd);
 	if (thePrefs.GetStraightWindowStyles() < 0)
 		return;
@@ -3118,6 +3284,12 @@ int CemuleDlg::GetNextWindowToolbarButton(int iButtonID, int iDirection) const
 
 BOOL CemuleDlg::PreTranslateMessage(MSG *pMsg)
 {
+	if (pMsg != NULL && (pMsg->message == WM_LBUTTONUP || pMsg->message == WM_RBUTTONUP
+		|| pMsg->message == WM_MBUTTONUP))
+	{
+		PrivateDiagnostics::LogUiInteraction(pMsg->message,
+			pMsg->hwnd != NULL ? static_cast<UINT>(::GetDlgCtrlID(pMsg->hwnd)) : 0);
+	}
 	BOOL bResult = CTrayDialog::PreTranslateMessage(pMsg);
 
 	if (m_pSplashWnd && m_pSplashWnd->m_hWnd != NULL)
@@ -3232,6 +3404,7 @@ void CemuleDlg::CreateToolbarCmdIconMap()
 	m_mapTbarCmdToIcon[TBBTN_OPTIONS] = _T("Preferences");
 	m_mapTbarCmdToIcon[TBBTN_TOOLS] = _T("Tools");
 	m_mapTbarCmdToIcon[TBBTN_HELP] = _T("Help");
+	m_mapTbarCmdToIcon[TBBTN_PROJECT] = _T("NEXT_LINK");
 }
 
 LPCTSTR CemuleDlg::GetIconFromCmdId(UINT uId)
@@ -3519,8 +3692,21 @@ LRESULT CemuleDlg::OnUPnPResult(WPARAM wParam, LPARAM lParam)
 			impl->StopAsyncFind();
 			impl->DeletePorts();
 		}
-		// UPnP failed, check if we can retry it with another implementation
-		if (theApp.m_pUPnPFinder->SwitchImplentation()) {
+		// The new protocols fall back only after a non-mutating discovery
+		// proves unavailable. Never bypass a refusal or an uncertain MAP result.
+		if (thePrefs.IsUPnPHomeOnly() && impl->CanFallbackToUPnP()) {
+			impl->StopAsyncFind();
+			if (theApp.m_pUPnPFinder->SelectImplementation(UPNP_IMPL_MINIUPNPLIB)) {
+				if (m_hUPnPTimeOutTimer != 0) { ::KillTimer(NULL, m_hUPnPTimeOutTimer); m_hUPnPTimeOutTimer = 0; }
+				StartUPnP(false);
+				return 0;
+			}
+		}
+		// Preserve the legacy UPnP path for existing users.
+		if (!thePrefs.IsUPnPHomeOnly()
+			&& impl->GetDiagnosticMessageID() != IDS_CONNSETUP_CONFLICT
+			&& impl->GetDiagnosticMessageID() != IDS_CONNSETUP_SHARED
+			&& theApp.m_pUPnPFinder->SwitchImplentation()) {
 			StartUPnP(false);
 			return 0;
 		}
@@ -3536,9 +3722,28 @@ LRESULT CemuleDlg::OnUPnPResult(WPARAM wParam, LPARAM lParam)
 		if (wParam == CUPnPImpl::UPNP_OK) {
 			// remember the last working implementation
 			thePrefs.SetLastWorkingUPnPImpl(impl->GetImplementationID());
-			Log(GetResString(IDS_UPNPSUCCESS), impl->GetUsedTCPPort(), impl->GetUsedUDPPort());
-		} else
+			if (!thePrefs.IsUPnPHomeOnly())
+				Log(GetResString(IDS_UPNPSUCCESS), impl->GetUsedTCPPort(), impl->GetUsedUDPPort());
+		} else if (!thePrefs.IsUPnPHomeOnly())
 			LogWarning(GetResString(IDS_UPNPFAILED));
+
+		if (!bWasRefresh && thePrefs.IsUPnPHomeOnly()) {
+			CString message;
+			if (wParam == CUPnPImpl::UPNP_OK)
+				message.Format(GetResString(IDS_CONNSETUP_SUCCESS), impl->GetUsedTCPPort(), impl->GetUsedUDPPort());
+			else
+				message = GetResString(impl->GetDiagnosticMessageID() != 0
+					? impl->GetDiagnosticMessageID() : IDS_CONNSETUP_FAILED);
+			CString protocol;
+			protocol.Format(GetResString(IDS_PORTMAP_PROTOCOL), impl->GetProtocolName());
+			message += _T("\n\n") + protocol;
+			Log(_T("%s"), (LPCTSTR)message);
+			if (m_reportUPnPSetupResult && theApp.IsRunning())
+				MessageBox(message, GetResString(IDS_CONNSETUP_TITLE), MB_OK | MB_ICONINFORMATION);
+		}
+		if (bWasRefresh && thePrefs.IsUPnPHomeOnly() && wParam != CUPnPImpl::UPNP_OK)
+			LogWarning(GetResString(impl->GetDiagnosticMessageID() != 0 ? impl->GetDiagnosticMessageID() : IDS_CONNSETUP_FAILED));
+		m_reportUPnPSetupResult = false;
 
 		if (theApp.IsRunning() && m_bConnectRequestDelayedForUPnP)
 			StartConnection();
@@ -3568,46 +3773,88 @@ LRESULT CemuleDlg::OnPowerBroadcast(WPARAM wParam, LPARAM lParam)
 	return FALSE; // we do not process this message
 }
 
-void CemuleDlg::StartUPnP(bool bReset, uint16 nForceTCPPort, uint16 nForceUDPPort)
+void CemuleDlg::StartUPnP(bool bReset, uint16 nForceTCPPort, uint16 nForceUDPPort, bool reportSetupResult)
 {
+	if (bReset && theApp.m_pUPnPFinder != NULL
+		&& (((theApp.m_pUPnPFinder->GetImplementation()->GetImplementationID() == UPNP_IMPL_MINIUPNPLIB
+			|| theApp.m_pUPnPFinder->GetImplementation()->GetImplementationID() == UPNP_IMPL_PCP_NATPMP)
+			&& !theApp.m_pUPnPFinder->GetImplementation()->IsReady()) || m_hUPnPTimeOutTimer != 0))
+	{
+		if (reportSetupResult)
+			LocMessageBox(IDS_CONNSETUP_BUSY, MB_OK | MB_ICONINFORMATION);
+		return;
+	}
+	// Recheck before fallback too: the network may have changed during a
+	// discovery timeout, and the next implementation must not bypass the guard.
+	if (thePrefs.IsUPnPHomeOnly()) {
+		const UINT restriction = GetAutomaticSetupRestriction();
+		if (restriction != 0) {
+			LogWarning(GetResString(restriction));
+			if (reportSetupResult || m_reportUPnPSetupResult)
+				LocMessageBox(restriction, MB_OK | MB_ICONINFORMATION);
+			if (m_hUPnPTimeOutTimer != 0) { ::KillTimer(NULL, m_hUPnPTimeOutTimer); m_hUPnPTimeOutTimer = 0; }
+			m_reportUPnPSetupResult = false;
+			return;
+		}
+	}
 	if (theApp.m_pUPnPFinder != NULL && (m_hUPnPTimeOutTimer == 0 || !bReset)) {
 		if (bReset) {
 			theApp.m_pUPnPFinder->Reset();
-			Log(GetResString(IDS_UPNPSETUP));
+			m_reportUPnPSetupResult = reportSetupResult;
+			if (thePrefs.IsUPnPHomeOnly()
+				&& !theApp.m_pUPnPFinder->SelectImplementation(UPNP_IMPL_PCP_NATPMP))
+			{
+				LogWarning(GetResString(IDS_CONNSETUP_FAILED));
+				if (reportSetupResult)
+					LocMessageBox(IDS_CONNSETUP_FAILED, MB_OK | MB_ICONWARNING);
+				m_reportUPnPSetupResult = false;
+				return;
+			}
+			Log(GetResString(thePrefs.IsUPnPHomeOnly() ? IDS_CONNSETUP_TITLE : IDS_UPNPSETUP));
 		}
 		try {
 			CUPnPImpl *impl = theApp.m_pUPnPFinder->GetImplementation();
 			if (impl->IsReady()) {
 				impl->SetMessageOnResult(this, UM_UPNP_RESULT);
-				if (bReset)
+				if (bReset || m_hUPnPTimeOutTimer == 0)
 					VERIFY((m_hUPnPTimeOutTimer = ::SetTimer(NULL, 0, SEC2MS(40), (TIMERPROC)UPnPTimeOutTimer)) != 0);
 				impl->StartDiscovery((nForceTCPPort ? nForceTCPPort : thePrefs.GetPort())
 					, (nForceUDPPort ? nForceUDPPort : thePrefs.GetUDPPort())
-					, (thePrefs.GetWSUseUPnP() ? thePrefs.GetWSPort() : 0));
+					, (!thePrefs.IsUPnPHomeOnly() && thePrefs.GetWSUseUPnP() ? thePrefs.GetWSPort() : 0));
 			} else
 				/*theApp.emuledlg->*/PostMessage(UM_UPNP_RESULT, (WPARAM)CUPnPImpl::UPNP_FAILED, 0);
 		} catch (const CUPnPImpl::UPnPError&) {
-			//ignore
+			PostMessage(UM_UPNP_RESULT, (WPARAM)CUPnPImpl::UPNP_FAILED, 0);
 		} catch (CException *ex) {
 			ex->Delete();
+			PostMessage(UM_UPNP_RESULT, (WPARAM)CUPnPImpl::UPNP_FAILED, 0);
 		}
-	} else
-		ASSERT(0);
+	} else if (reportSetupResult)
+		LocMessageBox(IDS_CONNSETUP_BUSY, MB_OK | MB_ICONINFORMATION);
 }
 
 void CemuleDlg::RefreshUPnP(bool bRequestAnswer)
 {
 	if (!thePrefs.IsUPnPEnabled())
 		return;
+	if (thePrefs.IsUPnPHomeOnly() && GetAutomaticSetupRestriction() != 0)
+		return;
 	if (theApp.m_pUPnPFinder != NULL && m_hUPnPTimeOutTimer == 0) {
 		try {
 			CUPnPImpl *impl = theApp.m_pUPnPFinder->GetImplementation();
 			if (impl->IsReady()) {
+				const bool newMapper = impl->GetImplementationID() == UPNP_IMPL_PCP_NATPMP;
 				if (bRequestAnswer)
 					impl->SetMessageOnResult(this, UM_UPNP_RESULT);
-				if (impl->CheckAndRefresh() && bRequestAnswer)
-					VERIFY((m_hUPnPTimeOutTimer = ::SetTimer(NULL, 0, SEC2MS(10), UPnPTimeOutTimer)) != 0);
-				else
+				else if (newMapper)
+					// Configure the callback before starting the worker, never
+					// concurrently with its completion notification.
+					impl->SetMessageOnResult(NULL, 0);
+				const bool started = impl->CheckAndRefresh();
+				if (started && bRequestAnswer)
+					VERIFY((m_hUPnPTimeOutTimer = ::SetTimer(NULL, 0,
+						SEC2MS(newMapper ? 40 : 10), UPnPTimeOutTimer)) != 0);
+				else if (!started || !newMapper)
 					impl->SetMessageOnResult(NULL, 0);
 			} else
 				DebugLogWarning(_T("RefreshUPnP, implementation not ready"));

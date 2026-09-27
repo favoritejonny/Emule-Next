@@ -343,6 +343,10 @@ void CKademliaWnd::Localize()
 	SetDlgItemText(IDC_NODESDATLABEL, GetResString(IDS_BOOTSRAPNODESDAT));
 	SetDlgItemText(IDC_FIREWALLCHECKBUTTON, GetResString(IDS_KAD_RECHECKFW));
 
+	// These compact radio buttons intentionally draw only their glyph. Giving
+	// them localized text still exposes a useful accessible name to screen readers.
+	SetDlgItemText(IDC_RADIP, GetResString(IDS_SV_ADDRESS));
+	SetDlgItemText(IDC_RADNODESURL, GetResString(IDS_BOOTSRAPNODESDAT));
 	SetDlgItemText(IDC_RADCLIENTS, GetResString(IDS_RADCLIENTS));
 
 	UpdateControlsState();
@@ -439,7 +443,7 @@ void CKademliaWnd::ContactRef(const Kademlia::CContact *contact)
 		m_contactListCtrl->ContactRef(contact);
 }
 
-void CKademliaWnd::UpdateNodesDatFromURL(const CString &strURL)
+void CKademliaWnd::UpdateNodesDatFromURL(const CString &strURL, bool startKad)
 {
 	CString strTempFilename(thePrefs.GetMuleDirectory(EMULE_CONFIGDIR));
 	strTempFilename.AppendFormat(_T("temp-%lu-nodes.dat"), ::GetTickCount());
@@ -452,6 +456,20 @@ void CKademliaWnd::UpdateNodesDatFromURL(const CString &strURL)
 	dlgDownload.m_sFileToDownloadInto = strTempFilename;
 	if (dlgDownload.DoModal() != IDOK) {
 		LogError(LOG_STATUSBAR, GetResString(IDS_ERR_FAILEDDOWNLOADNODES), (LPCTSTR)strURL);
+		return;
+	}
+
+	// During the first-run wizard, store the bootstrap file without starting
+	// Kad yet. This lets automatic router configuration finish before the
+	// normal connection path starts either network.
+	if (!Kademlia::CKademlia::IsRunning() && !startKad) {
+		const CString strNodesFilename(thePrefs.GetMuleDirectory(EMULE_CONFIGDIR) + _T("nodes.dat"));
+		if (!::MoveFileEx(strTempFilename, strNodesFilename,
+			MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH))
+		{
+			(void)_tremove(strTempFilename);
+			LogError(LOG_STATUSBAR, GetResString(IDS_ERR_FAILEDDOWNLOADNODES), (LPCTSTR)strURL);
+		}
 		return;
 	}
 

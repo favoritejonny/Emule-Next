@@ -249,7 +249,10 @@ void CPPgNotify::OnBnClickedTestNotification()
 
 	// play test notification
 	CString strTest;
-	strTest.Format(GetResString(IDS_MAIN_READY), (LPCTSTR)theApp.m_strCurVersionLong);
+	CString readyText(GetResString(IDS_MAIN_READY));
+	if (readyText.Find(EMULE_NEXT_PRODUCT_NAME) < 0)
+		readyText.Replace(_T("eMule"), EMULE_NEXT_PRODUCT_NAME);
+	strTest.Format(readyText, theApp.GetProductVersion());
 	theApp.emuledlg->ShowNotifier(strTest, TBN_IMPORTANTEVENT);
 
 	// restore pref settings

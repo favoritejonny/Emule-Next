@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Kad を開始するためにインターネットから nodes.dat をダウンロードして読み込む"
+    IDS_WIZSETUP_PROTOCOLS "PCP、NAT-PMP、UPnP は、対応ルーターに eMule のポートだけの転送を要求します。自動モードが対応プロトコルを選びます。VPN を使わない、ご自身のホームネットワークでのみ使用してください。それ以外は手動で進めてください。既存の設定は保持されます。"
+    IDS_WIZSETUP_PORTTEST "ルーターの自動設定は「完了」後に実行されるため、選択した場合は完了後にテストしてください。"
+    IDS_WIZSETUP_NETWORKS "eD2K はサーバー一覧を使います。Kad はサーバー不要ですが、UDP と初期接続先が必要です。両方を利用できます。UDP を無効にすると Kad も無効になります。サーバー一覧は次のページで選べます。"
+    IDS_WIZSETUP_SERVERS_ADD "インターネットから eD2K サーバー一覧をダウンロードして読み込む"
+    IDS_WIZSETUP_SPEEDTEST_INFO "任意: 他の転送を停止し、VPN を切断してからテストを開始してください。Cloudflare 経由で最大約 100 MB の一時データを送受信するため、同サービスには IP アドレスが見えます。eMule Next は結果を送信または保存しません。適用前に測定値（KB/s）を編集できます。"
+    IDS_WIZSETUP_SPEEDTEST_INVALID "有効なダウンロードおよびアップロード速度を KB/s で入力するか、適用のチェックを外してください。"
+    IDS_WIZSETUP_SERVERS_INFO "eD2K を選択した場合、「完了」で以下のサーバーを追加できます。既存のサーバーは保持され、一覧のダウンロードや自動接続の有効化は行いません。自分で管理する場合や Kad のみ使う場合はチェックしないでください。"
+    IDS_WIZSETUP_PORTS "TCP は接続と転送に使い、Kad には UDP も必要です。提案されたポートを使うか、指定してください。ルーターに転送設定済みのポートがある場合は同じ番号を使ってください。"
     IDS_SOCKETS_INIT_FAILED "Windowsソケットの初期化中にエラーが発生しました"
     IDS_ABOUTBOX            "eMuleについて(&A)..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s(%s)"
@@ -1033,14 +1042,14 @@ BEGIN
                             "eMuleの send link プロトコルメッセージを無視"
     IDS_CHECK4UPDATE        "新しいバージョンをチェック"
     IDS_STARTUP             "起動時"
-    IDS_NEWVERSIONAVL       "新しいバージョンのeMuleが利用可能になりました! プロジェクトホームページで詳細情報を確認できます"
-    IDS_NEWVERSIONAVLPOPUP  "新しいバージョンのeMuleが利用可能になりました! ここをクリックすれば新バージョンについての詳細を確認することができます!"
+    IDS_NEWVERSIONAVL       "新しいバージョンのeMule Nextが利用可能になりました! プロジェクトホームページで詳細情報を確認できます"
+    IDS_NEWVERSIONAVLPOPUP  "新しいバージョンのeMule Nextが利用可能になりました! ここをクリックすれば新バージョンについての詳細を確認することができます!"
     IDS_NEWVERSIONFAILED    "新しいバージョンをチェックできません"
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "新しいバージョンのeMuleを検出"
+    IDS_CB_TBN_ONNEWVERSION "新しいバージョンのeMule Nextを検出"
     IDS_NONEWERVERSION      "eMuleの新しいバージョンはありません"
     IDS_VERSIONCHECK        "バージョンチェック(&V)"
     IDS_VISITVERSIONCHECK   "\n\n今すぐインフォメーションページを訪問しますか?"
@@ -1990,6 +1999,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Enable Windows 7 taskbar effects"
     IDS_LANMODE             "LAN Mode"
     IDS_OPENPREFINI         "Open preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "自動接続セットアップ"
+    IDS_CONNSETUP_INFO          "提案された TCP ポートと UDP ポートをそのまま使用するか、独自のポートを入力します。このウィザードを完了すると、自動セットアップにより互換性のあるホーム ルーターを構成できます。"
+    IDS_CONNSETUP_BUTTON        "自動的に設定する"
+    IDS_CONNSETUP_CONSENT       "ウィザードが終了し、その後開始した後、eMule Next がこのプライベート ホーム ネットワーク上で PCP、NAT-PMP、または UPnP を使用して TCP/UDP ポートを転送することを許可しますか?\n\nVPN を使用せず、自分が管理するネットワーク上でのみ確認してください。検出ではすべての VPN を認識できるわけではありません。 Windows ファイアウォールの許可は引き続き必要です。 Web インターフェイス ポートは除外されます。高いIDは保証されません。一時的なマッピングは、ルーターによって割り当てられた有効期限が切れるまで保持される場合があります。\n\nウィザードをキャンセルすると、この選択は保存されません。"
+    IDS_CONNSETUP_PENDING       "選択した場合: ルーターのセットアップは、ウィザードの終了後、その後の開始後に、対象となるプライベート ネットワーク上でのみ実行されます。 Windows ファイアウォールの許可は引き続き必要です。高 ID と Kad の到達可能性はまだ検証されていません。"
+    IDS_CONNSETUP_MANUAL        "新しい自動セットアップが選択されていません。既存の設定は保持されます。手動ポート転送を使用したり、Windows ファイアウォールのアクセス許可を確認したり、外部テストを自分で実行したりすることができます。"
+    IDS_CONNSETUP_PRIVATE       "自動セットアップが一時停止されました: Windows は、パブリック ネットワーク、管理ネットワーク、または混合ネットワークを報告します。ルーターの変更は要求されませんでした。手動セットアップを使用するか、これが自分の信頼できるホーム ネットワークである場合にのみネットワーク プロファイルを確認してください。"
+    IDS_CONNSETUP_VPN           "自動セットアップが一時停止されました: VPN、プロキシ、または明示的なインターフェイス バインディングの可能性が見つかりました。ホームルーターは自動設定されません。接続プロバイダーのポート転送設定を使用します。"
+    IDS_CONNSETUP_UNKNOWN       "自動セットアップが一時停止されました: ローカル ネットワークを安全に識別できませんでした。ルーターの変更は要求されませんでした。続行して接続を手動で構成できます。"
+    IDS_CONNSETUP_SUCCESS       "ルーターは、この PC への TCP %u および UDP %u (0 = 無効) の転送を確認します。\n\nこれはインターネットへの到達可能性を証明するものではありません。 Windows ファイアウォールの許可を確認し、接続して High ID と Kad ステータスを確認するか、外部ポート テストを手動で実行します。"
+    IDS_CONNSETUP_FAILED        "ルーターの自動セットアップが完了しませんでした。 PCP、NAT-PMP、または UPnP が利用できないか無効になっているか、ルーターが要求を拒否した可能性があります。ルーターと Windows ファイアウォールを確認してください。手動セットアップは引き続き利用可能です。"
+    IDS_CONNSETUP_SHARED        "ルーターは非パブリックのインターネット アドレスを報告します。二重 NAT またはプロバイダー CGNAT が可能です。このルーターを開くだけでは不十分な場合があります。パブリック IP またはサポートされているポート転送についてはプロバイダーに問い合わせてください。"
+    IDS_CONNSETUP_CONFLICT      "要求されたポートには、すでに別のルーター ルールが設定されているか、無効になっています。上書きされませんでした。別のクライアント ポートを選択するか、そのルールを手動で検査してください。"
+    IDS_CONNSETUP_BADPORT       "TCP ポートを 1 ～ 65535 の範囲で入力し、UDP ポートを 1 ～ 65535 の範囲で入力するか、UDP を明示的に無効にします。"
+    IDS_CONNSETUP_TESTINFO      "eMule 公式 Web サイトでの自主テスト。 IP とポートの情報を受け取ります。"
+    IDS_CONNSETUP_FIREWALL      "Windows ファイアウォールを開きます..."
+    IDS_CONNSETUP_BINDFAILED    "クライアントは選択されたポートをリッスンできませんでした。別のプログラムによって使用されている可能性があります。以前のポート設定が復元されました。"
+    IDS_CONNSETUP_BUSY          "別のポート設定がまだ実行中です。完了するまで待ってから再試行してください。"
+    IDS_CONNSETUP_UNSELECT      "自動選択を元に戻す"
+    IDS_PORTMAP_WRONGPORT       "ルーターは別の外部ポートを割り当てました。動作するクライアント マッピングとして受け入れられませんでした。クライアントのポートは変更されませんでした。別のポートを使用するか、ルーターを手動で確認してください。一時的なマッピングは期限が切れるまで残る場合があります。"
+    IDS_PORTMAP_REFUSED         "ルーターが自動ポート転送を拒否しました。この拒否を回避するための代替プロトコルは使用されませんでした。ルーター管理者の設定を確認するか、手動セットアップを使用してください。"
+    IDS_PORTMAP_NETWORKCHANGED  "ポート マッピングが一時停止されました: ネットワーク、ゲートウェイ、クライアント ポート、または外部アドレスが変更されました。以前のマッピングは期限が切れるまで残る場合があります。接続を確認し、必要に応じて自動セットアップを再度実行します。"
+    IDS_PORTMAP_SHORTLEASE      "ルーターが許可したマッピングの有効期間が短すぎて、信頼性の高い更新ができませんでした。自動セットアップは成功としてマークされませんでした。手動セットアップを使用するか、ルーターを確認してください。"
+    IDS_PORTMAP_PROTOCOL        "プロトコル: %s"
+    IDS_ADD_UNC_SHARE           "ネットワーク フォルダーを追加"
 END
 
 #endif    // 日本語 (Japanese) resources

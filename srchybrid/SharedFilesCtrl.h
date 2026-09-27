@@ -57,7 +57,7 @@ public:
 	void	SetToolTipsDelay(DWORD dwDelay);
 	void	CreateMenus();
 	void	ReloadFileList();
-	void	AddFile(const CShareableFile *file);
+	void	AddFile(const CShareableFile *file, bool bCheckExisting = true);
 	void	RemoveFile(const CShareableFile *file, bool bDeletedFromDisk);
 	void	UpdateFile(const CShareableFile *file, bool bUpdateFileSummary = true);
 	void	Localize();

@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Hämta och läs in nodes.dat från internet för att starta Kad"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP och UPnP ber en kompatibel router att öppna endast eMules portar. Automatiskt läge väljer ett protokoll som stöds. Använd det bara i ditt eget hemnätverk utan VPN. Fortsätt annars manuellt; befintliga inställningar behålls."
+    IDS_WIZSETUP_PORTTEST "Automatisk routerinställning startar först efter Slutför; gör testet därefter."
+    IDS_WIZSETUP_NETWORKS "eD2K använder en serverlista. Kad fungerar utan servrar men behöver UDP och startkontakter. Du kan använda båda nätverken. Om UDP stängs av stängs även Kad av. Serverlistan väljs på nästa sida."
+    IDS_WIZSETUP_SERVERS_ADD "Hämta och läs in en eD2K-serverlista från internet"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Valfritt: stoppa andra överföringar och koppla från eventuell VPN innan du startar testet. Det överför upp till cirka 100 MB tillfälliga data via Cloudflare, som kan se din IP-adress. eMule Next skickar eller sparar inte resultatet. Du kan redigera de uppmätta värdena i KB/s innan de används."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Ange giltiga hämtnings- och uppladdningshastigheter i KB/s eller avmarkera användning av värdena."
+    IDS_WIZSETUP_SERVERS_INFO "Med eD2K valt kan dessa servrar läggas till vid Slutför. Befintliga servrar behålls. Ingen lista hämtas och automatisk anslutning aktiveras inte. Lämna omarkerat för att hantera servrar själv eller bara använda Kad."
+    IDS_WIZSETUP_PORTS "TCP används för anslutningar och överföringar; UDP behövs även för Kad. Behåll föreslagna portar eller välj egna. Om portar redan vidarebefordras i routern, använd samma nummer."
     IDS_SOCKETS_INIT_FAILED "Fel vid initiering av windows sockets."
     IDS_ABOUTBOX            "&Om eMule..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s från %s"
@@ -934,14 +943,14 @@ BEGIN
                             "Ignorera eMule skicka länk protokollmeddelanden"
     IDS_CHECK4UPDATE        "Kolla efter ny version"
     IDS_STARTUP             "Start av eMule"
-    IDS_NEWVERSIONAVL       "En ny version av eMule är tillgänglig! Kolla hemsidan för mer information."
-    IDS_NEWVERSIONAVLPOPUP  "En ny version av eMule är tillgänglig. Klicka här för att läsa om den nya versionen!"
+    IDS_NEWVERSIONAVL       "En ny version av eMule Next är tillgänglig! Kolla hemsidan för mer information."
+    IDS_NEWVERSIONAVLPOPUP  "En ny version av eMule Next är tillgänglig. Klicka här för att läsa om den nya versionen!"
     IDS_NEWVERSIONFAILED    "Misslyckades att kolla om det fanns en ny version."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "Ny eMule version hittad"
+    IDS_CB_TBN_ONNEWVERSION "Ny eMule Next version hittad"
     IDS_NONEWERVERSION      "Ingen ny eMule version hittad."
     IDS_VERSIONCHECK        "&Versionskontroll"
     IDS_VISITVERSIONCHECK   "\n\nVill du besöka informationssidan nu?"
@@ -1987,6 +1996,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Enable Windows 7 taskbar effects"
     IDS_LANMODE             "LAN Mode"
     IDS_OPENPREFINI         "Open preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Automatisk anslutningsinställning"
+    IDS_CONNSETUP_INFO          "Behåll de föreslagna TCP och UDP portarna, eller ange din egen. Automatisk installation kan konfigurera en kompatibel hemrouter efter att du är klar med den här guiden."
+    IDS_CONNSETUP_BUTTON        "Konfigurera automatiskt"
+    IDS_CONNSETUP_CONSENT       "Tillåta eMule Next att vidarebefordra sina TCP/UDP-portar med PCP, NAT-PMP eller UPnP på detta privata hemnätverk efter att guiden avslutats och startar senare?\n\nBekräfta endast på ett nätverk du kontrollerar, utan ett VPN. Detektion kan inte känna igen alla VPN. Windows-brandväggsbehörighet behövs fortfarande; webbgränssnittsporten är utesluten. Högt ID kan inte garanteras. Tillfälliga mappningar kan finnas kvar tills deras routertilldelade utgångsdatum.\n\nOm du avbryter guiden sparas inte detta val."
+    IDS_CONNSETUP_PENDING       "Valt: routerinstallationen kommer att köras efter att guiden är klar och vid senare start, endast på kvalificerade privata nätverk. Windows-brandväggsbehörighet krävs fortfarande. Hög ID och Kad-nåbarhet återstår att verifiera."
+    IDS_CONNSETUP_MANUAL        "Ingen ny automatisk inställning har valts. Befintliga inställningar behålls. Du kan använda manuell portvidarebefordran, kontrollera Windows brandväggsbehörigheter eller köra det externa testet själv."
+    IDS_CONNSETUP_PRIVATE       "Automatisk installation pausad: Windows rapporterar ett offentligt, hanterat eller blandat nätverk. Inga routerändringar begärdes. Använd manuell inställning eller kontrollera nätverksprofilen endast om detta är ditt eget betrodda hemnätverk."
+    IDS_CONNSETUP_VPN           "Automatisk installation pausad: en möjlig VPN, proxy eller explicit gränssnittsbindning hittades. Hemroutern konfigureras inte automatiskt. Använd anslutningsleverantörens inställningar för portvidarebefordran."
+    IDS_CONNSETUP_UNKNOWN       "Automatisk installation pausad: det lokala nätverket kunde inte identifieras säkert. Inga routerändringar begärdes. Du kan fortsätta och konfigurera anslutningen manuellt."
+    IDS_CONNSETUP_SUCCESS       "Routern bekräftar vidarebefordran av TCP %u och UDP %u (0 = inaktiverad) till denna PC.\n\nDetta bevisar inte tillgängligheten till Internet. Kontrollera Windows-brandväggens behörighet, anslut sedan och kontrollera High ID och Kad-status, eller kör det externa porttestet manuellt."
+    IDS_CONNSETUP_FAILED        "Automatisk routerinstallation slutfördes inte. PCP, NAT-PMP eller UPnP kan vara otillgängliga eller inaktiverade, eller så kan routern ha avvisat begäran. Kontrollera routern och Windows brandväggen; manuell inställning är fortfarande tillgänglig."
+    IDS_CONNSETUP_SHARED        "Routern rapporterar en icke-offentlig internetadress: dubbel NAT eller leverantör CGNAT är möjlig. Att öppna den här routern ensam kanske inte räcker. Fråga leverantören om en offentlig IP eller portvidarebefordran som stöds."
+    IDS_CONNSETUP_CONFLICT      "En begärd port har redan en annan eller inaktiverad routerregel. Den skrevs inte över. Välj olika klientportar eller inspektera regeln manuellt."
+    IDS_CONNSETUP_BADPORT       "Ange en TCP-port från 1 till 65535 och en UDP-port från 1 till 65535, eller inaktivera uttryckligen UDP."
+    IDS_CONNSETUP_TESTINFO      "Frivilligt test på den officiella eMule-webbplatsen. Den tar emot din IP- och portinformation."
+    IDS_CONNSETUP_FIREWALL      "Öppna Windows-brandväggen..."
+    IDS_CONNSETUP_BINDFAILED    "Klienten kunde inte lyssna på de valda portarna. De kan användas av ett annat program. Tidigare portinställningar har återställts."
+    IDS_CONNSETUP_BUSY          "En annan portinstallation körs fortfarande. Vänta tills det är klart innan du försöker igen."
+    IDS_CONNSETUP_UNSELECT      "Ångra automatiskt val"
+    IDS_PORTMAP_WRONGPORT       "Routern tilldelade en annan extern port. Det accepterades inte som en fungerande klientmappning. Klientportar ändrades inte. Använd olika portar eller kontrollera routern manuellt. Tillfälliga mappningar kan finnas kvar tills de löper ut."
+    IDS_PORTMAP_REFUSED         "Routern vägrade automatisk vidarebefordran av portar. Inget alternativt protokoll användes för att kringgå denna vägran. Kontrollera routeradministratörens inställningar eller använd manuell inställning."
+    IDS_PORTMAP_NETWORKCHANGED  "Portmappning pausad: nätverket, gatewayen, klientportarna eller den externa adressen har ändrats. Tidigare mappningar kan finnas kvar tills de löper ut. Kontrollera anslutningen och kör automatisk installation igen om det är lämpligt."
+    IDS_PORTMAP_SHORTLEASE      "Routern gav en kartlivslängd för kort för pålitlig förnyelse. Automatisk installation markerades inte som framgångsrik. Använd manuell inställning eller kontrollera routern."
+    IDS_PORTMAP_PROTOCOL        "Protokoll: %s"
+    IDS_ADD_UNC_SHARE           "Lägg till nätverksmapp"
 END
 
 #endif    // Swedish resources

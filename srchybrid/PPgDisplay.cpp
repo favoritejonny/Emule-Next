@@ -221,7 +221,9 @@ void CPPgDisplay::Localize()
 		SetDlgItemText(IDC_MINTRAY, GetResString(IDS_PW_TRAY));
 		SetDlgItemText(IDC_DBLCLICK, GetResString(IDS_PW_DBLCLICK));
 		SetDlgItemText(IDC_TOOLTIPDELAY_LBL, GetResString(IDS_PW_TOOL));
-		SetDlgItemText(IDC_3DDEP, _T("Tema / Theme:"));
+		// Reuse the page's localized display label instead of mixing Italian and
+		// English in every language pack. Theme names remain stable product names.
+		SetDlgItemText(IDC_3DDEP, GetResString(IDS_PW_DISPLAY) + _T(':'));
 		SetDlgItemText(IDC_SHOWRATEONTITLE, GetResString(IDS_SHOWRATEONTITLE));
 		SetDlgItemText(IDC_DISABLEKNOWNLIST, GetResString(IDS_DISABLEKNOWNLIST));
 		SetDlgItemText(IDC_DISABLEQUEUELIST, GetResString(IDS_DISABLEQUEUELIST));

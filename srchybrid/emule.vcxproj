@@ -333,7 +333,10 @@
     <ClCompile Include="Preview.cpp" />
     <ClCompile Include="PreviewDlg.cpp" />
     <ClCompile Include="ProgressCtrlX.cpp" />
-    <ClCompile Include="PShtWiz1.cpp" />
+	<ClCompile Include="PShtWiz1.cpp" />
+	<ClCompile Include="ConnectionSpeedTest.cpp" />
+	<ClCompile Include="ConnectionSetup.cpp" />
+	<ClCompile Include="PrivateDiagnostics.cpp" />
     <ClCompile Include="Quantize.cpp" />
     <ClCompile Include="QueueListCtrl.cpp" />
     <ClCompile Include="RARFile.cpp" />
@@ -406,6 +409,8 @@
     <ClCompile Include="UploadQueue.cpp" />
     <ClCompile Include="UPnPImpl.cpp" />
     <ClCompile Include="UPnPImplMiniLib.cpp" />
+    <ClCompile Include="UPnPImplPcpNatPmp.cpp" />
+    <ClCompile Include="PortMappingTests.cpp" />
     <ClCompile Include="UPnPImplWinServ.cpp" />
     <ClCompile Include="UPnPImplWrapper.cpp" />
     <ClCompile Include="URLClient.cpp" />
@@ -460,7 +465,8 @@
     <ClInclude Include="ClientList.h" />
     <ClInclude Include="ClientListCtrl.h" />
     <ClInclude Include="ClientStateDefs.h" />
-    <ClInclude Include="ClientUDPSocket.h" />
+	<ClInclude Include="ClientUDPSocket.h" />
+	<ClInclude Include="ConnectionSpeedTest.h" />
     <ClInclude Include="ClosableTabCtrl.h" />
     <ClInclude Include="Collection.h" />
     <ClInclude Include="CollectionCreateDialog.h" />
@@ -486,6 +492,7 @@
     <ClInclude Include="DownloadClientsCtrl.h" />
     <ClInclude Include="DownloadListCtrl.h" />
     <ClInclude Include="DownloadQueue.h" />
+	<ClInclude Include="PrivateDiagnostics.h" />
     <ClInclude Include="Drawgdix.h" />
     <ClInclude Include="DropDownButton.h" />
     <ClInclude Include="DropTarget.h" />
@@ -564,11 +571,13 @@
     <ClInclude Include="kademlia\utils\ThreadName.h" />
     <ClInclude Include="kademlia\utils\UInt128.h" />
     <ClInclude Include="KademliaWnd.h" />
+    <ClInclude Include="KadBootstrap.h" />
     <ClInclude Include="KadLookupGraph.h" />
     <ClInclude Include="KadSearchListCtrl.h" />
     <ClInclude Include="KnownFile.h" />
     <ClInclude Include="KnownFileList.h" />
     <ClInclude Include="langids.h" />
+    <ClInclude Include="LanguageSelection.h" />
     <ClInclude Include="LastCommonRouteFinder.h" />
     <ClInclude Include="LayeredWindowHelperST.h" />
     <ClInclude Include="ListBoxST.h" />
@@ -709,6 +718,8 @@
     <ClInclude Include="UploadQueue.h" />
     <ClInclude Include="UPnPImpl.h" />
     <ClInclude Include="UPnPImplMiniLib.h" />
+    <ClInclude Include="UPnPImplPcpNatPmp.h" />
+    <ClInclude Include="PortMappingProtocol.h" />
     <ClInclude Include="UPnPImplWinServ.h" />
     <ClInclude Include="UPnPImplWrapper.h" />
     <ClInclude Include="URLClient.h" />
@@ -717,6 +728,9 @@
     <ClInclude Include="VistaDefines.h" />
     <ClInclude Include="WebServer.h" />
     <ClInclude Include="WebServices.h" />
+    <ClInclude Include="ConnectionSetup.h" />
+    <ClInclude Include="ConnectionSetupPolicy.h" />
+    <ClInclude Include="ServerBootstrap.h" />
     <ClInclude Include="WebSocket.h" />
     <ClInclude Include="Wizard.h" />
     <ClInclude Include="ZIPFile.h" />
@@ -969,6 +983,11 @@
       <Command>if not exist "$(OutDir)docs" mkdir "$(OutDir)docs"
 copy /Y "$(ProjectDir)..\docs\eMuleNext-Help.html" "$(OutDir)docs\eMuleNext-Help.html" &gt;nul</Command>
     </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(EmuleNextPrivateDiagnostics)'=='true'">
+    <ClCompile>
+      <PreprocessorDefinitions>EMULENEXT_PRIVATE_DIAGNOSTICS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="BuildLanguageResources" BeforeTargets="Build">

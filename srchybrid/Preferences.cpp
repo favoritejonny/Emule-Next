@@ -47,7 +47,8 @@ static char THIS_FILE[] = __FILE__;
 
 #define SHAREDDIRS	_T("shareddir.dat")
 LPCTSTR const strPreferencesDat = _T("preferences.dat");
-LPCTSTR const strDefaultToolbar = _T("0099010203040506070899091011");
+LPCTSTR const strDefaultToolbar = _T("009901020304050607089909101112");
+LPCTSTR const strLegacyDefaultToolbar = _T("0099010203040506070899091011");
 CPreferences thePrefs;
 
 namespace
@@ -484,6 +485,7 @@ uint8	CPreferences::m_byCryptTCPPaddingLength;
 bool	CPreferences::m_bSkipWANIPSetup;
 bool	CPreferences::m_bSkipWANPPPSetup;
 bool	CPreferences::m_bEnableUPnP;
+bool	CPreferences::m_bUPnPHomeOnly;
 bool	CPreferences::m_bCloseUPnPOnExit;
 bool	CPreferences::m_bIsWinServImplDisabled;
 bool	CPreferences::m_bIsMinilibImplDisabled;
@@ -682,7 +684,7 @@ void CPreferences::Uninit()
 
 void CPreferences::SetStandardValues()
 {
-	WINDOWPLACEMENT defaultWPM;
+	WINDOWPLACEMENT defaultWPM = {};
 	defaultWPM.length = sizeof(WINDOWPLACEMENT);
 	defaultWPM.rcNormalPosition.left = 10;
 	defaultWPM.rcNormalPosition.top = 10;
@@ -1846,6 +1848,7 @@ void CPreferences::SavePreferences()
 	// Section: "UPnP"
 	//
 	ini.WriteBool(_T("EnableUPnP"), m_bEnableUPnP, _T("UPnP"));
+	ini.WriteBool(_T("AutomaticHomeNetworkOnly"), m_bUPnPHomeOnly);
 	ini.WriteBool(_T("SkipWANIPSetup"), m_bSkipWANIPSetup);
 	ini.WriteBool(_T("SkipWANPPPSetup"), m_bSkipWANPPPSetup);
 	ini.WriteBool(_T("CloseUPnPOnExit"), m_bCloseUPnPOnExit);
@@ -2292,6 +2295,8 @@ void CPreferences::LoadPreferences()
 
 	// Toolbar
 	m_sToolbarSettings = ini.GetString(_T("ToolbarSetting"), strDefaultToolbar);
+	if (m_sToolbarSettings == strLegacyDefaultToolbar)
+		m_sToolbarSettings = strDefaultToolbar;
 	m_sToolbarBitmap = ini.GetString(_T("ToolbarBitmap"), _T(""));
 	m_sToolbarBitmapFolder = ini.GetString(_T("ToolbarBitmapFolder"), _T(""));
 	if (m_sToolbarBitmapFolder.IsEmpty()) // We want GetDefaultDirectory to also create the folder, so we have to know if we use the default or not
@@ -2453,6 +2458,7 @@ void CPreferences::LoadPreferences()
 	// Section: "UPnP"
 	//
 	m_bEnableUPnP = ini.GetBool(_T("EnableUPnP"), false, _T("UPnP"));
+	m_bUPnPHomeOnly = ini.GetBool(_T("AutomaticHomeNetworkOnly"), false);
 	m_bSkipWANIPSetup = ini.GetBool(_T("SkipWANIPSetup"), false);
 	m_bSkipWANPPPSetup = ini.GetBool(_T("SkipWANPPPSetup"), false);
 	m_bCloseUPnPOnExit = ini.GetBool(_T("CloseUPnPOnExit"), true);

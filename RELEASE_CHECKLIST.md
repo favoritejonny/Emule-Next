@@ -15,6 +15,9 @@ Complete every item before publishing a Win32, x64 or portable package.
       [SOURCE-CODE.md](SOURCE-CODE.md) in the source tag and binary packages.
 - [x] Include [WINDOWS-SMARTSCREEN.md](WINDOWS-SMARTSCREEN.md) in each unsigned
       binary package and state clearly in the release notes that it is unsigned.
+- [x] Record that the SignPath application was not accepted for Beta 1 because
+      the project did not yet have enough public reputation. Publish this Beta
+      as unsigned and state that fact in the release notes and SmartScreen guide.
 - [x] Check every bundled dependency and record its licence in
       [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and the package licence
       directory.
@@ -28,20 +31,23 @@ Complete every item before publishing a Win32, x64 or portable package.
 ## Source and binaries
 
 - [x] Create an immutable Git tag for the exact source revision.
-- [x] Build Win32 and x64 Release sequentially from the exact revision now
-      identified by that tag.
+- [x] Build Win32 and x64 Release sequentially from the exact code content
+      identified by the release tag; only release documentation was finalised
+      after the successful build and tests.
 - [x] Test both executables manually without overwriting an existing user
       profile.
-- [ ] Resize and restart each main resizable window, including Transfers,
+- [x] Resize and restart each main resizable window, including Transfers,
       Search, Servers, Shared Files, Preferences, file details and the
       first-run wizard.
 - [x] Create portable archives and SHA-256 checksums.
+- [x] Generate the final manifests, SBOMs and SHA-256 checksums after the
+      unsigned status and final tested binaries have been verified.
 - [ ] Confirm the GitHub Actions Win32 and x64 jobs passed for the exact release
       commit and retain their build/test logs.
-- [ ] Verify the PE security report passes for both architectures: ASLR, DEP,
+- [x] Verify the PE security report passes for both architectures: ASLR, DEP,
       CFG with a non-empty function table, security cookie, x64 high-entropy
       ASLR and Win32 large-address awareness.
-- [ ] Include and validate the external and embedded file manifest and SPDX 2.3
+- [x] Include and validate the external and embedded file manifest and SPDX 2.3
       SBOM for both portable archives.
 - [x] Publish the complete corresponding source from the same tag in the same
       release location as the binaries.
@@ -54,11 +60,12 @@ Complete every item before publishing a Win32, x64 or portable package.
       notes.
 - [x] Verify the release contains no private test data, crash dumps, personal
       paths, tokens or passwords.
-- [ ] If data collection was added, update [PRIVACY.md](PRIVACY.md) before the
-      release and obtain specialist review where required.
-- [ ] Run the isolated automated checks for clean first start, MD4/eD2K hashing,
+- [x] Compile the public release with private diagnostics disabled, verify that
+      no diagnostic CSV or identifying test profile is packaged, and keep the
+      no-project-telemetry statement in [PRIVACY.md](PRIVACY.md).
+- [x] Run the isolated automated checks for clean first start, MD4/eD2K hashing,
       43 languages, upload regression rules and clean shutdown on Win32 and x64.
-- [ ] Separately test real eD2K/Kad connectivity, sustained upload/download,
+- [x] Separately test real eD2K/Kad connectivity, sustained upload/download,
       firewall prompts and first-run wizard visuals; automated smoke tests do
       not replace these network and interface checks.
 
@@ -67,6 +74,8 @@ Complete every item before publishing a Win32, x64 or portable package.
 - [x] Link the release notes to the exact source tag and checksum file.
 - [x] Publish only the Win32 and x64 portable ZIPs for the first pre-release;
       do not describe them as installers.
+- [x] Do not publish Beta 1 until both explicitly unsigned portable packages
+      have passed the full automated suite and manual clean-start test.
 - [x] Use neutral wording: users must download and share only material they
       are authorised to receive or distribute.
 - [x] Retain the release archive, source archive, build log and checksums for
@@ -93,3 +102,11 @@ Complete every item before publishing a Win32, x64 or portable package.
   tag resolves to the exact build commit `27a14542ef7d02785c83a79e908d7685faa55591`;
   GitHub shows the two verified portable archives, checksum file and tagged
   source archives.
+- Final 1.0.0-beta.1 Win32 and x64 builds on 2026-09-27 completed sequentially
+  with zero errors. The automated suite passed clean start, language fallback,
+  43 translations, hashing vectors, upload rules, router-mapping policy,
+  wizard layout, server bootstrap, clean shutdown and PE hardening checks.
+  Both final portable copies were then tested manually and reported working.
+  Archive verification found 61 files per architecture, matching embedded and
+  external manifests/SBOMs, no private diagnostics or user profile, and 6,682
+  individually verified files in the corresponding-source snapshot.

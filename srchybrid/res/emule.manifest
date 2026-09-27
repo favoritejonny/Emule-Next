@@ -4,7 +4,7 @@
                     name="eMuleNext"
                     processorArchitecture="*"
                     publicKeyToken="0000000000000000"
-                    version="1.0.0.1"
+                    version="1.0.0.2"
   />
   <description>eMule Next community build</description>
   <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">

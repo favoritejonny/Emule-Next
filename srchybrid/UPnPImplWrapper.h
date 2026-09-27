@@ -27,6 +27,7 @@ public:
 	CUPnPImpl* GetImplementation() const	{ return m_pActiveImpl; }
 	bool SwitchImplentation();
 	void Reset();
+	bool SelectImplementation(int implementationID);
 
 protected:
 	void Init();

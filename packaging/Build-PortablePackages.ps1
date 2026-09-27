@@ -2,7 +2,7 @@
 param(
     [ValidateSet('All', 'Win32', 'x64')]
     [string]$Platform = 'All',
-    [string]$Version = '1.0.0-alpha.1',
+    [string]$Version = '1.0.0-beta.1',
     [string]$OutputDirectory = ''
 )
 

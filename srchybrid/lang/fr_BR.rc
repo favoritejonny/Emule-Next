@@ -898,14 +898,14 @@ BEGIN
 	IDS_IRC_EMULEPROTO_IGNORESENDLINK	"Leuskel a-gostez ar c'hemennadennoù kas eus ereoù"
 	IDS_CHECK4UPDATE	"Gwiriañ stumm nevez"
 	IDS_STARTUP	"Loc'hañ"
-	IDS_NEWVERSIONAVL	"Prest eo ur stumm nevez eus eMule da vezañ pellgarget. Sellit ouzh https://emule-project.net evit lenn muioc'h a ditouroù."
-	IDS_NEWVERSIONAVLPOPUP 	"Prest eo stumm nevez eus eMule da vezañ staliet. Klikit amañ evit lenn muioc'h a ditouroù."
+	IDS_NEWVERSIONAVL	"Prest eo ur stumm nevez eus eMule Next da vezañ pellgarget. Sellit ouzh https://github.com/favoritejonny/Emule-Next evit lenn muioc'h a ditouroù."
+	IDS_NEWVERSIONAVLPOPUP 	"Prest eo stumm nevez eus eMule Next da vezañ staliet. Klikit amañ evit lenn muioc'h a ditouroù."
 	IDS_NEWVERSIONFAILED 	"N'haller ket gwiriañ mard ez eus ur stumm nevez da bellgargañ."
 END
 
 STRINGTABLE FIXED IMPURE
 BEGIN
-	IDS_CB_TBN_ONNEWVERSION	"Dizoloet ez eus bet ur stumm nevez eus eMule"
+	IDS_CB_TBN_ONNEWVERSION	"Dizoloet ez eus bet ur stumm nevez eus eMule Next"
 	IDS_NONEWERVERSION	"Stumm nevez eus eMule ebet kavet."
 	IDS_VERSIONCHECK	"&Gwiriañ stumm"
 	IDS_VISITVERSIONCHECK	"\n\nHa fellout a ra deoc'h gweladenniñ ar bajenn ditouroù diouzhtu ?"
@@ -1652,6 +1652,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Télécharger et charger nodes.dat depuis Internet pour démarrer Kad"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP hag UPnP a c'houlenn digant ur rouer kenglotus digeriñ porzhioù eMule hepken. Ar mod emgefreek a zibab ur protokol skoret. Implijit anezhañ en ho rouedad ti hep VPN hepken. A-hend-all, kendalc'hit dre zorn; miret e vo an arventennoù a zo."
+    IDS_WIZSETUP_PORTTEST "Kregiñ a ra kefluniañ emgefreek ar rouer goude Echu hepken; grit an amprouadenn da c'houde."
+    IDS_WIZSETUP_NETWORKS "eD2K a implij ur roll servijerioù. Kad a labour hep servijerioù, met ezhomm en deus eus UDP ha darempredoù kentañ. Gallout a rit implijout an daou rouedad. Diweredekaat UDP a ziweredeka Kad ivez. Dibabet e vo ar roll servijerioù war ar bajenn da-heul."
+    IDS_WIZSETUP_SERVERS_ADD "Pellgargañ ha kargañ ur roll servijerioù eD2K eus Internet"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Diret: paouezit an treuzkasadennoù all ha digennaskit VPN ebet a-raok loc'hañ an amprouadenn. Betek 100 MB a roadennoù padennek a vo kaset dre Cloudflare, a c'hall gwelet ho chomlec'h IP. eMule Next ne gas ha ne vir ket an disoc'h. Gallout a rit kemmañ talvoudoù KB/s ar muzul a-raok o arloañ."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Lakait tizhioù pellgargañ ha kas reizh e KB/s, pe dilamit dibab an arloañ."
+    IDS_WIZSETUP_SERVERS_INFO "Ma 'z eo dibabet eD2K, e c'hallit ouzhpennañ ar servijerioù-mañ dre glikañ war Echu. Miret e vo ar servijerioù a zo. Ne vo ket pellgarget ur roll na gweredekaet ar c'hennaskañ emgefreek. Lezit digasket evit merañ ar servijerioù hoc'h-unan pe implijout Kad hepken."
+    IDS_WIZSETUP_PORTS "TCP a dalvez evit ar c'hennaskoù hag an treuzkas; ezhomm en deus Kad eus UDP ivez. Mirout ar porzhioù kinniget pe dibab ho re. Ma 'z eo kefluniet porzhioù er rouer dija, implijit an hevelep niveroù."
 	IDS_COMCTRL32_DLL_TOOOLD
 	"Windows Common Controls library (COMCTL32.DLL) is too old!\r\n\r\neMule detected a version of the ""Windows Common Controls library (COMCTL32.DLL)"" which is too old to be properly used by eMule. To ensure full and flawless functionality of eMule we strongly recommend to update the ""Windows Common Controls library (COMCTL32.DLL)"" to at least version 5.8.\r\n\r\nDownload and install an update of the ""Windows Common Controls library (COMCTL32.DLL)"" at Microsoft (R) Download Center. Do you want to visit the corresponding URL?"
 	IDS_ASREGEXPR	"Evel riñvenn reizh"
@@ -1947,6 +1956,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Enable Windows 7 taskbar effects"
     IDS_LANMODE             "LAN Mode"
     IDS_OPENPREFINI         "Open preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Kefluniañ ar c'hennask emgefre"
+    IDS_CONNSETUP_INFO          "Mirout ar porzhioù TCP ha UDP kinniget, pe lakait ho hini. Ar c'hefluniadur emgefre a c'hall kefluniañ ur router ti kempoell goude bezañ echuet gant ar sorser-mañ."
+    IDS_CONNSETUP_BUTTON        "Kefluniañ ent emgefre"
+    IDS_CONNSETUP_CONSENT       "Aotren eMule Next da dreuzkas e borzhioù TCP/UDP en ur implijout PCP, NAT-PMP pe UPnP war ar rouedad prevez-mañ goude ma vo echuet ar sorser ha goude ma vo kroget diwezhatoc'h ?\n\nKadarnait war ur rouedad kontrollet ganeoc'h hepken, hep ur VPN. N'hall ket an detektañ anavezout pep VPN. Ezhomm zo eus aotre ar pared-tan Windows c'hoazh ; dilezet eo ar porzh etrefas web. N'eo ket gwarantet an ID uhel. Ar c'hartennaouiñ da c'hortoz a c'hall chom betek ma vo echuet o amzer lakaet gant ar router.\n\nNullañ ar sorser ne vo ket enrollet an dibab-mañ."
+    IDS_CONNSETUP_PENDING       "Dibabet : arventennoù ar routaer a vo kaset da benn goude ma vo echuet ar sorser ha pa vo kroget diwezhatoc'h, war ar rouedadoù prevez dereat hepken. Ret eo kaout aotre ar pared-tan Windows c'hoazh. Chom a ra da wiriañ an doareoù uhel da vont betek an ID hag an Kad."
+    IDS_CONNSETUP_MANUAL        "N'eus ket bet diuzet arventennoù emgefre nevez ebet. Miret e vez an arventennoù zo anezho dija. Gallout a rit implijout an treuzkas porzhioù dre zorn, gwiriañ aotreoù ar pared-tan Windows, pe seveniñ an test diavaez hoc'h-unan."
+    IDS_CONNSETUP_PRIVATE       "Paouezet eo bet an arventennoù emgefre : Windows a ginnig ur rouedad foran, meret pe mesket. N'eus bet goulennet kemm router ebet. Implijit ar c'hefluniadur dre zorn, pe gwiriit ar profil rouedad nemet ma'z eo ho rouedad fiziañs hoc'h-unan."
+    IDS_CONNSETUP_VPN           "Paouezet eo bet ar c'hefluniadur emgefre : kavet eo bet ur c'hennask VPN, ur proksi pe un etrefas splann. N'eo ket kefluniet ar router ti ent emgefre. Implijit arventennoù treuzkas porzh ar pourvezer kevreadenn."
+    IDS_CONNSETUP_UNKNOWN       "Paouezet eo bet an arventennoù emgefre : n'haller ket anavezout ar rouedad lec'hel en un doare sur. N'eus bet goulennet kemm router ebet. Gallout a rit kenderc'hel ha kefluniañ ar c'hennask dre zorn."
+    IDS_CONNSETUP_SUCCESS       "Kadarnaat a ra ar router treuzkas TCP %u hag UDP %u (0 = diweredekaet) d'an urzhiataer-mañ.\n\nNe brou ket an dra-se e c'haller mont war Internet. Gwiriit aotre ar pared-tan Windows, ha goude-se kevreit ha gwiriit statud an ID uhel hag ar Kad, pe sevenit an test porzh diavaez dre zorn."
+    IDS_CONNSETUP_FAILED        "N'eo ket bet echuet ar c'hefluniadur router emgefre. PCP, NAT-PMP pe UPnP a c'hall bezañ diweredekaet pe diweredekaet, pe marteze en deus nac'het ar goulenn gant ar routaer. Gwiriit ar router hag ar pared-tan Windows ; ar c'hefluniadur dre zorn a chom hegerz."
+    IDS_CONNSETUP_SHARED        "Ar routaer a embann ur chomlec'h Internet nann-foran : NAT doubl pe pourvezer CGNAT a zo posupl. Digeriñ ar router-mañ hepken n'eo ket a-walc'h marteze. Goulenn digant ar pourvezer diwar-benn un IP foran pe un treuzkas porzh skoret."
+    IDS_CONNSETUP_CONFLICT      "Ur reolenn router disheñvel pe diweredekaet en deus ur porzh goulennet dija. N'eo ket bet dreistskrivet. Dibabit porzhioù kliant disheñvel, pe gwiriit ar reolenn-se dre zorn."
+    IDS_CONNSETUP_BADPORT       "Ebarzhit ur porzh TCP eus 1 da 65535 hag ur porzh UDP eus 1 da 65535, pe diweredekait UDP dre ret."
+    IDS_CONNSETUP_TESTINFO      "Test a-youl vat war lec'hienn ofisiel eMule. Resev a ra ho titouroù IP ha porzh."
+    IDS_CONNSETUP_FIREWALL      "Digeriñ moger-tan Windows..."
+    IDS_CONNSETUP_BINDFAILED    "N'hall ket ar c'hlient selaou war ar porzhioù diuzet. Marteze e vezont implijet gant ur programm all. Adsavet eo bet arventennoù ar porzh a-raok."
+    IDS_CONNSETUP_BUSY          "Ur c'hefluniadur porzh all a zo o vont en-dro c'hoazh. Gortozit ma vo echu a-raok klask en-dro."
+    IDS_CONNSETUP_UNSELECT      "Dilemel an dibab emgefre"
+    IDS_PORTMAP_WRONGPORT       "Ur porzh diavaez disheñvel en deus roet ar router. N'eo ket bet degemeret evel kartennaouiñ kliant o vont en-dro. N'eo ket bet cheñchet porzhioù ar c'hlient. Implijit porzhioù disheñvel pe gwiriit ar router dre zorn. Ar c'hartennaouegoù da c'hortoz a c'hall chom betek an dibenn."
+    IDS_PORTMAP_REFUSED         "Nac'het en deus ar router treuzkas porzh emgefre. N'eus bet implijet protokol all ebet evit mont en-dro d'ar nac'hadenn-mañ. Gwiriit arventennoù merour ar router pe implijit ar c'hefluniadur dre zorn."
+    IDS_PORTMAP_NETWORKCHANGED  "Paouezet eo bet kartennaouiñ ar porzh : kemmet eo bet ar rouedad, ar porzh, ar porzhioù kliant pe ar chomlec'h diavaez. Ar c'hartennaouegoù a-raok a c'hall chom betek an diamzer. Gwiriit ar c'hennask ha lakait ar c'hefluniadur emgefre da vont en-dro ma 'z eo ret."
+    IDS_PORTMAP_SHORTLEASE      "Ar router en deus roet ur vuhez kartennaouiñ re verr evit un nevesaat fiziañs. N'eo ket bet merket ar c'hefluniadur emgefre evel berzh. Implijit ar c'hefluniadur dre zorn pe gwiriit ar router."
+    IDS_PORTMAP_PROTOCOL        "Protokol : %s"
+    IDS_ADD_UNC_SHARE           "Ouzhpennañ un teuliad rouedad"
 END
 
 #endif    // Breton (France) resources

@@ -108,6 +108,13 @@ void CToolTipCtrlX::CustomPaint(LPNMTTCUSTOMDRAW pNMCD)
 {
 	CWnd *pwnd = CWnd::FromHandle(pNMCD->nmcd.hdr.hwndFrom);
 	CDC *pdc = CDC::FromHandle(pNMCD->nmcd.hdc);
+	const bool bUseClassicFileTooltip = m_bShowFileIcon;
+	if (bUseClassicFileTooltip) {
+		// Keep file information and truncated-name tooltips easy to distinguish
+		// from the application surface, as in the classic eMule interface.
+		m_crTooltipBkColor = RGB(255, 255, 225);
+		m_crTooltipTextColor = RGB(0, 0, 0);
+	}
 
 	// Windows Vista (General)
 	// -----------------------
@@ -140,7 +147,7 @@ void CToolTipCtrlX::CustomPaint(LPNMTTCUSTOMDRAW pNMCD)
 	//
 	bool bUseEmbeddedThemeFonts = false;
 	HTHEME hTheme = NULL;
-	if (theApp.IsVistaThemeActive()) {
+	if (theApp.IsVistaThemeActive() && !bUseClassicFileTooltip) {
 		hTheme = ::OpenThemeData(*pwnd, L"TOOLTIP");
 		// Using the theme's fonts works only under Vista without SP1. When SP1
 		// is installed the fonts which are used for TTP_STANDARDTITLE and TTP_STANDARD
@@ -352,7 +359,7 @@ void CToolTipCtrlX::CustomPaint(LPNMTTCUSTOMDRAW pNMCD)
 				::DrawThemeParentBackground(m_hWnd, pdc->m_hDC, &rcWnd);
 			::DrawThemeBackground(hTheme, pdc->m_hDC, TTP_STANDARD, TTSS_NORMAL, &rcWnd, NULL);
 		} else {
-			::FillRect(*pdc, &rcWnd, ::GetSysColorBrush(COLOR_INFOBK));
+			pdc->FillSolidRect(&rcWnd, m_crTooltipBkColor);
 			iOldBkColor = pdc->SetBkColor(m_crTooltipBkColor);
 			// Vista: Need to draw the window border explicitly !?
 			if (theApp.m_ullComCtrlVer >= MAKEDLLVERULL(6, 16, 0, 0)) {

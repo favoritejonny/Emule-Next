@@ -123,8 +123,7 @@ BOOL CServerWnd::OnInitDialog()
 		servermsgbox->ApplySkin();
 		servermsgbox->SetTitle(GetResString(IDS_SV_SERVERINFO));
 
-		servermsgbox->AppendText(_T("eMule v"));
-		servermsgbox->AppendText(theApp.m_strCurVersionLong);
+		servermsgbox->AppendText(theApp.GetProductDisplayName());
 		servermsgbox->AppendText(_T("\n"));
 		// MOD Note: Do not remove this part - Merkur
 		m_strClickNewVersion.Format(_T("%s %s %s"), (LPCTSTR)GetResString(IDS_EMULEW), (LPCTSTR)GetResString(IDS_EMULEW3), (LPCTSTR)GetResString(IDS_EMULEW2));
@@ -309,16 +308,19 @@ bool CServerWnd::UpdateServerMetFromURL(const CString &strURL)
 	dlgDownload.m_sURLToDownload = strURL;
 	dlgDownload.m_sFileToDownloadInto = strTempFilename;
 	if (dlgDownload.DoModal() != IDOK) {
+		(void)_tremove(strTempFilename);
 		LogError(LOG_STATUSBAR, GetResString(IDS_ERR_FAILEDDOWNLOADMET), (LPCTSTR)strURL);
 		return false;
 	}
 
 	// add content of server.met to serverlist
 	serverlistctrl.Hide();
-	serverlistctrl.AddServerMetToList(strTempFilename);
+	const bool imported = serverlistctrl.AddServerMetToList(strTempFilename);
 	serverlistctrl.Visible();
 	(void)_tremove(strTempFilename);
-	return true;
+	if (imported)
+		theApp.serverlist->SaveServermetToFile();
+	return imported;
 }
 
 void CServerWnd::OnSysColorChange()

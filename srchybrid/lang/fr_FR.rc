@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Télécharger et charger nodes.dat depuis Internet pour démarrer Kad"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP et UPnP demandent à un routeur compatible d'ouvrir uniquement les ports d'eMule. Le mode automatique choisit un protocole compatible. Utilisez-le chez vous, sans VPN. Sinon, continuez pour un réglage manuel ; les paramètres existants sont conservés."
+    IDS_WIZSETUP_PORTTEST "Le réglage automatique du routeur ne démarre qu'après Terminer : effectuez le test ensuite."
+    IDS_WIZSETUP_NETWORKS "eD2K utilise une liste de serveurs. Kad fonctionne sans serveur, mais nécessite UDP et des contacts initiaux. Vous pouvez utiliser les deux réseaux. Désactiver UDP désactive aussi Kad. La liste des serveurs se choisit à la page suivante."
+    IDS_WIZSETUP_SERVERS_ADD "Télécharger et charger une liste de serveurs eD2K depuis Internet"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Facultatif : arrêtez les autres transferts et déconnectez tout VPN avant de lancer le test. Il transfère jusqu'à environ 100 Mo de données temporaires via Cloudflare, qui peut voir votre adresse IP. eMule Next n'envoie ni ne conserve le résultat. Vous pouvez modifier les valeurs mesurées en KB/s avant de les appliquer."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Saisissez des débits de réception et d'émission valides en KB/s ou décochez l'application des valeurs."
+    IDS_WIZSETUP_SERVERS_INFO "Si eD2K est sélectionné, les serveurs ci-dessous peuvent être ajoutés en cliquant sur Terminer. Les serveurs existants sont conservés. Aucun téléchargement de liste ni connexion automatique n'est activé. Décochez pour gérer les serveurs vous-même ou utiliser seulement Kad."
+    IDS_WIZSETUP_PORTS "TCP sert aux connexions et transferts ; UDP est aussi nécessaire pour Kad. Gardez les ports proposés ou choisissez les vôtres. Si votre routeur redirige déjà des ports, reprenez ces numéros."
     IDS_SOCKETS_INIT_FAILED "Erreur d'initialisation des sockets Windows"
     IDS_ABOUTBOX            "&A propos d'eMule..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s de %s"
@@ -933,14 +942,14 @@ BEGIN
     IDS_IRC_EMULEPROTO_IGNORESENDLINK "Ignorer les messages d'envoi de lien"
     IDS_CHECK4UPDATE        "Vérifier si nouvelle version tous les"
     IDS_STARTUP             "Démarrage"
-    IDS_NEWVERSIONAVL       "Une nouvelle version d'eMule est disponible. Regardez sur https://emule-project.net pour plus d'infos."
-    IDS_NEWVERSIONAVLPOPUP  "Une nouvelle version d'eMule est disponible. Cliquez ici pour obtenir des informations."
+    IDS_NEWVERSIONAVL       "Une nouvelle version d'eMule Next est disponible. Regardez sur https://github.com/favoritejonny/Emule-Next pour plus d'infos."
+    IDS_NEWVERSIONAVLPOPUP  "Une nouvelle version d'eMule Next est disponible. Cliquez ici pour obtenir des informations."
     IDS_NEWVERSIONFAILED    "Impossible de vérifier une nouvelle version."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "La détection d'une nouvelle version d'eMule"
+    IDS_CB_TBN_ONNEWVERSION "La détection d'une nouvelle version d'eMule Next"
     IDS_NONEWERVERSION      "Pas de nouvelle version d'eMule trouvée."
     IDS_VERSIONCHECK        "&Vérifier si une nouvelle version existe"
     IDS_VISITVERSIONCHECK   "\n\nVoulez-vous visiter la page d'information maintenant ?"
@@ -1985,6 +1994,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Activer les effets Windows 7 de la barre des tâches"
     IDS_LANMODE             "LAN Mode"
     IDS_OPENPREFINI         "Open preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Configuration de connexion automatique"
+    IDS_CONNSETUP_INFO          "Conservez les ports TCP et UDP proposés, ou saisissez le vôtre. La configuration automatique peut configurer un routeur domestique compatible une fois cet assistant terminé."
+    IDS_CONNSETUP_BUTTON        "Configurer automatiquement"
+    IDS_CONNSETUP_CONSENT       "Autoriser eMule Next à transférer ses ports TCP/UDP à l'aide de PCP, NAT-PMP ou UPnP sur ce réseau domestique privé une fois l'assistant terminé et lors de démarrages ultérieurs ?\n\nConfirmez uniquement sur un réseau que vous contrôlez, sans VPN. La détection ne peut pas reconnaître tous les VPN. L'autorisation du pare-feu Windows est toujours nécessaire ; le port de l'interface Web est exclu. Une identification élevée n’est pas garantie. Les mappages temporaires peuvent rester jusqu'à l'expiration attribuée par le routeur.\n\nL'annulation de l'assistant ne sauvegardera pas ce choix."
+    IDS_CONNSETUP_PENDING       "Sélectionné : la configuration du routeur s'exécutera une fois l'assistant terminé et lors de démarrages ultérieurs, uniquement sur les réseaux privés éligibles. L'autorisation du pare-feu Windows est toujours requise. L'accessibilité élevée de l'ID et du Kad reste à vérifier."
+    IDS_CONNSETUP_MANUAL        "Aucune nouvelle configuration automatique sélectionnée. Les paramètres existants sont conservés. Vous pouvez utiliser la redirection de port manuelle, vérifier les autorisations du pare-feu Windows ou exécuter le test externe vous-même."
+    IDS_CONNSETUP_PRIVATE       "Configuration automatique suspendue : Windows signale un réseau public, géré ou mixte. Aucune modification de routeur n'a été demandée. Utilisez la configuration manuelle ou vérifiez le profil réseau uniquement s'il s'agit de votre propre réseau domestique de confiance."
+    IDS_CONNSETUP_VPN           "Configuration automatique suspendue : une éventuelle liaison VPN, proxy ou interface explicite a été trouvée. Le routeur domestique n'est pas configuré automatiquement. Utilisez les paramètres de redirection de port du fournisseur de connexion."
+    IDS_CONNSETUP_UNKNOWN       "Configuration automatique suspendue : le réseau local n'a pas pu être identifié en toute sécurité. Aucune modification de routeur n'a été demandée. Vous pouvez continuer et configurer la connexion manuellement."
+    IDS_CONNSETUP_SUCCESS       "Le routeur confirme le transfert de TCP %u et UDP %u (0 = désactivé) vers ce PC.\n\nCela ne prouve pas l’accessibilité à Internet. Vérifiez l'autorisation du pare-feu Windows, puis connectez-vous et vérifiez l'état High ID et Kad, ou exécutez le test du port externe manuellement."
+    IDS_CONNSETUP_FAILED        "La configuration automatique du routeur n'a pas été effectuée. PCP, NAT-PMP ou UPnP peuvent être indisponibles ou désactivés, ou le routeur peut avoir refusé la demande. Vérifiez le routeur et le pare-feu Windows ; la configuration manuelle reste disponible."
+    IDS_CONNSETUP_SHARED        "Le routeur signale une adresse Internet non publique : un double NAT ou un fournisseur CGNAT est possible. Ouvrir ce routeur seul peut ne pas suffire. Renseignez-vous auprès du fournisseur sur une adresse IP publique ou une redirection de port prise en charge."
+    IDS_CONNSETUP_CONFLICT      "Un port demandé a déjà une règle de routeur différente ou désactivée. Il n'a pas été écrasé. Choisissez différents ports clients ou inspectez cette règle manuellement."
+    IDS_CONNSETUP_BADPORT       "Entrez un port TCP de 1 à 65535 et un port UDP de 1 à 65535, ou désactivez explicitement UDP."
+    IDS_CONNSETUP_TESTINFO      "Test volontaire sur le site officiel d'eMule. Il reçoit vos informations IP et de port."
+    IDS_CONNSETUP_FIREWALL      "Ouvrez le pare-feu Windows..."
+    IDS_CONNSETUP_BINDFAILED    "Le client n'a pas pu écouter sur les ports sélectionnés. Ils peuvent être utilisés par un autre programme. Les paramètres de port précédents ont été restaurés."
+    IDS_CONNSETUP_BUSY          "Une autre configuration de port est toujours en cours. Attendez qu'il soit terminé avant de réessayer."
+    IDS_CONNSETUP_UNSELECT      "Annuler le choix automatique"
+    IDS_PORTMAP_WRONGPORT       "Le routeur a attribué un port externe différent. Il n’a pas été accepté comme mappage client fonctionnel. Les ports clients n'ont pas été modifiés. Utilisez différents ports ou vérifiez le routeur manuellement. Les mappages temporaires peuvent rester jusqu'à leur expiration."
+    IDS_PORTMAP_REFUSED         "Le routeur a refusé la redirection automatique de port. Aucun protocole alternatif n’a été utilisé pour contourner ce refus. Vérifiez les paramètres de l'administrateur du routeur ou utilisez la configuration manuelle."
+    IDS_PORTMAP_NETWORKCHANGED  "Mappage des ports suspendu : le réseau, la passerelle, les ports client ou l'adresse externe ont changé. Les mappages précédents peuvent rester jusqu’à leur expiration. Vérifiez la connexion et exécutez à nouveau la configuration automatique si nécessaire."
+    IDS_PORTMAP_SHORTLEASE      "Le routeur a accordé une durée de vie de mappage trop courte pour un renouvellement fiable. La configuration automatique n’a pas été marquée comme réussie. Utilisez la configuration manuelle ou vérifiez le routeur."
+    IDS_PORTMAP_PROTOCOL        "Protocole : %s"
+    IDS_ADD_UNC_SHARE           "Ajouter un dossier réseau"
 END
 
 #endif    // French (France) resources

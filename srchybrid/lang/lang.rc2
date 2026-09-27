@@ -18,8 +18,8 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 //
 
 VS_VERSION_INFO VERSIONINFO
- 	FILEVERSION 	VERSION_MJR,VERSION_MIN,VERSION_UPDATE,VERSION_BUILD
- 	PRODUCTVERSION 	VERSION_MJR,VERSION_MIN,VERSION_UPDATE,VERSION_BUILD
+    FILEVERSION     EMULE_NEXT_VERSION_MJR,EMULE_NEXT_VERSION_MIN,EMULE_NEXT_VERSION_PATCH,EMULE_NEXT_VERSION_BUILD
+    PRODUCTVERSION  EMULE_NEXT_VERSION_MJR,EMULE_NEXT_VERSION_MIN,EMULE_NEXT_VERSION_PATCH,EMULE_NEXT_VERSION_BUILD
 	FILEFLAGSMASK	VS_FFI_FILEFLAGSMASK
 #ifdef _DEBUG
 	FILEFLAGS		VS_FF_DEBUG | VS_FF_PRIVATEBUILD | VS_FF_PRERELEASE
@@ -35,12 +35,12 @@ BEGIN
     BEGIN
         BLOCK "040904B0" // Lang=US English, CharSet=Unicode
         BEGIN
-            VALUE "CompanyName", "http://www.emule-project.net"
-            VALUE "FileDescription", "eMule Language DLL"
-            VALUE "FileVersion", SZ_VERSION_NAME
+            VALUE "CompanyName", "eMule Next contributors"
+            VALUE "FileDescription", "eMule Next Language DLL"
+            VALUE "FileVersion", EMULE_NEXT_VERSION_STRING
             VALUE "LegalCopyright", "Copyright © 2002-2026 Merkur - read license.txt for more infos"
-            VALUE "ProductName", "eMule"
-            VALUE "ProductVersion", SZ_VERSION_NAME
+            VALUE "ProductName", "eMule Next"
+            VALUE "ProductVersion", EMULE_NEXT_VERSION_STRING
         END
     END
     BLOCK "VarFileInfo"

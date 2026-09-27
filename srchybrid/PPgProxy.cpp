@@ -160,6 +160,13 @@ void CPPgProxy::LoadSettings()
 void CPPgProxy::Localize()
 {
 	if (m_hWnd) {
+		CComboBox* proxyType = static_cast<CComboBox*>(GetDlgItem(IDC_PROXYTYPE));
+		const int selectedType = proxyType->GetCurSel();
+		if (proxyType->GetCount() > 0) {
+			proxyType->DeleteString(PROXYTYPE_NOPROXY);
+			proxyType->InsertString(PROXYTYPE_NOPROXY, GetResString(IDS_DISABLED));
+			proxyType->SetCurSel(selectedType);
+		}
 		SetWindowText(GetResString(IDS_PW_PROXY));
 		SetDlgItemText(IDC_ENABLEPROXY, GetResString(IDS_PROXY_ENABLE));
 		SetDlgItemText(IDC_PROXYTYPE_LBL, GetResString(IDS_PROXY_TYPE));

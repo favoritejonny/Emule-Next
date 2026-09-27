@@ -1,7 +1,9 @@
 # eMule Next — identità del prodotto
 
 - Nome pubblico: **eMule Next**
-- Prima versione prevista: **1.0.0-alpha.1**
+- Versione pubblica corrente: **1.0.0-beta.1** (eMule Next 1.0.0 Beta 1)
+- Prossima versione prevista: **1.0.0-beta.2** se serviranno correzioni,
+  altrimenti **1.0.0-rc.1**
 - Eseguibile previsto: `eMuleNext.exe`
 - Base tecnica: eMule Community **0.72a**
 

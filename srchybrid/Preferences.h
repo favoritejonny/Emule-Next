@@ -629,6 +629,7 @@ public:
 	static bool		m_bSkipWANIPSetup;
 	static bool		m_bSkipWANPPPSetup;
 	static bool		m_bEnableUPnP;
+	static bool		m_bUPnPHomeOnly;
 	static bool		m_bCloseUPnPOnExit;
 	static bool		m_bIsWinServImplDisabled;
 	static bool		m_bIsMinilibImplDisabled;
@@ -1395,6 +1396,9 @@ public:
 	static bool		GetSkipWANIPSetup()					{ return m_bSkipWANIPSetup; }
 	static bool		GetSkipWANPPPSetup()				{ return m_bSkipWANPPPSetup; }
 	static bool		IsUPnPEnabled()						{ return m_bEnableUPnP; }
+	static bool		IsUPnPHomeOnly()						{ return m_bUPnPHomeOnly; }
+	static void		EnableAutomaticHomeUPnP()			{ m_bEnableUPnP = true; m_bUPnPHomeOnly = true; }
+	static void		DisableAutomaticHomeUPnP()			{ m_bEnableUPnP = false; m_bUPnPHomeOnly = false; }
 	static void		SetSkipWANIPSetup(bool nv)			{ m_bSkipWANIPSetup = nv; }
 	static void		SetSkipWANPPPSetup(bool nv)			{ m_bSkipWANPPPSetup = nv; }
 	static bool		CloseUPnPOnExit()					{ return m_bCloseUPnPOnExit; }

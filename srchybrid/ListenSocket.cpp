@@ -1892,6 +1892,7 @@ bool CListenSocket::Rebind()
 		return false;
 
 	Close();
+	m_port = 0; // a failed bind must not report the previous, now closed port
 	KillAllSockets();
 
 	return StartListening();

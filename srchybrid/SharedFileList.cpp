@@ -41,6 +41,7 @@
 #include "kademlia/kademlia/UDPFirewallTester.h"
 #include "ImportParts.h"
 #include "MD5Sum.h"
+#include "PrivateDiagnostics.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -327,7 +328,6 @@ bool CAddFileThread::ImportParts()
 	}
 
 	const CString strFilePath = MakePath(NULL, m_strDirectory, m_strFilename, NULL);
-
 	Log(LOG_STATUSBAR, GetResString(IDS_IMPORTPARTS_IMPORTSTART), m_PartsToImport.GetSize(), (LPCTSTR)strFilePath);
 
 	uint64 fileSize = f.GetLength();
@@ -422,6 +422,12 @@ int CAddFileThread::Run()
 	CSingleLock hashingLock(&theApp.hashing_mut, TRUE); // hash only one file at a time
 
 	const CString strFilePath = MakePath(NULL, m_strDirectory, m_strFilename, NULL);
+	CFileStatus fileStatus = {};
+	const uint64 fileSize = CFile::GetStatus(strFilePath, fileStatus)
+		? static_cast<uint64>(fileStatus.m_size) : 0;
+	const DWORD hashStartTick = ::GetTickCount();
+	bool hashSucceeded = false;
+	PrivateDiagnostics::LogEvent("hashing", "start", fileSize, m_partfile != NULL ? 1 : 0, 0);
 	if (m_partfile)
 		Log(_T("%s \"%s\" \"%s\""), (LPCTSTR)GetResString(IDS_HASHINGFILE), (LPCTSTR)m_partfile->GetFileName(), (LPCTSTR)strFilePath);
 	else
@@ -430,6 +436,7 @@ int CAddFileThread::Run()
 	if (!theApp.IsClosing()) {
 		CKnownFile *newKnown = new CKnownFile();
 		if (newKnown->CreateFromFile(m_strDirectory, m_strFilename, m_partfile)) { // SLUGFILLER: SafeHash - in case of shutdown while still hashing
+			hashSucceeded = true;
 			newKnown->SetSharedDirectory(m_strSharedDir);
 			if (m_partfile && m_partfile->GetFileOp() == PFOP_HASHING)
 				m_partfile->SetFileOp(PFOP_NONE);
@@ -451,6 +458,8 @@ int CAddFileThread::Run()
 			delete newKnown;
 		}
 	}
+	PrivateDiagnostics::LogEvent("hashing", hashSucceeded ? "complete" : "failed", fileSize,
+		static_cast<uint64>(::GetTickCount() - hashStartTick), m_partfile != NULL ? 1 : 0);
 
 	hashingLock.Unlock();
 	::CoUninitialize();

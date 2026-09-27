@@ -19,6 +19,7 @@
 #include "UPnPImpl.h"
 #include "UPnPImplWinServ.h"
 #include "UPnPImplMiniLib.h"
+#include "UPnPImplPcpNatPmp.h"
 #include "Preferences.h"
 
 #ifdef _DEBUG
@@ -35,6 +36,7 @@ CUPnPImplWrapper::CUPnPImplWrapper()
 		m_liAvailable.AddTail(new CUPnPImplMiniLib());
 	if (m_liAvailable.IsEmpty())
 		m_liAvailable.AddTail(new CUPnPImplNone());
+	m_liAvailable.AddTail(new CUPnPImplPcpNatPmp());
 	Init();
 }
 
@@ -55,15 +57,26 @@ void CUPnPImplWrapper::Init()
 	for (POSITION pos = m_liAvailable.GetHeadPosition(); pos != NULL;) {
 		POSITION pos2 = pos;
 		CUPnPImpl *tmp = m_liAvailable.GetNext(pos);
-		if (tmp->GetImplementationID() == thePrefs.GetLastWorkingUPnPImpl()) {
+		if (tmp->GetImplementationID() == thePrefs.GetLastWorkingUPnPImpl()
+			&& (tmp->GetImplementationID() != UPNP_IMPL_PCP_NATPMP || thePrefs.IsUPnPHomeOnly())) {
 			m_pActiveImpl = tmp;
 			m_liAvailable.RemoveAt(pos2);
 			break;
 		}
 	}
 
-	if (m_pActiveImpl == NULL)
-		m_pActiveImpl = m_liAvailable.RemoveHead();
+	if (m_pActiveImpl == NULL) {
+		// Do not silently enable the new protocols for legacy UPnP users.
+		for (POSITION pos = m_liAvailable.GetHeadPosition(); pos != NULL;) {
+			POSITION current = pos;
+			CUPnPImpl* candidate = m_liAvailable.GetNext(pos);
+			if (candidate->GetImplementationID() != UPNP_IMPL_PCP_NATPMP) {
+				m_pActiveImpl = candidate;
+				m_liAvailable.RemoveAt(current);
+				break;
+			}
+		}
+	}
 	m_liUsed.AddTail(m_pActiveImpl);
 }
 
@@ -76,10 +89,31 @@ void CUPnPImplWrapper::Reset()
 
 bool CUPnPImplWrapper::SwitchImplentation()
 {
-	if (m_liAvailable.IsEmpty())
-		return false;
+	for (POSITION pos = m_liAvailable.GetHeadPosition(); pos != NULL;) {
+		POSITION current = pos;
+		CUPnPImpl* candidate = m_liAvailable.GetNext(pos);
+		if (candidate->GetImplementationID() == UPNP_IMPL_PCP_NATPMP) continue;
+		m_liAvailable.RemoveAt(current);
+		m_pActiveImpl = candidate;
+		m_liUsed.AddTail(m_pActiveImpl);
+		return true;
+	}
+	return false;
+}
 
-	m_pActiveImpl = m_liAvailable.RemoveHead();
-	m_liUsed.AddTail(m_pActiveImpl);
-	return true;
+bool CUPnPImplWrapper::SelectImplementation(int implementationID)
+{
+	if (m_pActiveImpl->GetImplementationID() == implementationID)
+		return true;
+	for (POSITION pos = m_liAvailable.GetHeadPosition(); pos != NULL;) {
+		POSITION current = pos;
+		CUPnPImpl* implementation = m_liAvailable.GetNext(pos);
+		if (implementation->GetImplementationID() == implementationID) {
+			m_liAvailable.RemoveAt(current);
+			m_liUsed.AddTail(implementation);
+			m_pActiveImpl = implementation;
+			return true;
+		}
+	}
+	return false;
 }

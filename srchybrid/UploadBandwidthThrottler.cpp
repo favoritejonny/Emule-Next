@@ -413,12 +413,11 @@ UINT UploadBandwidthThrottler::RunInternal()
 					loopsCount = 0;
 				}
 
-				// Until socket activity produced a real estimate, zero means
-				// "unknown", not "no upload bandwidth". Applying it as a limit
-				// made the unlimited mode fall back to trickle packets after its
-				// initial calibration window.
-				if (nEstiminatedDataRate != 0 && allowedDataRate > nEstiminatedDataRate)
-					allowedDataRate = nEstiminatedDataRate;
+				// Keep the historical estimate for startup scheduling and diagnostics,
+				// but never apply it as a hidden cap. Socket backpressure often comes
+				// from slow remote peers rather than saturation of the local connection.
+				// Upload Speed Sense still controls allowedDataRate through
+				// lastCommonRouteFinder when the user explicitly enables it.
 			}
 
 			if (nCanSend == nBusy && GetStandardListSize() > 0 && nSlotsBusyLevel < 125) {

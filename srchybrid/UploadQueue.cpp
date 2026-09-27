@@ -46,6 +46,7 @@
 #include "Kademlia/Kademlia/Prefs.h"
 #include "Log.h"
 #include "collection.h"
+#include "PrivateDiagnostics.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -60,6 +61,9 @@ static uint32 igraph, istats;
 
 #define HIGHSPEED_UPLOADRATE_START	(500*1024)
 #define HIGHSPEED_UPLOADRATE_END	(300*1024)
+
+#define PRIVATE_UPLOAD_DIAGNOSTIC(decision, slots) \
+	PrivateDiagnostics::LogUploadDecision(decision, waitinglist.GetCount(), slots, m_MaxActiveClientsShortTime)
 
 
 CUploadQueue::CUploadQueue()
@@ -284,6 +288,7 @@ void CUploadQueue::UpdateActiveClientsInfo(DWORD curTick)
  */
 void CUploadQueue::Process()
 {
+	PrivateDiagnostics::Sample();
 	const DWORD curTick = ::GetTickCount();
 	UpdateActiveClientsInfo(curTick);
 
@@ -403,18 +408,30 @@ uint32 CUploadQueue::GetTargetClientDataRate(bool bMinDatarate) const
 
 bool CUploadQueue::ForceNewClient(bool allowEmptyWaitingQueue)
 {
-	if (!allowEmptyWaitingQueue && waitinglist.IsEmpty())
-		return false;
-
 	INT_PTR curUploadSlots = uploadinglist.GetCount();
-	if (curUploadSlots < MIN_UP_CLIENTS_ALLOWED)
+	if (!allowEmptyWaitingQueue && waitinglist.IsEmpty()) {
+		PRIVATE_UPLOAD_DIAGNOSTIC("queue-empty", curUploadSlots);
+		return false;
+	}
+
+	if (curUploadSlots < MIN_UP_CLIENTS_ALLOWED) {
+		PRIVATE_UPLOAD_DIAGNOSTIC("open-below-minimum", curUploadSlots);
 		return true;
+	}
 
-	if (!HasTickCountElapsed(::GetTickCount(), m_nLastStartUpload, SEC2MS(1)) && datarate < 102400)
+	if (!HasTickCountElapsed(::GetTickCount(), m_nLastStartUpload, SEC2MS(1)) && datarate < 102400) {
+		PRIVATE_UPLOAD_DIAGNOSTIC("slot-start-cooldown", curUploadSlots);
 		return false;
+	}
 
-	if (!AcceptNewClient(curUploadSlots) || !theApp.lastCommonRouteFinder->AcceptNewClient()) // UploadSpeedSense can veto a new slot if USS enabled
+	if (!AcceptNewClient(curUploadSlots)) {
+		PRIVATE_UPLOAD_DIAGNOSTIC("accept-policy-rejected", curUploadSlots);
 		return false;
+	}
+	if (!theApp.lastCommonRouteFinder->AcceptNewClient()) { // UploadSpeedSense can veto a new slot if USS enabled
+		PRIVATE_UPLOAD_DIAGNOSTIC("upload-speed-sense-rejected", curUploadSlots);
+		return false;
+	}
 
 	uint32 MaxSpeed;
 	if (thePrefs.IsDynUpEnabled())
@@ -438,8 +455,10 @@ bool CUploadQueue::ForceNewClient(bool allowEmptyWaitingQueue)
 		// waiting client from ever being activated, leaving the existing slots
 		// trickling indefinitely. Keep the same small-slot baseline used for a
 		// high, explicit upload limit; this does not impose a bandwidth cap.
-		if (UploadPolicy::ShouldOpenUnlimitedSlot((uint32)curUploadSlots, datarate, upPerClient))
+		if (UploadPolicy::ShouldOpenUnlimitedSlot((uint32)curUploadSlots, datarate, upPerClient)) {
+			PRIVATE_UPLOAD_DIAGNOSTIC("open-unlimited-policy", curUploadSlots);
 			return true;
+		}
 	} else {
 		uint32 nMaxSlots;
 		if (MaxSpeed > 25)
@@ -452,10 +471,14 @@ bool CUploadQueue::ForceNewClient(bool allowEmptyWaitingQueue)
 			nMaxSlots = MIN_UP_CLIENTS_ALLOWED;
 		//AddLogLine(true, "maxslots=%u, upPerClient=%u, datarateslot=%u|%u|%u", nMaxSlots, upPerClient, datarate / UPLOAD_CHECK_CLIENT_DR, datarate, UPLOAD_CHECK_CLIENT_DR);
 
-		if ((uint32)curUploadSlots < nMaxSlots)
+		if ((uint32)curUploadSlots < nMaxSlots) {
+			PRIVATE_UPLOAD_DIAGNOSTIC("open-configured-limit", curUploadSlots);
 			return true;
+		}
 	}
-	return m_iHighestNumberOfFullyActivatedSlotsSinceLastCall > uploadinglist.GetCount();
+	const bool throttlerRequestsSlot = m_iHighestNumberOfFullyActivatedSlotsSinceLastCall > uploadinglist.GetCount();
+	PRIVATE_UPLOAD_DIAGNOSTIC(throttlerRequestsSlot ? "open-throttler-request" : "no-additional-demand", curUploadSlots);
+	return throttlerRequestsSlot;
 }
 
 CUpDownClient* CUploadQueue::GetWaitingClientByIP_UDP(uint32 dwIP, uint16 nUDPPort, bool bIgnorePortOnUniqueIP, bool *pbMultipleIPs)

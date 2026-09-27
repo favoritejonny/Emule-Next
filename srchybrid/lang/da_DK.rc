@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Hent og indlæs nodes.dat fra internettet for at starte Kad"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP og UPnP beder en kompatibel router om kun at åbne eMules porte. Automatisk tilstand vælger en understøttet protokol. Brug den kun på dit eget hjemmenetværk uden VPN. Fortsæt ellers manuelt; eksisterende indstillinger bevares."
+    IDS_WIZSETUP_PORTTEST "Automatisk routeropsætning starter først efter Udfør; test derefter."
+    IDS_WIZSETUP_NETWORKS "eD2K bruger en serverliste. Kad fungerer uden servere, men kræver UDP og startkontakter. Du kan bruge begge netværk. Deaktivering af UDP deaktiverer også Kad. Serverlisten vælges på næste side."
+    IDS_WIZSETUP_SERVERS_ADD "Hent og indlæs en eD2K-serverliste fra internettet"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Valgfrit: stop andre overførsler og afbryd en eventuel VPN, og start derefter testen. Den sender op til cirka 100 MB midlertidige data via Cloudflare, som kan se din IP-adresse. eMule Next sender eller gemmer ikke resultatet. Du kan redigere de målte værdier i KB/s, før de anvendes."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Indtast gyldige download- og uploadhastigheder i KB/s, eller fjern valget om at anvende dem."
+    IDS_WIZSETUP_SERVERS_INFO "Med eD2K valgt kan disse servere tilføjes ved Udfør. Eksisterende servere bevares. Ingen liste hentes, og automatisk forbindelse aktiveres ikke. Lad feltet være tomt for selv at styre serverne eller kun bruge Kad."
+    IDS_WIZSETUP_PORTS "TCP bruges til forbindelser og overførsler; UDP kræves også til Kad. Behold de foreslåede porte eller vælg dine egne. Brug samme portnumre, hvis routeren allerede videresender dem."
     IDS_SOCKETS_INIT_FAILED "Fejl ved initialisering af Windows sockets."
     IDS_ABOUTBOX            "&Om eMule..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s fra %s"
@@ -952,14 +961,14 @@ BEGIN
                             "Ignorer eMule send link protokol besked"
     IDS_CHECK4UPDATE        "Tjek for ny version"
     IDS_STARTUP             "Opstart"
-    IDS_NEWVERSIONAVL       "Der er en ny eMule version tilgængelig! Tjek eMule hjemmesiden for mere information."
-    IDS_NEWVERSIONAVLPOPUP  "Der er en ny eMule version tilgængelig!. Klik her for at læse mere om versionen!"
+    IDS_NEWVERSIONAVL       "Der er en ny eMule Next version tilgængelig! Tjek eMule Next hjemmesiden for mere information."
+    IDS_NEWVERSIONAVLPOPUP  "Der er en ny eMule Next version tilgængelig!. Klik her for at læse mere om versionen!"
     IDS_NEWVERSIONFAILED    "Ikke i stand til at tjekke for ny version."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "Ny eMule version fundet"
+    IDS_CB_TBN_ONNEWVERSION "Ny eMule Next version fundet"
     IDS_NONEWERVERSION      "Ingen ny eMule version fundet."
     IDS_VERSIONCHECK        "&Versionscheck"
     IDS_VISITVERSIONCHECK   "\n\nØnsker du at besøge informationssiden nu?"
@@ -1994,6 +2003,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Enable Windows 7 taskbar effects"
     IDS_LANMODE             "LAN Mode"
     IDS_OPENPREFINI         "Open preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Automatisk forbindelsesopsætning"
+    IDS_CONNSETUP_INFO          "Behold de foreslåede TCP og UDP porte, eller indtast din egen. Automatisk opsætning kan konfigurere en kompatibel hjemmerouter, når du er færdig med denne guide."
+    IDS_CONNSETUP_BUTTON        "Konfigurer automatisk"
+    IDS_CONNSETUP_CONSENT       "Tillade eMule Next at videresende sine TCP/UDP-porte ved hjælp af PCP, NAT-PMP eller UPnP på dette private hjemmenetværk, efter at guiden er færdig og senere starter?\n\nBekræft kun på et netværk, du kontrollerer, uden en VPN. Detektion kan ikke genkende alle VPN. Windows firewall-tilladelse er stadig nødvendig; webinterfaceporten er udelukket. Høj ID er ikke garanteret. Midlertidige kortlægninger kan forblive, indtil deres routertildelte udløb.\n\nAnnullering af guiden vil ikke gemme dette valg."
+    IDS_CONNSETUP_PENDING       "Valgt: routeropsætning vil køre, når guiden er færdig og ved senere start, kun på kvalificerede private netværk. Windows firewall-tilladelse er stadig påkrævet. Høj ID og Kad tilgængelighed mangler stadig at blive verificeret."
+    IDS_CONNSETUP_MANUAL        "Ingen ny automatisk opsætning valgt. Eksisterende indstillinger bevares. Du kan bruge manuel portvideresendelse, kontrollere Windows firewall-tilladelser eller køre den eksterne test selv."
+    IDS_CONNSETUP_PRIVATE       "Automatisk opsætning sat på pause: Windows rapporterer et offentligt, administreret eller blandet netværk. Der blev ikke anmodet om ændringer af routeren. Brug manuel opsætning, eller kontroller kun netværksprofilen, hvis dette er dit eget betroede hjemmenetværk."
+    IDS_CONNSETUP_VPN           "Automatisk opsætning sat på pause: en mulig VPN, proxy eller eksplicit grænsefladebinding blev fundet. Hjemmerouteren konfigureres ikke automatisk. Brug forbindelsesudbyderens indstillinger for portvideresendelse."
+    IDS_CONNSETUP_UNKNOWN       "Automatisk opsætning sat på pause: det lokale netværk kunne ikke identificeres sikkert. Der blev ikke anmodet om ændringer af routeren. Du kan fortsætte og konfigurere forbindelsen manuelt."
+    IDS_CONNSETUP_SUCCESS       "Routeren bekræfter videresendelse af TCP %u og UDP %u (0 = deaktiveret) til denne pc.\n\nDette beviser ikke tilgængelighed på internettet. Kontroller Windows firewall-tilladelse, tilslut derefter og kontroller High ID og Kad-status, eller kør den eksterne porttest manuelt."
+    IDS_CONNSETUP_FAILED        "Automatisk routeropsætning blev ikke fuldført. PCP, NAT-PMP eller UPnP kan være utilgængelige eller deaktiverede, eller routeren kan have afvist anmodningen. Tjek routeren og Windows firewall; manuel opsætning forbliver tilgængelig."
+    IDS_CONNSETUP_SHARED        "Routeren rapporterer en ikke-offentlig internetadresse: dobbelt NAT eller udbyder CGNAT er muligt. Det er muligvis ikke nok at åbne denne router alene. Spørg udbyderen om en offentlig IP eller understøttet portvideresendelse."
+    IDS_CONNSETUP_CONFLICT      "En anmodet port har allerede en anden eller deaktiveret routerregel. Det blev ikke overskrevet. Vælg forskellige klientporte, eller inspicér denne regel manuelt."
+    IDS_CONNSETUP_BADPORT       "Indtast en TCP port fra 1 til 65535 og en UDP port fra 1 til 65535, eller deaktiver eksplicit UDP."
+    IDS_CONNSETUP_TESTINFO      "Frivillig test på den officielle eMule hjemmeside. Den modtager din IP- og portinformation."
+    IDS_CONNSETUP_FIREWALL      "Åbn Windows Firewall..."
+    IDS_CONNSETUP_BINDFAILED    "Klienten kunne ikke lytte på de valgte porte. De kan være i brug af et andet program. Tidligere portindstillinger er blevet gendannet."
+    IDS_CONNSETUP_BUSY          "En anden portopsætning kører stadig. Vent til det er færdigt, før du prøver igen."
+    IDS_CONNSETUP_UNSELECT      "Fortryd automatisk valg"
+    IDS_PORTMAP_WRONGPORT       "Routeren tildelte en anden ekstern port. Det blev ikke accepteret som en fungerende klientkortlægning. Klientporte blev ikke ændret. Brug forskellige porte, eller tjek routeren manuelt. Midlertidige kortlægninger kan forblive indtil udløb."
+    IDS_PORTMAP_REFUSED         "Routeren nægtede automatisk portvideresendelse. Ingen alternativ protokol blev brugt til at omgå dette afslag. Tjek routeradministratorens indstillinger eller brug manuel opsætning."
+    IDS_PORTMAP_NETWORKCHANGED  "Portmapping sat på pause: netværket, gatewayen, klientportene eller den eksterne adresse er ændret. Tidligere kortlægninger kan forblive indtil udløb. Kontroller forbindelsen, og kør den automatiske opsætning igen, hvis det er relevant."
+    IDS_PORTMAP_SHORTLEASE      "Routeren gav en kort levetid for kort til pålidelig fornyelse. Automatisk opsætning blev ikke markeret som vellykket. Brug manuel opsætning eller tjek routeren."
+    IDS_PORTMAP_PROTOCOL        "Protokol: %s"
+    IDS_ADD_UNC_SHARE           "Tilføj netværksmappe"
 END
 
 #endif    // Danish resources

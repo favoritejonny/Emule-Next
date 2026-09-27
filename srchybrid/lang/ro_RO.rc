@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Descarcă și încarcă nodes.dat de pe Internet pentru a porni Kad"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP și UPnP cer unui router compatibil să deschidă doar porturile eMule. Modul automat alege un protocol acceptat. Folosește-l doar în propria rețea de acasă, fără VPN. Altfel continuă manual; setările existente se păstrează."
+    IDS_WIZSETUP_PORTTEST "Configurarea automată a routerului începe doar după Terminare; testează după aceea."
+    IDS_WIZSETUP_NETWORKS "eD2K folosește o listă de servere. Kad funcționează fără servere, dar necesită UDP și contacte inițiale. Poți folosi ambele rețele. Dezactivarea UDP dezactivează și Kad. Lista de servere se alege pe pagina următoare."
+    IDS_WIZSETUP_SERVERS_ADD "Descarcă și încarcă o listă de servere eD2K de pe Internet"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Opțional: opriți celelalte transferuri și deconectați orice VPN, apoi porniți testul. Acesta transferă până la aproximativ 100 MB de date temporare prin Cloudflare, care vă poate vedea adresa IP. eMule Next nu trimite și nu păstrează rezultatul. Puteți modifica valorile măsurate în KB/s înainte de a le aplica."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Introduceți viteze valide de descărcare și încărcare în KB/s sau debifați aplicarea valorilor."
+    IDS_WIZSETUP_SERVERS_INFO "Cu eD2K selectat, poți adăuga aceste servere la Terminare. Serverele existente se păstrează. Nu se descarcă o listă și nu se activează conectarea automată. Lasă nebifat pentru a gestiona singur serverele sau a folosi doar Kad."
+    IDS_WIZSETUP_PORTS "TCP servește conexiunilor și transferurilor; UDP este necesar și pentru Kad. Păstrează porturile propuse sau alege altele. Dacă routerul redirecționează deja porturi, folosește aceleași numere."
     IDS_SOCKETS_INIT_FAILED "Eroare la deschiderea socket-urilor Windows."
     IDS_ABOUTBOX            "&Despre eMule..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s de la %s"
@@ -1002,14 +1011,14 @@ BEGIN
                             "Ignoră mesaje protocol eMule Trimitere link"
     IDS_CHECK4UPDATE        "Caută o nouă versiune"
     IDS_STARTUP             "La pornire"
-    IDS_NEWVERSIONAVL       "E disponibilă o nouă versiune de eMule! Pentru alte informaţii intră pe site-ul eMule."
-    IDS_NEWVERSIONAVLPOPUP  "E disponibilă o nouă versiune de eMule. Pentru informaţii dă click aici!"
+    IDS_NEWVERSIONAVL       "E disponibilă o nouă versiune de eMule Next! Pentru alte informaţii intră pe site-ul eMule Next."
+    IDS_NEWVERSIONAVLPOPUP  "E disponibilă o nouă versiune de eMule Next. Pentru informaţii dă click aici!"
     IDS_NEWVERSIONFAILED    "Nu pot verifica actualizarea."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "E disponibilă o nouă versiune de eMule"
+    IDS_CB_TBN_ONNEWVERSION "E disponibilă o nouă versiune de eMule Next"
     IDS_NONEWERVERSION      "Ai deja ultima versiune de eMule."
     IDS_VERSIONCHECK        "Control &Versiune"
     IDS_VISITVERSIONCHECK   "\n\nVrei să vezi acum pagina de noutăţi?"
@@ -1992,6 +2001,35 @@ BEGIN
 END
 
 /////////////////////////////////////////////////////////////////////////////
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Configurare automată a conexiunii"
+    IDS_CONNSETUP_INFO          "Păstrați porturile TCP și UDP propuse sau introduceți-le pe ale dvs. Configurarea automată poate configura un router de acasă compatibil după ce terminați acest expert."
+    IDS_CONNSETUP_BUTTON        "Configurați automat"
+    IDS_CONNSETUP_CONSENT       "Permiteți eMule Next să redirecționeze porturile TCP/UDP folosind PCP, NAT-PMP sau UPnP pe această rețea privată de acasă după ce vrăjitorul se termină și pornește mai târziu?\n\nConfirmați numai într-o rețea pe care o controlați, fără VPN. Detectarea nu poate recunoaște fiecare VPN. Permisiunea pentru firewall Windows este încă necesară; portul de interfață web este exclus. ID mare nu este garantat. Mapările temporare pot rămâne până la expirarea atribuită de router.\n\nAnularea expertului nu va salva această alegere."
+    IDS_CONNSETUP_PENDING       "Selectat: configurarea routerului va rula după terminarea expertului și la pornirea ulterioară, numai în rețelele private eligibile. Permisiunea pentru firewall Windows este încă necesară. ID ridicat și accesibilitatea Kad rămân de verificat."
+    IDS_CONNSETUP_MANUAL        "Nu a fost selectată nicio nouă configurare automată. Se păstrează setările existente. Puteți utiliza redirecționarea manuală a portului, puteți verifica permisiunile pentru firewall Windows sau puteți rula singur testul extern."
+    IDS_CONNSETUP_PRIVATE       "Configurare automată întreruptă: Windows raportează o rețea publică, gestionată sau mixtă. Nu au fost solicitate modificări de router. Utilizați configurarea manuală sau verificați profilul de rețea numai dacă aceasta este propria dvs. rețea de acasă de încredere."
+    IDS_CONNSETUP_VPN           "Configurare automată întreruptă: a fost găsită o posibilă VPN, proxy sau legare explicită a interfeței. Routerul de acasă nu este configurat automat. Utilizați setările de redirecționare porturi ale furnizorului de conexiune."
+    IDS_CONNSETUP_UNKNOWN       "Configurare automată întreruptă: rețeaua locală nu a putut fi identificată în siguranță. Nu au fost solicitate modificări de router. Puteți continua și configura manual conexiunea."
+    IDS_CONNSETUP_SUCCESS       "Routerul confirmă redirecționarea TCP %u și UDP %u (0 = dezactivat) către acest computer.\n\nAcest lucru nu dovedește accesibilitatea la Internet. Verificați permisiunea Windows firewall, apoi conectați-vă și verificați High ID și starea Kad sau rulați manual testul portului extern."
+    IDS_CONNSETUP_FAILED        "Configurarea automată a routerului nu s-a finalizat. PCP, NAT-PMP sau UPnP pot fi indisponibile sau dezactivate, sau routerul poate să fi refuzat cererea. Verificați routerul și firewall-ul Windows; setarea manuală rămâne disponibilă."
+    IDS_CONNSETUP_SHARED        "Routerul raportează o adresă de Internet non-publică: este posibil un NAT dublu sau furnizorul CGNAT. Deschiderea acestui router singură poate să nu fie suficientă. Întrebați furnizorul despre un IP public sau despre redirecționarea unui port acceptat."
+    IDS_CONNSETUP_CONFLICT      "Un port solicitat are deja o regulă de router diferită sau dezactivată. Nu a fost suprascris. Alegeți diferite porturi de client sau inspectați manual acea regulă."
+    IDS_CONNSETUP_BADPORT       "Introduceți un port TCP de la 1 la 65535 și un port UDP de la 1 la 65535 sau dezactivați explicit UDP."
+    IDS_CONNSETUP_TESTINFO      "Test voluntar pe site-ul oficial eMule. Acesta primește informațiile despre IP și portul dvs."
+    IDS_CONNSETUP_FIREWALL      "Deschide Windows Firewall..."
+    IDS_CONNSETUP_BINDFAILED    "Clientul nu a putut asculta pe porturile selectate. Ele pot fi utilizate de un alt program. Setările anterioare ale portului au fost restaurate."
+    IDS_CONNSETUP_BUSY          "Un alt port de configurare încă rulează. Așteptați să se termine înainte de a încerca din nou."
+    IDS_CONNSETUP_UNSELECT      "Anulați alegerea automată"
+    IDS_PORTMAP_WRONGPORT       "Routerul a atribuit un alt port extern. Nu a fost acceptat ca o mapare a clientului de lucru. Porturile clientului nu au fost modificate. Utilizați porturi diferite sau verificați manual routerul. Mapările temporare pot rămâne până la expirare."
+    IDS_PORTMAP_REFUSED         "Routerul a refuzat redirecționarea automată a portului. Nu a fost folosit niciun protocol alternativ pentru a ocoli acest refuz. Verificați setările administratorului routerului sau utilizați configurarea manuală."
+    IDS_PORTMAP_NETWORKCHANGED  "Maparea portului întreruptă: rețeaua, gateway-ul, porturile client sau adresa externă s-au schimbat. Mapările anterioare pot rămâne până la expirare. Verificați conexiunea și executați din nou configurarea automată, dacă este cazul."
+    IDS_PORTMAP_SHORTLEASE      "Routerul a acordat o durată de viață de cartografiere prea scurtă pentru o reînnoire fiabilă. Configurarea automată nu a fost marcată cu succes. Utilizați configurarea manuală sau verificați routerul."
+    IDS_PORTMAP_PROTOCOL        "Protocol: %s"
+    IDS_ADD_UNC_SHARE           "Adaugă folder de rețea"
+END
+
 #endif    // Romanian resources
 
 

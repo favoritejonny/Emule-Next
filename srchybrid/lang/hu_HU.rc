@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "A nodes.dat letöltése és betöltése az internetről a Kad indításához"
+    IDS_WIZSETUP_PROTOCOLS "A PCP, NAT-PMP és UPnP csak az eMule portjainak megnyitását kéri a megfelelő routertől. Az automatikus mód támogatott protokollt választ. Csak saját otthoni hálózaton, VPN nélkül használja. Más esetben folytassa kézzel; a meglévő beállítások megmaradnak."
+    IDS_WIZSETUP_PORTTEST "A router automatikus beállítása csak a Befejezés után indul; ezután teszteljen."
+    IDS_WIZSETUP_NETWORKS "Az eD2K kiszolgálólistát használ. A Kad kiszolgálók nélkül működik, de UDP és kezdeti kapcsolatok kellenek hozzá. Mindkét hálózat használható. Az UDP letiltása a Kadot is letiltja. A kiszolgálólista a következő oldalon választható."
+    IDS_WIZSETUP_SERVERS_ADD "eD2K-kiszolgálólista letöltése az internetről"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Opcionális: állítsa le a többi átvitelt és bontsa a VPN-kapcsolatot, majd indítsa el a tesztet. Legfeljebb körülbelül 100 MB ideiglenes adatot továbbít a Cloudflare-en keresztül, amely láthatja az IP-címét. Az eMule Next nem küldi el és nem tárolja az eredményt. Az alkalmazás előtt módosíthatja a mért KB/s értékeket."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Adjon meg érvényes letöltési és feltöltési sebességet KB/s-ban, vagy törölje az alkalmazás jelölését."
+    IDS_WIZSETUP_SERVERS_INFO "Ha az eD2K ki van választva, ezek a kiszolgálók a Befejezéskor hozzáadhatók. A meglévők megmaradnak. Nem töltünk le listát és nem kapcsoljuk be az automatikus csatlakozást. Hagyja üresen saját listához vagy csak Kad használatához."
+    IDS_WIZSETUP_PORTS "A TCP kapcsolatokat és átviteleket szolgál; az UDP a Kadhoz is szükséges. Tartsa meg a javasolt portokat vagy válasszon sajátokat. Ha a router már továbbít portokat, azok számát használja."
     IDS_SOCKETS_INIT_FAILED "Nem tudtam használatba venni a fájlleírót. (socket)"
     IDS_ABOUTBOX            "&Az eMule névjegye..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s -> %s"
@@ -938,14 +947,14 @@ BEGIN
                             "eMule hivatkozásküldés üzenetek mellőzése"
     IDS_CHECK4UPDATE        "Új verzió keresése"
     IDS_STARTUP             "Indításkor"
-    IDS_NEWVERSIONAVL       "Új eMule verzió érhető el! Látogass el a honlapra tovább információért."
-    IDS_NEWVERSIONAVLPOPUP  "Új eMule verzió érhető. Klikkelj ide további információért!"
+    IDS_NEWVERSIONAVL       "Új eMule Next verzió érhető el! Látogass el a honlapra tovább információért."
+    IDS_NEWVERSIONAVLPOPUP  "Új eMule Next verzió érhető. Klikkelj ide további információért!"
     IDS_NEWVERSIONFAILED    "Nem sikerült megvizsgálni, van-e új verzió."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "Új eMule verziót észlelek."
+    IDS_CB_TBN_ONNEWVERSION "Új eMule Next verziót észlelek."
     IDS_NONEWERVERSION      "Nem észleltem újabb eMule verziót."
     IDS_VERSIONCHECK        "&Verziófrissítés"
     IDS_VISITVERSIONCHECK   "\n\nMeg szeretnéd látogatni az információs oldalt?"
@@ -1990,6 +1999,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Enable Windows 7 taskbar effects"
     IDS_LANMODE             "LAN Mode"
     IDS_OPENPREFINI         "Open preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Automatikus kapcsolat beállítás"
+    IDS_CONNSETUP_INFO          "Tartsa meg a javasolt TCP és UDP portokat, vagy adja meg a sajátját. A varázsló befejezése után az automatikus beállítás konfigurálhat egy kompatibilis otthoni útválasztót."
+    IDS_CONNSETUP_BUTTON        "Automatikus konfigurálás"
+    IDS_CONNSETUP_CONSENT       "Engedélyezi az eMule Next számára, hogy PCP, NAT-PMP vagy UPnP használatával továbbítsa a TCP/UDP portjait ezen a magánhálózaton, miután a varázsló befejeződött, majd később elindul?\n\nCsak az Ön által irányított hálózaton erősítse meg, VPN nélkül. Az észlelés nem ismer fel minden VPN-t. A Windows tűzfal engedélyére továbbra is szükség van; a webes interfész port nincs kizárva. A magas azonosító nem garantált. Az ideiglenes leképezések a router által hozzárendelt lejáratukig megmaradhatnak.\n\nA varázsló megszakítása nem menti el ezt a választást."
+    IDS_CONNSETUP_PENDING       "Kiválasztva: az útválasztó beállítása a varázsló befejezése után és későbbi indításkor csak a jogosult magánhálózatokon fog futni. A Windows tűzfal engedélye továbbra is szükséges. A magas azonosító és a Kad elérhetősége ellenőrzésre vár."
+    IDS_CONNSETUP_MANUAL        "Nincs új automatikus beállítás kiválasztva. A meglévő beállítások megmaradnak. Használhat kézi porttovábbítást, ellenőrizheti a Windows tűzfalengedélyeket, vagy saját maga futtathatja a külső tesztet."
+    IDS_CONNSETUP_PRIVATE       "Az automatikus beállítás szünetel: Windows nyilvános, felügyelt vagy vegyes hálózatot jelent. A router módosítását nem kérték. Használjon kézi beállítást, vagy csak akkor ellenőrizze a hálózati profilt, ha ez a saját megbízható otthoni hálózata."
+    IDS_CONNSETUP_VPN           "Az automatikus beállítás szünetel: lehetséges VPN, proxy vagy explicit interfész-összerendelés található. Az otthoni útválasztó nincs automatikusan konfigurálva. Használja a kapcsolatszolgáltató port-továbbítási beállításait."
+    IDS_CONNSETUP_UNKNOWN       "Az automatikus beállítás szünetel: a helyi hálózatot nem lehetett biztonságosan azonosítani. A router módosítását nem kérték. Folytathatja és manuálisan konfigurálhatja a kapcsolatot."
+    IDS_CONNSETUP_SUCCESS       "Az útválasztó megerősíti a TCP %u és UDP %u (0 = letiltva) továbbítását erre a számítógépre.\n\nEz nem bizonyítja az internetes elérhetőséget. Ellenőrizze a Windows tűzfal engedélyét, majd csatlakozzon, és ellenőrizze a High ID és a Kad állapotát, vagy futtassa manuálisan a külső porttesztet."
+    IDS_CONNSETUP_FAILED        "Az útválasztó automatikus beállítása nem fejeződött be. Előfordulhat, hogy az PCP, NAT-PMP vagy UPnP nem érhető el vagy le van tiltva, vagy az útválasztó visszautasította a kérést. Ellenőrizze az útválasztót és a Windows tűzfalat; kézi beállítás továbbra is elérhető."
+    IDS_CONNSETUP_SHARED        "Az útválasztó nem nyilvános internetcímet jelent: dupla NAT vagy CGNAT szolgáltató lehetséges. A router megnyitása önmagában nem biztos, hogy elég. Kérdezze meg a szolgáltatót a nyilvános IP-címről vagy a támogatott porttovábbításról."
+    IDS_CONNSETUP_CONFLICT      "A kért porton már van egy másik vagy letiltott útválasztó szabály. Nem írták felül. Válasszon különböző ügyfélportokat, vagy ellenőrizze a szabályt manuálisan."
+    IDS_CONNSETUP_BADPORT       "Adjon meg egy TCP portot 1-től 65535-ig, és egy UDP portot 1-től 65535-ig, vagy kifejezetten tiltsa le az UDP portot."
+    IDS_CONNSETUP_TESTINFO      "Önkéntes teszt az eMule hivatalos honlapján. Megkapja az Ön IP-címét és portját."
+    IDS_CONNSETUP_FIREWALL      "Nyissa meg a Windows tűzfalat..."
+    IDS_CONNSETUP_BINDFAILED    "Az ügyfél nem tudott figyelni a kiválasztott portokon. Lehet, hogy egy másik program használja őket. A korábbi portbeállítások visszaálltak."
+    IDS_CONNSETUP_BUSY          "Egy másik portbeállítás még mindig fut. Várja meg, amíg befejeződik, mielőtt újra próbálkozna."
+    IDS_CONNSETUP_UNSELECT      "Automatikus választás visszavonása"
+    IDS_PORTMAP_WRONGPORT       "A router másik külső portot rendelt. Nem fogadták el működő ügyfélleképezésként. Az ügyfélportok nem változtak. Használjon különböző portokat, vagy ellenőrizze manuálisan az útválasztót. Az ideiglenes leképezések a lejáratig megmaradhatnak."
+    IDS_PORTMAP_REFUSED         "A router megtagadta az automatikus porttovábbítást. Nem használtak alternatív protokollt ennek az elutasításnak a megkerülésére. Ellenőrizze az útválasztó rendszergazdájának beállításait, vagy használja a kézi beállítást."
+    IDS_PORTMAP_NETWORKCHANGED  "Port leképezés szünetel: a hálózat, az átjáró, az ügyfélportok vagy a külső cím megváltozott. A korábbi leképezések a lejáratig megmaradhatnak. Ellenőrizze a kapcsolatot, és futtassa újra az automatikus beállítást, ha szükséges."
+    IDS_PORTMAP_SHORTLEASE      "Az útválasztó túl rövid leképezési élettartamot adott a megbízható megújításhoz. Az automatikus beállítás nem lett sikeres. Használjon kézi beállítást, vagy ellenőrizze az útválasztót."
+    IDS_PORTMAP_PROTOCOL        "Protokoll: %s"
+    IDS_ADD_UNC_SHARE           "Hálózati mappa hozzáadása"
 END
 
 #endif    // Hungarian resources

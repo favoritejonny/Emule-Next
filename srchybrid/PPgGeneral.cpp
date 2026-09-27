@@ -110,7 +110,12 @@ BOOL CPPgGeneral::OnInitDialog()
 	for (INT_PTR i = 0; i < aLanguageIDs.GetCount(); ++i) {
 		TCHAR szLang[128];
 		TCHAR *pLang = szLang;
-		int ret = GetLocaleInfo(aLanguageIDs[i], LOCALE_SLANGUAGE, szLang, _countof(szLang));
+		// Show every language in its own native form.  LOCALE_SLANGUAGE uses the
+		// Windows display language, which made the list look only partly
+		// translated when eMule Next was using a different language.
+		int ret = GetLocaleInfo(aLanguageIDs[i], LOCALE_SNATIVELANGNAME, szLang, _countof(szLang));
+		if (ret == 0)
+			ret = GetLocaleInfo(aLanguageIDs[i], LOCALE_SLANGUAGE, szLang, _countof(szLang));
 
 		if (ret == 0)
 			switch (aLanguageIDs[i]) {

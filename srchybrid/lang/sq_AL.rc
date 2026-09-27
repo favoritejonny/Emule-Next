@@ -56,6 +56,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Shkarko dhe ngarko nodes.dat nga Interneti për të nisur Kad"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP dhe UPnP i kërkojnë një ruteri të përputhshëm të hapë vetëm portat e eMule. Mënyra automatike zgjedh një protokoll të mbështetur. Përdoreni vetëm në rrjetin tuaj të shtëpisë pa VPN. Ndryshe vazhdoni manualisht; cilësimet ekzistuese ruhen."
+    IDS_WIZSETUP_PORTTEST "Konfigurimi automatik i ruterit nis vetëm pas Përfundo; bëni testin më pas."
+    IDS_WIZSETUP_NETWORKS "eD2K përdor një listë serverësh. Kad punon pa serverë, por kërkon UDP dhe kontakte fillestare. Mund të përdorni të dy rrjetet. Çaktivizimi i UDP çaktivizon edhe Kad. Lista e serverëve zgjidhet në faqen tjetër."
+    IDS_WIZSETUP_SERVERS_ADD "Shkarko dhe ngarko një listë serverësh eD2K nga Interneti"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Opsionale: ndaloni transferimet e tjera dhe shkëputni çdo VPN para se të nisni provën. Ajo transferon deri në rreth 100 MB të dhëna të përkohshme përmes Cloudflare, e cila mund të shohë adresën tuaj IP. eMule Next nuk e dërgon dhe nuk e ruan rezultatin. Mund t'i ndryshoni vlerat e matura në KB/s para zbatimit."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Vendosni shpejtësi të vlefshme shkarkimi dhe ngarkimi në KB/s ose çaktivizoni zbatimin e vlerave."
+    IDS_WIZSETUP_SERVERS_INFO "Me eD2K të zgjedhur, mund t'i shtoni këta serverë te Përfundo. Serverët ekzistues ruhen. Nuk shkarkohet listë dhe nuk aktivizohet lidhja automatike. Lëreni pa shenjë për t'i menaxhuar vetë serverët ose për të përdorur vetëm Kad."
+    IDS_WIZSETUP_PORTS "TCP shërben për lidhje dhe transferime; UDP nevojitet edhe për Kad. Mbani portat e propozuara ose zgjidhni tuajat. Nëse ruteri tashmë përcjell porta, përdorni të njëjtët numra."
     IDS_SOCKETS_INIT_FAILED "Gabim në nisje te foletë e Windows."
     IDS_ABOUTBOX            "&Rreth eMule..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s nga %s"
@@ -1026,14 +1035,14 @@ BEGIN
                             "Për dërgimin e linkeve"
     IDS_CHECK4UPDATE        "Verifiko versionin më të ri"
     IDS_STARTUP             "Në nisje"
-    IDS_NEWVERSIONAVL       "Për eMule ka një version të ri! Për më tepër informacion verifikoni faqen kryesore të projektit."
-    IDS_NEWVERSIONAVLPOPUP  "Për eMule ka një version të ri. Klikoni për të lexuar rreth tij!"
+    IDS_NEWVERSIONAVL       "Për eMule Next ka një version të ri! Për më tepër informacion verifikoni faqen kryesore të projektit."
+    IDS_NEWVERSIONAVLPOPUP  "Për eMule Next ka një version të ri. Klikoni për të lexuar rreth tij!"
     IDS_NEWVERSIONFAILED    "Versioni i ri nuk mund të verifikohet!"
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "Për eMule diktohet një version i ri"
+    IDS_CB_TBN_ONNEWVERSION "Për eMule Next diktohet një version i ri"
     IDS_NONEWERVERSION      "Për eMule nuk diktohet asnjë version i ri."
     IDS_VERSIONCHECK        "&Verifikim versioni"
     IDS_VISITVERSIONCHECK   "\n\nA do e vizitoni tani faqen e informacionit?"
@@ -1980,6 +1989,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Enable Windows 7 taskbar effects"
     IDS_LANMODE             "LAN Mode"
     IDS_OPENPREFINI         "Open preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Konfigurimi automatik i lidhjes"
+    IDS_CONNSETUP_INFO          "Mbani portat e propozuara TCP dhe UDP, ose futni tuajat. Konfigurimi automatik mund të konfigurojë një ruter të pajtueshëm në shtëpi pasi të keni përfunduar këtë magjistar."
+    IDS_CONNSETUP_BUTTON        "Konfiguro automatikisht"
+    IDS_CONNSETUP_CONSENT       "Të lejohet që eMule Next të përcjellë portat e tij TCP/UDP duke përdorur PCP, NAT-PMP ose UPnP në këtë rrjet privat shtëpiak pasi të përfundojë magjistari dhe të fillojë më vonë?\n\nKonfirmo vetëm në një rrjet që kontrollon ti, pa një VPN. Zbulimi nuk mund të njohë çdo VPN. Leja e murit të zjarrit të Windows është ende e nevojshme; porta e ndërfaqes në ueb është e përjashtuar. ID e lartë nuk është e garantuar. Hartimet e përkohshme mund të mbeten deri në skadimin e tyre të caktuar nga ruteri.\n\nAnulimi i magjistarit nuk do ta ruajë këtë zgjedhje."
+    IDS_CONNSETUP_PENDING       "Zgjedhur: konfigurimi i ruterit do të funksionojë pasi të përfundojë magjistari dhe në fillimet e mëvonshme, vetëm në rrjetet private të përshtatshme. Kërkohet ende leja e murit të zjarrit të Windows. ID-ja e lartë dhe arritshmëria e Kad mbeten për t'u verifikuar."
+    IDS_CONNSETUP_MANUAL        "Nuk është zgjedhur konfigurim i ri automatik. Cilësimet ekzistuese janë mbajtur. Mund të përdorni përcjelljen manuale të portit, të kontrolloni lejet e murit të zjarrit Windows ose të kryeni vetë testin e jashtëm."
+    IDS_CONNSETUP_PRIVATE       "Konfigurimi automatik u ndërpre: Windows raporton një rrjet publik, të menaxhuar ose të përzier. Asnjë ndryshim i ruterit nuk u kërkua. Përdorni konfigurimin manual ose kontrolloni profilin e rrjetit vetëm nëse ky është rrjeti juaj i besuar i shtëpisë."
+    IDS_CONNSETUP_VPN           "Konfigurimi automatik u ndërpre: u gjet një lidhje e mundshme VPN, përfaqësues ose e qartë e ndërfaqes. Ruteri i shtëpisë nuk konfigurohet automatikisht. Përdorni cilësimet e përcjelljes së portit të ofruesit të lidhjes."
+    IDS_CONNSETUP_UNKNOWN       "Konfigurimi automatik u ndërpre: rrjeti lokal nuk mund të identifikohej në mënyrë të sigurt. Asnjë ndryshim i ruterit nuk u kërkua. Mund të vazhdoni dhe konfiguroni lidhjen manualisht."
+    IDS_CONNSETUP_SUCCESS       "Ruteri konfirmon përcjelljen e TCP %u dhe UDP %u (0 = i çaktivizuar) në këtë PC.\n\nKjo nuk vërteton aksesueshmërinë në internet. Kontrolloni lejen e murit të zjarrit të Windows, më pas lidheni dhe kontrolloni statusin ""High ID"" dhe ""Kad"" ose ekzekutoni manualisht testin e portit të jashtëm."
+    IDS_CONNSETUP_FAILED        "Konfigurimi automatik i ruterit nuk përfundoi. PCP, NAT-PMP ose UPnP mund të jetë i padisponueshëm ose i çaktivizuar, ose ruteri mund ta ketë refuzuar kërkesën. Kontrolloni ruterin dhe murin e zjarrit Windows; konfigurimi manual mbetet i disponueshëm."
+    IDS_CONNSETUP_SHARED        "Ruteri raporton një adresë interneti jo publike: NAT e dyfishtë ose ofruesi CGNAT është i mundur. Vetëm hapja e këtij ruteri mund të mos jetë e mjaftueshme. Pyetni ofruesin për një IP publike ose përcjellje porti të mbështetur."
+    IDS_CONNSETUP_CONFLICT      "Një port i kërkuar tashmë ka një rregull të ndryshëm ose të çaktivizuar të ruterit. Nuk ishte mbishkruar. Zgjidhni porte të ndryshme klienti ose kontrolloni manualisht atë rregull."
+    IDS_CONNSETUP_BADPORT       "Futni një portë TCP nga 1 në 65535 dhe një port UDP nga 1 në 65535, ose çaktivizoni në mënyrë eksplicite UDP."
+    IDS_CONNSETUP_TESTINFO      "Test vullnetar në faqen zyrtare të eMule. Ai merr IP-në tuaj dhe informacionin e portit."
+    IDS_CONNSETUP_FIREWALL      "Hapni Windows Firewall..."
+    IDS_CONNSETUP_BINDFAILED    "Klienti nuk mund të dëgjonte në portet e zgjedhura. Ato mund të përdoren nga një program tjetër. Cilësimet e mëparshme të portit janë rikthyer."
+    IDS_CONNSETUP_BUSY          "Një konfigurim tjetër porti është ende duke u ekzekutuar. Prisni që të përfundojë përpara se të provoni përsëri."
+    IDS_CONNSETUP_UNSELECT      "Zhbër zgjedhjen automatike"
+    IDS_PORTMAP_WRONGPORT       "Ruteri caktoi një portë të jashtme të ndryshme. Nuk u pranua si një hartë pune e klientit. Portat e klientit nuk u ndryshuan. Përdorni porte të ndryshme ose kontrolloni manualisht ruterin. Hartëzimi i përkohshëm mund të qëndrojë deri në skadim."
+    IDS_PORTMAP_REFUSED         "Ruteri refuzoi përcjelljen automatike të portit. Asnjë protokoll alternativ nuk u përdor për të anashkaluar këtë refuzim. Kontrolloni cilësimet e administratorit të ruterit ose përdorni konfigurimin manual."
+    IDS_PORTMAP_NETWORKCHANGED  "Harta e portit u ndërpre: rrjeti, porta, portat e klientit ose adresa e jashtme u ndryshuan. Hartimet e mëparshme mund të qëndrojnë deri në skadim. Kontrolloni lidhjen dhe ekzekutoni përsëri konfigurimin automatik nëse është e nevojshme."
+    IDS_PORTMAP_SHORTLEASE      "Ruteri dha një jetëgjatësi hartash shumë të shkurtër për rinovim të besueshëm. Konfigurimi automatik nuk u shënua si i suksesshëm. Përdorni konfigurimin manual ose kontrolloni ruterin."
+    IDS_PORTMAP_PROTOCOL        "Protokolli: %s"
+    IDS_ADD_UNC_SHARE           "Shto dosje rrjeti"
 END
 
 #endif    // Albanisch resources

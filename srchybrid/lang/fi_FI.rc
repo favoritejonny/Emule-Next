@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Lataa ja avaa nodes.dat internetistä Kad-verkon käynnistämiseksi"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP ja UPnP pyytävät yhteensopivaa reititintä avaamaan vain eMulen portit. Automaattitila valitsee tuetun protokollan. Käytä sitä vain omassa kotiverkossa ilman VPN:ää. Muuten jatka käsin; nykyiset asetukset säilyvät."
+    IDS_WIZSETUP_PORTTEST "Reitittimen automaattiasetus alkaa vasta Valmis-painikkeen jälkeen; testaa sen jälkeen."
+    IDS_WIZSETUP_NETWORKS "eD2K käyttää palvelinluetteloa. Kad toimii ilman palvelimia, mutta tarvitsee UDP:n ja alkuyhteyksiä. Voit käyttää molempia verkkoja. UDP:n poistaminen käytöstä poistaa myös Kadin. Palvelinluettelo valitaan seuraavalla sivulla."
+    IDS_WIZSETUP_SERVERS_ADD "Lataa eD2K-palvelinluettelo Internetistä"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Valinnainen: pysäytä muut siirrot ja katkaise VPN-yhteys ennen testin aloittamista. Testi siirtää enintään noin 100 Mt väliaikaista tietoa Cloudflaren kautta, joten palvelu näkee IP-osoitteesi. eMule Next ei lähetä eikä tallenna tulosta. Voit muokata mitattuja KB/s-arvoja ennen niiden käyttöönottoa."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Anna kelvolliset lataus- ja lähetysnopeudet yksikössä KB/s tai poista arvojen käyttöönotto."
+    IDS_WIZSETUP_SERVERS_INFO "Kun eD2K on valittu, nämä palvelimet voidaan lisätä Valmis-painikkeella. Nykyiset palvelimet säilyvät. Luetteloa ei ladata eikä automaattiyhteyttä oteta käyttöön. Jätä valitsematta, jos hallitset palvelimia itse tai käytät vain Kadia."
+    IDS_WIZSETUP_PORTS "TCP on yhteyksiä ja siirtoja varten; UDP:tä tarvitaan myös Kadiin. Säilytä ehdotetut portit tai valitse omat. Jos reititin jo ohjaa portteja, käytä samoja numeroita."
     IDS_SOCKETS_INIT_FAILED "Kohtasin virheen, kun yritin luoda Windows-soketteja."
     IDS_ABOUTBOX            "&Tietoa eMulesta..."
     IDS_HTTPDOWNLOAD_FILESTATUS "Tiedosto: %s Palvelin: %s"
@@ -1956,6 +1965,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Käytä Windows 7:n tehtäväpalkin efektejä"
     IDS_LANMODE             "LAN-tila"
     IDS_OPENPREFINI         "Avaa preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Automaattinen yhteyden määritys"
+    IDS_CONNSETUP_INFO          "Säilytä ehdotetut TCP- ja UDP-portit tai anna omasi. Automaattinen asennus voi määrittää yhteensopivan kotireitittimen tämän ohjatun toiminnon suorittamisen jälkeen."
+    IDS_CONNSETUP_BUTTON        "Määritä automaattisesti"
+    IDS_CONNSETUP_CONSENT       "Saako eMule Nextin välittää TCP/UDP-porttinsa PCP:n, NAT-PMP:n tai UPnP:n avulla tässä yksityisessä kotiverkossa ohjatun toiminnon päätyttyä ja myöhempien käynnistysten jälkeen?\n\nVahvista vain hallitsemassasi verkossa, ilman VPN:ää. Tunnistus ei voi tunnistaa jokaista VPN:ää. Windowsin palomuurin käyttöoikeus tarvitaan edelleen; web-käyttöliittymän portti on poissuljettu. Korkeaa tunnusta ei taata. Väliaikaiset kartoitukset voivat säilyä reitittimen määrittämän voimassaolon päättymiseen asti.\n\nOhjatun toiminnon peruuttaminen ei tallenna tätä valintaa."
+    IDS_CONNSETUP_PENDING       "Valittu: reitittimen asennus suoritetaan ohjatun toiminnon päätyttyä ja myöhemmissä käynnistyksissä vain kelvollisissa yksityisissä verkoissa. Windowsin palomuurin käyttöoikeus vaaditaan edelleen. Korkea ID- ja Kad-saatavuus on vielä tarkistettava."
+    IDS_CONNSETUP_MANUAL        "Uutta automaattista asetusta ei ole valittu. Olemassa olevat asetukset säilytetään. Voit käyttää manuaalista portin edelleenohjausta, tarkistaa Windows palomuurin käyttöoikeudet tai suorittaa ulkoisen testin itse."
+    IDS_CONNSETUP_PRIVATE       "Automaattinen määritys keskeytetty: Windows ilmoittaa julkisen, hallitun tai sekaverkon. Reitittimen muutoksia ei pyydetty. Käytä manuaalista asetusta tai tarkista verkkoprofiili vain, jos tämä on oma luotettu kotiverkkosi."
+    IDS_CONNSETUP_VPN           "Automaattinen asennus keskeytetty: mahdollinen VPN, välityspalvelin tai eksplisiittinen käyttöliittymän sidos löydettiin. Kotireititintä ei konfiguroida automaattisesti. Käytä yhteydentarjoajan portin edelleenlähetysasetuksia."
+    IDS_CONNSETUP_UNKNOWN       "Automaattinen asennus keskeytetty: paikallista verkkoa ei voitu tunnistaa turvallisesti. Reitittimen muutoksia ei pyydetty. Voit jatkaa ja määrittää yhteyden manuaalisesti."
+    IDS_CONNSETUP_SUCCESS       "Reititin vahvistaa TCP:n %u ja UDP:n %u (0 = pois käytöstä) edelleenlähettämisen tähän tietokoneeseen.\n\nTämä ei todista Internetin saavutettavuutta. Tarkista Windowsin palomuurioikeudet, muodosta yhteys ja tarkista High ID- ja Kad-tila tai suorita ulkoisen portin testi manuaalisesti."
+    IDS_CONNSETUP_FAILED        "Reitittimen automaattinen asennus ei ole valmis. PCP, NAT-PMP tai UPnP ei ehkä ole käytettävissä tai pois käytöstä, tai reititin on saattanut hylätä pyynnön. Tarkista reititin ja Windows palomuuri; manuaalinen asetus on edelleen käytettävissä."
+    IDS_CONNSETUP_SHARED        "Reititin ilmoittaa ei-julkisen Internet-osoitteen: kaksinkertainen NAT tai palveluntarjoaja CGNAT on mahdollista. Pelkästään tämän reitittimen avaaminen ei välttämättä riitä. Kysy palveluntarjoajalta julkisesta IP-osoitteesta tai tuetusta portin edelleenohjauksesta."
+    IDS_CONNSETUP_CONFLICT      "Pyydetyssä portissa on jo eri tai poistettu käytöstä reititinsääntö. Sitä ei kirjoitettu päälle. Valitse eri asiakasportit tai tarkista kyseinen sääntö manuaalisesti."
+    IDS_CONNSETUP_BADPORT       "Anna TCP-portti 1-65535 ja UDP-portti 1-65535 tai poista UDP."
+    IDS_CONNSETUP_TESTINFO      "Vapaaehtoinen testi virallisella eMule-sivustolla. Se vastaanottaa IP- ja porttitietosi."
+    IDS_CONNSETUP_FIREWALL      "Avaa Windowsin palomuuri..."
+    IDS_CONNSETUP_BINDFAILED    "Asiakas ei voinut kuunnella valittuja portteja. Ne voivat olla toisen ohjelman käytössä. Aiemmat porttiasetukset on palautettu."
+    IDS_CONNSETUP_BUSY          "Toinen portin asennus on edelleen käynnissä. Odota sen päättymistä ennen kuin yrität uudelleen."
+    IDS_CONNSETUP_UNSELECT      "Kumoa automaattinen valinta"
+    IDS_PORTMAP_WRONGPORT       "Reititin määritti toisen ulkoisen portin. Sitä ei hyväksytty toimivaksi asiakaskartoitukseksi. Asiakasportteja ei muutettu. Käytä eri portteja tai tarkista reititin manuaalisesti. Väliaikaiset kartoitukset voivat jäädä voimassaoloajan päättymiseen asti."
+    IDS_PORTMAP_REFUSED         "Reititin kieltäytyi automaattisesta portin edelleenlähettämisestä. Mitään vaihtoehtoista protokollaa ei käytetty tämän kieltäytymisen ohittamiseksi. Tarkista reitittimen järjestelmänvalvojan asetukset tai käytä manuaalista asetusta."
+    IDS_PORTMAP_NETWORKCHANGED  "Porttikartoitus keskeytetty: verkkoa, yhdyskäytävää, asiakasportteja tai ulkoista osoitetta muutettu. Aiemmat kartoitukset voivat olla voimassa vanhenemiseen asti. Tarkista yhteys ja suorita automaattinen asennus uudelleen tarvittaessa."
+    IDS_PORTMAP_SHORTLEASE      "Reititin myönsi kartoitukselle liian lyhyen käyttöiän luotettavaan uusimiseen. Automaattista asetusta ei merkitty onnistuneeksi. Käytä manuaalista asetusta tai tarkista reititin."
+    IDS_PORTMAP_PROTOCOL        "Protokolla: %s"
+    IDS_ADD_UNC_SHARE           "Lisää verkkokansio"
 END
 
 #endif    // Finnish resources

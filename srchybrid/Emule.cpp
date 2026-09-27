@@ -68,6 +68,7 @@
 #include "PartFileWriteThread.h"
 #include "HelpIDs.h"
 #include "langids.h"
+#include "PrivateDiagnostics.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -513,9 +514,20 @@ BOOL CemuleApp::InitInstance()
 	thePrefs.Init();
 	theStats.Init();
 	if (ciSelfTest) {
-		// CI runs this only from a fresh, isolated portable directory. Requiring
-		// FirstStart here verifies that no existing user configuration leaked in.
-		s_ciSelfTestExitCode = thePrefs.IsFirstStart() && SelfTest(true) ? 0 : 1;
+		PrivateDiagnostics::Initialize();
+		bool testSucceeded = false;
+		if (HasCommandLineSwitch(_T("ci-saved-language-test"))) {
+			extern bool SelfTestSavedLanguage();
+			testSucceeded = SelfTestSavedLanguage();
+		}
+		else {
+			// CI runs this only from a fresh, isolated portable directory. Requiring
+			// FirstStart here verifies that no existing user configuration leaked in.
+			testSucceeded = thePrefs.IsFirstStart() && SelfTest(true);
+		}
+		PrivateDiagnostics::LogEvent("ci", "self-test", testSucceeded ? 1 : 0, 0, 0);
+		PrivateDiagnostics::Shutdown();
+		s_ciSelfTestExitCode = testSucceeded ? 0 : 1;
 		return FALSE;
 	}
 
@@ -613,8 +625,10 @@ BOOL CemuleApp::InitInstance()
 	m_pUploadDiskIOThread = new CUploadDiskIOThread();
 	m_pPartFileWriteThread = new CPartFileWriteThread();
 
+	PrivateDiagnostics::Initialize();
 	thePerfLog.Startup();
 	emuledlg->DoModal();
+	PrivateDiagnostics::Shutdown();
 
 	DisableRTLWindowsLayout();
 

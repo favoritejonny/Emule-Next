@@ -543,5 +543,6 @@ bool CClientUDPSocket::Rebind()
 	if (thePrefs.GetUDPPort() == m_port)
 		return false;
 	Close();
+	m_port = 0; // allow restoration/retry after a failed bind
 	return Create();
 }

@@ -1,5 +1,39 @@
 # Publication status - 2026-08-29
 
+## SourceForge mirror - 2026-09-01
+
+The public SourceForge project was created at:
+
+`https://sourceforge.net/projects/emule-next/`
+
+Its public summary identifies eMule Next as an independent, unofficial Alpha
+and explicitly asks for beta testers to report crashes, connection problems,
+usability issues and compatibility with different PCs and routers. The project
+homepage points to GitHub and the preferred support page points to GitHub
+Issues. On 2026-09-01 the SourceForge gallery received a dedicated 1448x1086
+(4:3) presentation image, `docs/media/sourceforge-preview-4x3-v1.png`, so its
+thumbnail fills the SourceForge gallery frame more effectively. The previous
+1280x640 panoramic image was removed only from the SourceForge gallery and is
+still retained for the GitHub social preview. Three clean application
+screenshots remain published: Modern Light preferences, the Search interface
+and the Kad interface. They contain no shared-file names, IP addresses or
+personal configuration data.
+
+The same tested public Alpha files already released on GitHub were uploaded to
+the SourceForge mirror:
+
+- `eMuleNext-1.0.0-alpha.1-win32-portable.zip`, SHA-256
+  `8893FDB7AD545FFD9AED892F0FD749B3550F10C10AB5842BCF576DC90D7B54D1`;
+- `eMuleNext-1.0.0-alpha.1-x64-portable.zip`, SHA-256
+  `6A2FB77DB00FAC08FE83A8A42AFCE3EA80C7F3CC155202EC0A905B0F1362B455`;
+- `SHA256SUMS-1.0.0-alpha.1.txt` containing those two checksums.
+
+SourceForge completed initial mirror processing and exposes all three direct
+downloads. It automatically selected the x64 ZIP as the latest/default
+download. The experimental PCP/NAT-PMP packages were deliberately not
+published because real-router validation is still pending. No GitHub release
+or source revision was changed during the SourceForge publication.
+
 ## Final candidate generated
 
 The final local candidate was rebuilt from public revision

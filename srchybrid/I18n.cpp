@@ -3,7 +3,7 @@
 #include "emule.h"
 #include "OtherFunctions.h"
 #include "Preferences.h"
-#include "langids.h"
+#include "LanguageSelection.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -185,7 +185,9 @@ void CPreferences::GetLanguages(CWordArray &aLanguageIDs)
 static bool CheckLangDLLVersion(const CString &rstrLangDLL)
 {
 	ULONGLONG ullVersion = GetModuleVersion((LPCTSTR)rstrLangDLL);
-	return (HIDWORD(ullVersion) == theApp.m_dwProductVersionMS && LODWORD(ullVersion) == theApp.m_dwProductVersionLS);
+	const DWORD dwExpectedVersionMS = MAKELONG(EMULE_NEXT_VERSION_MIN, EMULE_NEXT_VERSION_MJR);
+	const DWORD dwExpectedVersionLS = MAKELONG(EMULE_NEXT_VERSION_BUILD, EMULE_NEXT_VERSION_PATCH);
+	return (HIDWORD(ullVersion) == dwExpectedVersionMS && LODWORD(ullVersion) == dwExpectedVersionLS);
 }
 
 static bool LoadLangLib(const CString &rstrLangDir1, const CString &rstrLangDir2, LANGID lid)
@@ -224,23 +226,12 @@ void CPreferences::SetLanguage()
 {
 	InitLanguages(GetMuleDirectory(EMULE_INSTLANGDIR), GetMuleDirectory(EMULE_ADDLANGDIR, false));
 
-	bool bFoundLang = false;
-	if (m_wLanguageID)
-		bFoundLang = LoadLangLib(GetMuleDirectory(EMULE_INSTLANGDIR), GetMuleDirectory(EMULE_ADDLANGDIR, false), m_wLanguageID);
-
-	if (!bFoundLang) {
-		LANGID lidLocale = (LANGID)GetThreadLocale();
-		//LANGID lidLocalePri = PRIMARYLANGID(GetThreadLocale());
-		//LANGID lidLocaleSub = SUBLANGID(GetThreadLocale());
-
-		bFoundLang = LoadLangLib(GetMuleDirectory(EMULE_INSTLANGDIR), GetMuleDirectory(EMULE_ADDLANGDIR, false), lidLocale);
-		if (!bFoundLang) {
-			LoadLangLib(GetMuleDirectory(EMULE_INSTLANGDIR), GetMuleDirectory(EMULE_ADDLANGDIR, false), LANGID_EN_US);
-			m_wLanguageID = LANGID_EN_US;
-			LocMessageBox(IDS_MB_LANGUAGEINFO, MB_ICONASTERISK);
-		} else
-			m_wLanguageID = lidLocale;
-	}
+	// The Windows display language is independent of regional number/date
+	// formats. Only an absent language preference enables automatic selection.
+	m_wLanguageID = LanguageSelection::Resolve(m_wLanguageID, ::GetUserDefaultUILanguage(),
+		[](LANGID language) {
+			return LoadLangLib(GetMuleDirectory(EMULE_INSTLANGDIR), GetMuleDirectory(EMULE_ADDLANGDIR, false), language);
+		});
 
 	// if loading a string fails, set language to English
 	if (GetResString(IDS_MB_LANGUAGEINFO).IsEmpty()) {

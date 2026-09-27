@@ -40,7 +40,8 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-#define	NUM_BUTTON_BITMAPS	14
+#define	LEGACY_NUM_BUTTON_BITMAPS	14
+#define	NUM_BUTTON_BITMAPS			15
 
 #define	EMULTB_BASEEXT		_T("eMuleToolbar.kad02")
 
@@ -406,7 +407,7 @@ CMuleToolbarCtrl::CMuleToolbarCtrl()
 	: m_sizBtnBmp(thePrefs.GetToolbarIconSize())
 	, m_iPreviousHeight()
 	, m_iLastPressedButton(-1)
-	, m_buttoncount(_countof(TBStringIDs) + 1)
+	, m_buttoncount(_countof(TBStringIDs) + 2)
 	, TBButtons()
 	, TBStrings()
 	, m_eLabelType(NoLabels)
@@ -438,15 +439,17 @@ void CMuleToolbarCtrl::Init()
 	TCHAR cButtonStrings[2000];
 
 	size_t lLen = 0;
-	UINT uid = IDS_MAIN_BTN_CONNECT;
-	for (unsigned i = 0; ; ++i) {
-		const CString &str(GetResString(uid));
+	for (int i = 0; i < m_buttoncount; ++i) {
+		CString str;
+		if (i == 0)
+			str = GetResString(IDS_MAIN_BTN_CONNECT);
+		else if (i == m_buttoncount - 1)
+			str = CemuleApp::GetProductName();
+		else
+			str = GetResString(TBStringIDs[i - 1]);
 		int iLen = str.GetLength() + 1;
 		memcpy(cButtonStrings + lLen, (LPCTSTR)str, iLen * sizeof(TCHAR));
 		lLen += iLen;
-		if (i >= _countof(TBStringIDs))
-			break;
-		uid = TBStringIDs[i];
 	}
 
 	// terminate
@@ -465,6 +468,7 @@ void CMuleToolbarCtrl::Init()
 		case TBBTN_OPTIONS:
 		case TBBTN_TOOLS:
 		case TBBTN_HELP:
+		case TBBTN_PROJECT:
 			TBButtons[i].fsStyle = TBSTYLE_BUTTON;
 			break;
 		default:
@@ -515,14 +519,17 @@ void CMuleToolbarCtrl::SetAllButtonsStrings()
 	else
 		uid = IDS_MAIN_BTN_CONNECT;
 
-	for (unsigned i = 0; ; ++i) {
-		const CString &str(GetResString(uid));
+	for (int i = 0; i < m_buttoncount; ++i) {
+		CString str;
+		if (i == 0)
+			str = GetResString(uid);
+		else if (i == m_buttoncount - 1)
+			str = CemuleApp::GetProductName();
+		else
+			str = GetResString(TBStringIDs[i - 1]);
 		_tcsncpy_s(TBStrings[i], _countof(TBStrings[i]), str, _TRUNCATE);
 		tbbi.pszText = TBStrings[i];
 		SetButtonInfo(IDC_TOOLBARBUTTON + i, &tbbi);
-		if (i >= _countof(TBStringIDs))
-			break;
-		uid = TBStringIDs[i];
 	}
 }
 
@@ -580,8 +587,8 @@ void CMuleToolbarCtrl::SetAllButtonsWidth()
 				iCalcSize = iMaxPossible;
 		} else if (iCalcSize < 56)
 			iCalcSize = 56;
-		else if (iCalcSize > 72)
-				iCalcSize = 72;
+		else if (iCalcSize > 88)
+			iCalcSize = 88;
 
 		SetButtonWidth(iCalcSize, iCalcSize);
 	} else {
@@ -869,23 +876,32 @@ void CMuleToolbarCtrl::ChangeToolbarBitmap(const CString &path, bool bRefresh)
 		BITMAP bm;
 		if (Bitmap.LoadImage(path)
 			&& Bitmap.GetObject(sizeof bm, &bm)
-			&& bm.bmWidth == NUM_BUTTON_BITMAPS * m_sizBtnBmp.cx
+			&& m_sizBtnBmp.cx > 0
+			&& bm.bmWidth % m_sizBtnBmp.cx == 0
+			&& (bm.bmWidth / m_sizBtnBmp.cx == LEGACY_NUM_BUTTON_BITMAPS
+				|| bm.bmWidth / m_sizBtnBmp.cx == NUM_BUTTON_BITMAPS)
 			&& bm.bmHeight == m_sizBtnBmp.cy)
 		{
 			bool bAlpha = bm.bmBitsPixel > 24;
-			if (ImageList.Create(m_sizBtnBmp.cx, bm.bmHeight, bAlpha ? ILC_COLOR32 : (theApp.m_iDfltImageListColorFlags | ILC_MASK), 0, 1)) {
+			if (ImageList.Create(m_sizBtnBmp.cx, bm.bmHeight, bAlpha ? ILC_COLOR32 : (theApp.m_iDfltImageListColorFlags | ILC_MASK), NUM_BUTTON_BITMAPS, 1)) {
 				ImageList.Add(&Bitmap, bAlpha ? CLR_DEFAULT : RGB(255, 0, 255));
-				CImageList *pimlOld = SetImageList(&ImageList);
-				ImageList.Detach();
-				if (pimlOld)
-					pimlOld->DeleteImageList();
-				bResult = true;
+				if (ImageList.GetImageCount() == LEGACY_NUM_BUTTON_BITMAPS)
+					ImageList.Add(CTempIconLoader(_T("NEXT_LINK"), m_sizBtnBmp.cx, m_sizBtnBmp.cy));
+				if (ImageList.GetImageCount() == NUM_BUTTON_BITMAPS) {
+					CImageList *pimlOld = SetImageList(&ImageList);
+					ImageList.Detach();
+					if (pimlOld)
+						pimlOld->DeleteImageList();
+					bResult = true;
+				}
 			}
 		}
 	}
 
 	// if image file loading or image list creation failed, create default image list.
 	if (!bResult) {
+		if (ImageList.GetSafeHandle() != NULL)
+			ImageList.DeleteImageList();
 		if (!CreateNextImageList(ImageList)) {
 			// Keep the original resources as a safe fallback on systems where a
 			// compatible drawing surface cannot be created.
@@ -904,6 +920,7 @@ void CMuleToolbarCtrl::ChangeToolbarBitmap(const CString &path, bool bRefresh)
 			ImageList.Add(CTempIconLoader(_T("PREFERENCES"), m_sizBtnBmp.cx, m_sizBtnBmp.cy));
 			ImageList.Add(CTempIconLoader(_T("TOOLS"), m_sizBtnBmp.cx, m_sizBtnBmp.cy));
 			ImageList.Add(CTempIconLoader(_T("HELP"), m_sizBtnBmp.cx, m_sizBtnBmp.cy));
+			ImageList.Add(CTempIconLoader(_T("NEXT_LINK"), m_sizBtnBmp.cx, m_sizBtnBmp.cy));
 		}
 		ASSERT(ImageList.GetImageCount() == NUM_BUTTON_BITMAPS);
 		CImageList *pimlOld = SetImageList(&ImageList);
@@ -929,7 +946,7 @@ bool CMuleToolbarCtrl::CreateNextImageList(CImageList &imageList) const
 	// image list. This removes the square colour-key edges produced by the old
 	// GDI path and stays crisp at both 16 and 32 pixels.
 	const int iScale = 4;
-	const int iStripWidth = iIconSize * NUM_BUTTON_BITMAPS;
+	const int iStripWidth = iIconSize * LEGACY_NUM_BUTTON_BITMAPS;
 	ULONG_PTR gdiplusToken = 0;
 	Gdiplus::GdiplusStartupInput startupInput;
 	if (Gdiplus::GdiplusStartup(&gdiplusToken, &startupInput, NULL) != Gdiplus::Ok)
@@ -947,7 +964,7 @@ bool CMuleToolbarCtrl::CreateNextImageList(CImageList &imageList) const
 		sourceGraphics.SetPixelOffsetMode(Gdiplus::PixelOffsetModeHalf);
 		sourceGraphics.SetCompositingQuality(Gdiplus::CompositingQualityHighQuality);
 		sourceGraphics.Clear(Gdiplus::Color(0, 0, 0, 0));
-		for (int i = 0; i < NUM_BUTTON_BITMAPS; ++i)
+		for (int i = 0; i < LEGACY_NUM_BUTTON_BITMAPS; ++i)
 			DrawNextToolbarIconGdiPlus(sourceGraphics, iIconSize * iScale, i);
 
 		Gdiplus::Graphics outputGraphics(&output);
@@ -977,8 +994,12 @@ bool CMuleToolbarCtrl::CreateNextImageList(CImageList &imageList) const
 
 				CBitmap bitmap;
 				bitmap.Attach(hBitmap);
-				if (imageList.Create(iIconSize, iIconSize, ILC_COLOR32, NUM_BUTTON_BITMAPS, 1))
-					bResult = imageList.Add(&bitmap, CLR_DEFAULT) == 0;
+				if (imageList.Create(iIconSize, iIconSize, ILC_COLOR32, NUM_BUTTON_BITMAPS, 1)
+					&& imageList.Add(&bitmap, CLR_DEFAULT) == 0)
+				{
+					imageList.Add(CTempIconLoader(_T("NEXT_LINK"), iIconSize, iIconSize));
+					bResult = imageList.GetImageCount() == NUM_BUTTON_BITMAPS;
+				}
 			}
 			output.UnlockBits(&bitmapData);
 		}

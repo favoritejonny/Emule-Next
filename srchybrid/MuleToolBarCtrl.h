@@ -15,6 +15,7 @@
 #define	TBBTN_OPTIONS	(IDC_TOOLBARBUTTON + 9)
 #define	TBBTN_TOOLS		(IDC_TOOLBARBUTTON + 10)
 #define	TBBTN_HELP		(IDC_TOOLBARBUTTON + 11)
+#define	TBBTN_PROJECT	(IDC_TOOLBARBUTTON + 12)
 
 #define	MULE_TOOLBAR_BAND_NR	0
 
@@ -48,8 +49,8 @@ protected:
 	int			m_iPreviousHeight;
 	int			m_iLastPressedButton;
 	int			m_buttoncount;
-	TBBUTTON	TBButtons[12];
-	TCHAR		TBStrings[12][200];
+	TBBUTTON	TBButtons[13];
+	TCHAR		TBStrings[13][200];
 	CStringArray m_astrToolbarPaths;
 	EToolbarLabelType m_eLabelType;
 	CStringArray m_astrSkinPaths;

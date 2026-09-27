@@ -275,6 +275,7 @@ void CPPgDirectories::Localize()
 		SetDlgItemText(IDC_INCOMING_FRM, GetResString(IDS_PW_INCOMING));
 		SetDlgItemText(IDC_TEMP_FRM, GetResString(IDS_PW_TEMP));
 		SetDlgItemText(IDC_SHARED_FRM, GetResString(IDS_PW_SHARED));
+		SetDlgItemText(IDC_UNCADD, GetResString(IDS_ADD_UNC_SHARE));
 	}
 }
 

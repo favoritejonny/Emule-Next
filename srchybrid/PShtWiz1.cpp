@@ -15,6 +15,7 @@
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #include "stdafx.h"
+#include "langids.h"
 #include "emule.h"
 #include "enbitmap.h"
 #include "OtherFunctions.h"
@@ -22,17 +23,19 @@
 #include "emuledlg.h"
 #include "ListenSocket.h"
 #include "ClientUDPSocket.h"
-#include "UPnPImpl.h"
-#include "UPnPImplWrapper.h"
-#include "opcodes.h"
+#include "ConnectionSetupPolicy.h"
+#include "ConnectionSpeedTest.h"
+#include "KadBootstrap.h"
+#include "KademliaWnd.h"
+#include "MenuCmds.h"
+#include "ServerList.h"
+#include "StatisticsDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
-
-#define	IDT_UPNP_TICKS	1
 
 ///////////////////////////////////////////////////////////////////////////////
 // CDlgPageWizard dialog
@@ -92,6 +95,117 @@ static void CreateWizardTitleFont(CFont& font)
 	font.CreateFontIndirect(&lf);
 }
 
+static CString GetWizardText(UINT resourceID)
+{
+	CString text(GetResString(resourceID));
+	const CString oldName(_T("eMule"));
+	const CString productName(EMULE_NEXT_PRODUCT_NAME);
+	for (int position = 0; (position = text.Find(oldName, position)) >= 0; ) {
+		if (text.Mid(position, productName.GetLength()).CompareNoCase(productName) != 0) {
+			text.Delete(position, oldName.GetLength());
+			text.Insert(position, productName);
+		}
+		position += productName.GetLength();
+	}
+	return text;
+}
+
+static CString RemoveTrailingChoiceNote(CString text)
+{
+	text.TrimRight();
+	int opening = text.ReverseFind(_T('('));
+	if (opening >= 0 && text.Right(1) == _T(")")) {
+		text = text.Left(opening);
+		text.TrimRight();
+		return text;
+	}
+	opening = text.ReverseFind(static_cast<TCHAR>(0xFF08));
+	if (opening >= 0 && !text.IsEmpty() && text[text.GetLength() - 1] == static_cast<TCHAR>(0xFF09)) {
+		text = text.Left(opening);
+		text.TrimRight();
+	}
+	return text;
+}
+
+struct WizardButtonText
+{
+	LANGID languageID;
+	LPCTSTR back;
+	LPCTSTR next;
+	LPCTSTR finish;
+};
+
+static void LocalizeWizardButtons(CPropertySheetEx *pSheet)
+{
+	static const WizardButtonText labels[] = {
+		{ LANGID_AR_AE, _T("\u0627\u0644\u0633\u0627\u0628\u0642"), _T("\u0627\u0644\u062a\u0627\u0644\u064a"), _T("\u0625\u0646\u0647\u0627\u0621") },
+		{ LANGID_BA_BA, _T("Atzera"), _T("Hurrengoa"), _T("Amaitu") },
+		{ LANGID_BG_BG, _T("\u041d\u0430\u0437\u0430\u0434"), _T("\u041d\u0430\u043f\u0440\u0435\u0434"), _T("\u0413\u043e\u0442\u043e\u0432\u043e") },
+		{ LANGID_CA_ES, _T("Enrere"), _T("Seg\u00fcent"), _T("Finalitza") },
+		{ LANGID_CZ_CZ, _T("Zp\u011bt"), _T("Dal\u0161\u00ed"), _T("Dokon\u010dit") },
+		{ LANGID_DA_DK, _T("Tilbage"), _T("N\u00e6ste"), _T("Udf\u00f8r") },
+		{ LANGID_DE_DE, _T("Zur\u00fcck"), _T("Weiter"), _T("Fertig stellen") },
+		{ LANGID_EL_GR, _T("\u03a0\u03af\u03c3\u03c9"), _T("\u0395\u03c0\u03cc\u03bc\u03b5\u03bd\u03bf"), _T("\u03a4\u03ad\u03bb\u03bf\u03c2") },
+		{ LANGID_ES_AS, _T("Atr\u00e1s"), _T("Siguiente"), _T("Finar") },
+		{ LANGID_ES_ES_T, _T("Atr\u00e1s"), _T("Siguiente"), _T("Finalizar") },
+		{ LANGID_ET_EE, _T("Tagasi"), _T("Edasi"), _T("L\u00f5peta") },
+		{ LANGID_FA_IR, _T("\u0642\u0628\u0644\u06cc"), _T("\u0628\u0639\u062f\u06cc"), _T("\u067e\u0627\u06cc\u0627\u0646") },
+		{ LANGID_FI_FI, _T("Edellinen"), _T("Seuraava"), _T("Valmis") },
+		{ LANGID_FR_BR, _T("Kent"), _T("War-lerc'h"), _T("Echui\u00f1") },
+		{ LANGID_FR_FR, _T("Pr\u00e9c\u00e9dent"), _T("Suivant"), _T("Terminer") },
+		{ LANGID_GL_ES, _T("Atr\u00e1s"), _T("Seguinte"), _T("Rematar") },
+		{ LANGID_HE_IL, _T("\u05d4\u05e7\u05d5\u05d3\u05dd"), _T("\u05d4\u05d1\u05d0"), _T("\u05e1\u05d9\u05d5\u05dd") },
+		{ LANGID_HU_HU, _T("Vissza"), _T("Tov\u00e1bb"), _T("Befejez\u00e9s") },
+		{ LANGID_IT_IT, _T("Indietro"), _T("Avanti"), _T("Fine") },
+		{ LANGID_JP_JP, _T("\u623b\u308b"), _T("\u6b21\u3078"), _T("\u5b8c\u4e86") },
+		{ LANGID_KO_KR, _T("\ub4a4\ub85c"), _T("\ub2e4\uc74c"), _T("\ub9c8\uce68") },
+		{ LANGID_LT_LT, _T("Atgal"), _T("Toliau"), _T("Baigti") },
+		{ LANGID_LV_LV, _T("Atpaka\u013c"), _T("T\u0101l\u0101k"), _T("Pabeigt") },
+		{ LANGID_MT_MT, _T("Lura"), _T("Li jmiss"), _T("Spi\u010b\u010ba") },
+		{ LANGID_NB_NO, _T("Tilbake"), _T("Neste"), _T("Fullf\u00f8r") },
+		{ LANGID_NN_NO, _T("Tilbake"), _T("Neste"), _T("Fullf\u00f8r") },
+		{ LANGID_NL_NL, _T("Vorige"), _T("Volgende"), _T("Voltooien") },
+		{ LANGID_PL_PL, _T("Wstecz"), _T("Dalej"), _T("Zako\u0144cz") },
+		{ LANGID_PT_BR, _T("Voltar"), _T("Avan\u00e7ar"), _T("Concluir") },
+		{ LANGID_PT_PT, _T("Voltar"), _T("Seguinte"), _T("Concluir") },
+		{ LANGID_RO_RO, _T("\u00cenapoi"), _T("\u00cenainte"), _T("Finalizare") },
+		{ LANGID_RU_RU, _T("\u041d\u0430\u0437\u0430\u0434"), _T("\u0414\u0430\u043b\u0435\u0435"), _T("\u0413\u043e\u0442\u043e\u0432\u043e") },
+		{ LANGID_SL_SI, _T("Nazaj"), _T("Naprej"), _T("Dokon\u010daj") },
+		{ LANGID_SQ_AL, _T("Prapa"), _T("Tjetra"), _T("P\u00ebrfundo") },
+		{ LANGID_SV_SE, _T("Tillbaka"), _T("N\u00e4sta"), _T("Slutf\u00f6r") },
+		{ LANGID_TR_TR, _T("Geri"), _T("\u0130leri"), _T("Bitir") },
+		{ LANGID_UA_UA, _T("\u041d\u0430\u0437\u0430\u0434"), _T("\u0414\u0430\u043b\u0456"), _T("\u0413\u043e\u0442\u043e\u0432\u043e") },
+		{ LANGID_UG_CN, _T("\u0626\u0627\u0644\u062f\u0649\u0646\u0642\u0649"), _T("\u0643\u06d0\u064a\u0649\u0646\u0643\u0649"), _T("\u062a\u0627\u0645\u0627\u0645") },
+		{ LANGID_VA_ES, _T("Arrere"), _T("Seg\u00fcent"), _T("Finalitzar") },
+		{ LANGID_VA_ES_RACV, _T("Arrere"), _T("Seg\u00fcent"), _T("Finalisar") },
+		{ LANGID_VI_VN, _T("Quay l\u1ea1i"), _T("Ti\u1ebfp theo"), _T("Ho\u00e0n t\u1ea5t") },
+		{ LANGID_ZH_CN, _T("\u4e0a\u4e00\u6b65"), _T("\u4e0b\u4e00\u6b65"), _T("\u5b8c\u6210") },
+		{ LANGID_ZH_TW, _T("\u4e0a\u4e00\u6b65"), _T("\u4e0b\u4e00\u6b65"), _T("\u5b8c\u6210") }
+	};
+
+	const WizardButtonText defaultLabels = { LANGID_EN_US, _T("Back"), _T("Next"), _T("Finish") };
+	const WizardButtonText *selected = &defaultLabels;
+	for (size_t index = 0; index < _countof(labels); ++index) {
+		if (labels[index].languageID == thePrefs.GetLanguageID()) {
+			selected = &labels[index];
+			break;
+		}
+	}
+
+	CWnd *button = pSheet->GetDlgItem(ID_WIZBACK);
+	if (button != NULL)
+		button->SetWindowText(CString(_T("< ")) + selected->back);
+	button = pSheet->GetDlgItem(ID_WIZNEXT);
+	if (button != NULL)
+		button->SetWindowText(CString(selected->next) + _T(" >"));
+	button = pSheet->GetDlgItem(ID_WIZFINISH);
+	if (button != NULL)
+		button->SetWindowText(selected->finish);
+	button = pSheet->GetDlgItem(IDCANCEL);
+	if (button != NULL)
+		button->SetWindowText(GetResString(IDS_CANCEL));
+}
+
 void CDlgPageWizard::DoDataExchange(CDataExchange *pDX)
 {
 	CPropertyPageEx::DoDataExchange(pDX);
@@ -114,6 +228,7 @@ BOOL CDlgPageWizard::OnSetActive()
 			dwButtons |= PSWIZB_FINISH;
 		}
 		pSheet->SetWizardButtons(dwButtons);
+		LocalizeWizardButtons(pSheet);
 	}
 	return CPropertyPageEx::OnSetActive();
 }
@@ -164,9 +279,9 @@ BOOL CPPgWiz1Welcome::OnInitDialog()
 
 	CDlgPageWizard::OnInitDialog();
 	InitWindowStyles(this);
-	SetDlgItemText(IDC_WIZ1_TITLE, GetResString(IDS_WIZ1_WELCOME_TITLE));
-	SetDlgItemText(IDC_WIZ1_ACTIONS, GetResString(IDS_WIZ1_WELCOME_ACTIONS));
-	SetDlgItemText(IDC_WIZ1_BTN_HINT, GetResString(IDS_WIZ1_WELCOME_BTN_HINT));
+	SetDlgItemText(IDC_WIZ1_TITLE, GetWizardText(IDS_WIZ1_WELCOME_TITLE));
+	SetDlgItemText(IDC_WIZ1_ACTIONS, GetWizardText(IDS_WIZ1_WELCOME_ACTIONS));
+	SetDlgItemText(IDC_WIZ1_BTN_HINT, GetWizardText(IDS_WIZ1_WELCOME_BTN_HINT));
 	return TRUE;
 }
 
@@ -224,15 +339,19 @@ BOOL CPPgWiz1General::OnInitDialog()
 {
 	CDlgPageWizard::OnInitDialog();
 	InitWindowStyles(this);
-	static_cast<CEdit*>(GetDlgItem(IDC_NICK))->SetLimitText(thePrefs.GetMaxUserNickLength());
-	SetDlgItemText(IDC_NICK_FRM, GetResString(IDS_ENTERUSERNAME));
-	SetDlgItemText(IDC_AUTOCONNECT, GetResString(IDS_FIRSTAUTOCON));
-	SetDlgItemText(IDC_AUTOSTART, GetResString(IDS_WIZ_STARTWITHWINDOWS));
+	CEdit* nickEdit = static_cast<CEdit*>(GetDlgItem(IDC_NICK));
+	nickEdit->SetLimitText(thePrefs.GetMaxUserNickLength());
+	// Long repository-based aliases must open from their beginning instead of
+	// leaving the user at the visually ambiguous tail of the edit control.
+	nickEdit->SetSel(0, 0);
+	SetDlgItemText(IDC_NICK_FRM, GetWizardText(IDS_ENTERUSERNAME));
+	SetDlgItemText(IDC_AUTOCONNECT, GetWizardText(IDS_FIRSTAUTOCON));
+	SetDlgItemText(IDC_AUTOSTART, GetWizardText(IDS_WIZ_STARTWITHWINDOWS));
 	return TRUE;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// CPPgWiz1Ports & Connections test dialog
+// CPPgWiz1Ports and automatic router setup
 
 class CPPgWiz1Ports : public CDlgPageWizard
 {
@@ -242,48 +361,25 @@ class CPPgWiz1Ports : public CDlgPageWizard
 	{
 		IDD = IDD_WIZ1_PORTS
 	};
-	UINT	m_lastudp;
-
 public:
 	CPPgWiz1Ports();
 	explicit CPPgWiz1Ports(UINT nIDTemplate, LPCTSTR pszCaption = NULL, LPCTSTR pszHeaderTitle = NULL, LPCTSTR pszHeaderSubTitle = NULL)
 		: CDlgPageWizard(nIDTemplate, pszCaption, pszHeaderTitle, pszHeaderSubTitle)
-		, m_lastudp()
 		, m_uTCP()
 		, m_uUDP()
-		, m_pbUDPDisabled()
-		, m_nUPnPTicks()
+		, m_iAutomaticPortSetup()
 	{
 	}
 
-//	void ValidateShownPorts();
-
 	virtual BOOL OnInitDialog();
-	afx_msg void OnStartConTest();
-	afx_msg void OnStartUPnP();
-	afx_msg void OnEnChangeUDPDisable();
-
-	afx_msg void OnEnChangeUDP();
-	afx_msg void OnEnChangeTCP();
-	afx_msg void OnTimer(UINT_PTR nIDEvent);
-
-	BOOL	OnKillActive();
-	void	OnOK();
-	void	OnCancel();
-
-	void OnPortChange();
-
-	CString	m_sTestURL; // , m_sUDP, m_sTCP;
-	uint16	GetTCPPort();
-	uint16	GetUDPPort();
 	UINT	m_uTCP;
 	UINT	m_uUDP;
-	bool	*m_pbUDPDisabled;
+	int		m_iAutomaticPortSetup;
 
 protected:
 	virtual void DoDataExchange(CDataExchange *pDX);    // DDX/DDV support
-	void	ResetUPnPProgress();
-	int		m_nUPnPTicks;
+	virtual BOOL OnKillActive();
+	bool	ValidatePorts();
 
 	DECLARE_MESSAGE_MAP()
 };
@@ -291,21 +387,13 @@ protected:
 IMPLEMENT_DYNAMIC(CPPgWiz1Ports, CDlgPageWizard)
 
 BEGIN_MESSAGE_MAP(CPPgWiz1Ports, CDlgPageWizard)
-	ON_BN_CLICKED(IDC_STARTTEST, OnStartConTest)
-	ON_BN_CLICKED(IDC_UDPDISABLE, OnEnChangeUDPDisable)
-	ON_BN_CLICKED(IDC_UPNPSTART, OnStartUPnP)
-	ON_EN_CHANGE(IDC_TCP, OnEnChangeTCP)
-	ON_EN_CHANGE(IDC_UDP, OnEnChangeUDP)
-	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 CPPgWiz1Ports::CPPgWiz1Ports()
 	: CDlgPageWizard(CPPgWiz1Ports::IDD)
-	, m_lastudp()
 	, m_uTCP()
 	, m_uUDP()
-	, m_pbUDPDisabled()
-	, m_nUPnPTicks()
+	, m_iAutomaticPortSetup()
 {
 }
 
@@ -313,169 +401,41 @@ void CPPgWiz1Ports::DoDataExchange(CDataExchange *pDX)
 {
 	CDlgPageWizard::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_TCP, m_uTCP);
+	DDV_MinMaxUInt(pDX, m_uTCP, 1, 65535);
 	DDX_Text(pDX, IDC_UDP, m_uUDP);
+	DDV_MinMaxUInt(pDX, m_uUDP, 1, 65535);
+	DDX_Check(pDX, IDC_WIZ_AUTO_PORTS, m_iAutomaticPortSetup);
 }
 
-void CPPgWiz1Ports::OnEnChangeTCP()
+bool CPPgWiz1Ports::ValidatePorts()
 {
-	OnPortChange();
-}
-
-void CPPgWiz1Ports::OnEnChangeUDP()
-{
-	OnPortChange();
-}
-
-uint16 CPPgWiz1Ports::GetTCPPort()
-{
-	return (uint16)GetDlgItemInt(IDC_TCP, NULL, FALSE);
-}
-
-uint16 CPPgWiz1Ports::GetUDPPort()
-{
-	return (uint16)(IsDlgButtonChecked(IDC_UDPDISABLE) ? 0 : GetDlgItemInt(IDC_UDP, NULL, FALSE));
-}
-
-void CPPgWiz1Ports::OnPortChange()
-{
-	bool bEnable = (theApp.IsPortchangeAllowed()
-		&&
-		(  theApp.listensocket->GetConnectedPort() != GetTCPPort()
-		|| theApp.listensocket->GetConnectedPort() == 0
-		|| theApp.clientudp->GetConnectedPort() != GetUDPPort()
-		|| theApp.clientudp->GetConnectedPort() == 0
-		));
-
-	GetDlgItem(IDC_STARTTEST)->EnableWindow(bEnable);
+	if (!ConnectionSetupPolicy::ValidPorts(GetDlgItemInt(IDC_TCP, NULL, FALSE),
+		GetDlgItemInt(IDC_UDP, NULL, FALSE), false))
+	{
+		LocMessageBox(IDS_CONNSETUP_BADPORT, MB_OK | MB_ICONWARNING);
+		return false;
+	}
+	return UpdateData(TRUE) != FALSE;
 }
 
 BOOL CPPgWiz1Ports::OnKillActive()
 {
-	ResetUPnPProgress();
-	return CDlgPageWizard::OnKillActive();
-}
-
-void CPPgWiz1Ports::OnOK()
-{
-	ResetUPnPProgress();
-	CDlgPageWizard::OnOK();
-}
-
-void CPPgWiz1Ports::OnCancel()
-{
-	ResetUPnPProgress();
-	CDlgPageWizard::OnCancel();
-}
-
-// ** UPnP Button stuff
-void CPPgWiz1Ports::OnStartUPnP()
-{
-	CDlgPageWizard::OnApply();
-	theApp.emuledlg->StartUPnP(true, GetTCPPort(), GetUDPPort());
-
-	SetDlgItemText(IDC_UPNPSTATUS, GetResString(IDS_UPNPSETUP));
-	GetDlgItem(IDC_UPNPSTART)->EnableWindow(FALSE);
-	m_nUPnPTicks = 0;
-	static_cast<CProgressCtrl*>(GetDlgItem(IDC_UPNPPROGRESS))->SetPos(0);
-	VERIFY(SetTimer(IDT_UPNP_TICKS, SEC2MS(1), NULL) != 0);
-}
-
-void CPPgWiz1Ports::OnTimer(UINT_PTR /*nIDEvent*/)
-{
-	++m_nUPnPTicks;
-	if (theApp.m_pUPnPFinder && theApp.m_pUPnPFinder->GetImplementation()->ArePortsForwarded() == TRIS_UNKNOWN)
-		if (m_nUPnPTicks < 40) {
-			static_cast<CProgressCtrl*>(GetDlgItem(IDC_UPNPPROGRESS))->SetPos(m_nUPnPTicks);
-			return;
-		}
-
-	if (theApp.m_pUPnPFinder && theApp.m_pUPnPFinder->GetImplementation()->ArePortsForwarded() == TRIS_TRUE) {
-		static_cast<CProgressCtrl*>(GetDlgItem(IDC_UPNPPROGRESS))->SetPos(40);
-		CString strMessage;
-		strMessage.Format(GetResString(IDS_UPNPSUCCESS), GetTCPPort(), GetUDPPort());
-		SetDlgItemText(IDC_UPNPSTATUS, strMessage);
-		// enable UPnP in the preferences after the successful try
-		thePrefs.m_bEnableUPnP = true;
-	} else {
-		static_cast<CProgressCtrl*>(GetDlgItem(IDC_UPNPPROGRESS))->SetPos(0);
-		SetDlgItemText(IDC_UPNPSTATUS, GetResString(IDS_UPNPFAILED));
-	}
-	GetDlgItem(IDC_UPNPSTART)->EnableWindow(TRUE);
-	VERIFY(KillTimer(IDT_UPNP_TICKS));
-}
-
-void CPPgWiz1Ports::ResetUPnPProgress()
-{
-	KillTimer(IDT_UPNP_TICKS);
-	static_cast<CProgressCtrl*>(GetDlgItem(IDC_UPNPPROGRESS))->SetPos(0);
-	GetDlgItem(IDC_UPNPSTART)->EnableWindow(TRUE);
-}
-
-// **
-
-void CPPgWiz1Ports::OnStartConTest()
-{
-	uint16 tcp = GetTCPPort();
-	if (tcp == 0)
-		return;
-	uint16 udp = GetUDPPort();
-
-	if (tcp != theApp.listensocket->GetConnectedPort() || udp != theApp.clientudp->GetConnectedPort()) {
-		if (!theApp.IsPortchangeAllowed()) {
-			LocMessageBox(IDS_NOPORTCHANGEPOSSIBLE, MB_OK, 0);
-			return;
-		}
-
-		// set new ports
-		thePrefs.port = tcp;
-		thePrefs.udpport = udp;
-
-		theApp.listensocket->Rebind();
-		theApp.clientudp->Rebind();
-	}
-
-	TriggerPortTest(tcp, udp);
+	return ValidatePorts() && CDlgPageWizard::OnKillActive();
 }
 
 BOOL CPPgWiz1Ports::OnInitDialog()
 {
 	CDlgPageWizard::OnInitDialog();
-	m_lastudp = m_uUDP;
-	CheckDlgButton(IDC_UDPDISABLE, !m_uUDP);
-	GetDlgItem(IDC_UDP)->EnableWindow(!IsDlgButtonChecked(IDC_UDPDISABLE));
-	static_cast<CProgressCtrl*>(GetDlgItem(IDC_UPNPPROGRESS))->SetRange(0, 40);
 	InitWindowStyles(this);
 
 	static_cast<CEdit*>(GetDlgItem(IDC_TCP))->SetLimitText(5);
 	static_cast<CEdit*>(GetDlgItem(IDC_UDP))->SetLimitText(5);
 
-	// disable changing ports to prevent harm
-	SetDlgItemText(IDC_PORTINFO, GetResString(IDS_PORTINFO));
-	SetDlgItemText(IDC_TESTFRAME, GetResString(IDS_CONNECTIONTEST));
-	SetDlgItemText(IDC_TESTINFO, GetResString(IDS_TESTINFO));
-	SetDlgItemText(IDC_STARTTEST, GetResString(IDS_STARTTEST));
-	SetDlgItemText(IDC_UDPDISABLE, GetResString(IDS_UDPDISABLED));
-	SetDlgItemText(IDC_UPNPSTART, GetResString(IDS_UPNPSTART));
-	SetDlgItemText(IDC_UPNPSTATUS, _T(""));
+	SetDlgItemText(IDC_PORTINFO, GetWizardText(IDS_CONNSETUP_INFO));
+	SetDlgItemText(IDC_WIZ_AUTO_PORTS, GetWizardText(IDS_CONNSETUP_BUTTON));
+	SetDlgItemText(IDC_WIZ_SETUP_INFO, GetWizardText(IDS_WIZSETUP_PROTOCOLS));
 
 	return TRUE;
-}
-
-void CPPgWiz1Ports::OnEnChangeUDPDisable()
-{
-	bool bDisabled = IsDlgButtonChecked(IDC_UDPDISABLE) != 0;
-	GetDlgItem(IDC_UDP)->EnableWindow(!bDisabled);
-
-	if (bDisabled) {
-		m_lastudp = GetDlgItemInt(IDC_UDP, NULL, FALSE);
-		SetDlgItemInt(IDC_UDP, 0);
-	} else
-		SetDlgItemInt(IDC_UDP, m_lastudp);
-
-	if (m_pbUDPDisabled != NULL)
-		*m_pbUDPDisabled = bDisabled;
-
-	OnPortChange();
 }
 
 
@@ -593,6 +553,192 @@ BOOL CPPgWiz1Upload::OnInitDialog()
 
 
 ///////////////////////////////////////////////////////////////////////////////
+// CPPgWiz1Speed dialog
+
+namespace
+{
+const UINT WM_WIZARD_SPEEDTEST_FINISHED = WM_APP + 201;
+
+struct SpeedTestThreadContext
+{
+	HWND destination;
+};
+
+UINT AFX_CDECL RunWizardSpeedTest(LPVOID parameter)
+{
+	std::unique_ptr<SpeedTestThreadContext> context(static_cast<SpeedTestThreadContext*>(parameter));
+	std::unique_ptr<ConnectionSpeedTest::Result> result(new ConnectionSpeedTest::Result(ConnectionSpeedTest::Run()));
+	if (!::PostMessage(context->destination, WM_WIZARD_SPEEDTEST_FINISHED, 0,
+		reinterpret_cast<LPARAM>(result.get())))
+		return 0;
+	result.release();
+	return 0;
+}
+}
+
+class CPPgWiz1Speed : public CDlgPageWizard
+{
+	DECLARE_DYNAMIC(CPPgWiz1Speed)
+
+	enum { IDD = IDD_WIZ1_SPEEDTEST };
+
+public:
+	CPPgWiz1Speed();
+	explicit CPPgWiz1Speed(UINT nIDTemplate, LPCTSTR pszCaption = NULL,
+		LPCTSTR pszHeaderTitle = NULL, LPCTSTR pszHeaderSubTitle = NULL)
+		: CDlgPageWizard(nIDTemplate, pszCaption, pszHeaderTitle, pszHeaderSubTitle)
+		, m_uDownloadCapacity(), m_uUploadCapacity(), m_iApplyResults(), m_testRunning(false)
+	{
+	}
+	virtual BOOL OnInitDialog();
+	virtual BOOL OnSetActive();
+	virtual BOOL OnKillActive();
+	virtual BOOL OnQueryCancel();
+
+	UINT m_uDownloadCapacity;
+	UINT m_uUploadCapacity;
+	int m_iApplyResults;
+
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX);
+	afx_msg void OnStartSpeedTest();
+	afx_msg LRESULT OnSpeedTestFinished(WPARAM, LPARAM resultPointer);
+	void SetRunning(bool running);
+
+	bool m_testRunning;
+	DECLARE_MESSAGE_MAP()
+};
+
+IMPLEMENT_DYNAMIC(CPPgWiz1Speed, CDlgPageWizard)
+
+BEGIN_MESSAGE_MAP(CPPgWiz1Speed, CDlgPageWizard)
+	ON_BN_CLICKED(IDC_WIZ_SPEED_START, OnStartSpeedTest)
+	ON_MESSAGE(WM_WIZARD_SPEEDTEST_FINISHED, OnSpeedTestFinished)
+END_MESSAGE_MAP()
+
+CPPgWiz1Speed::CPPgWiz1Speed()
+	: CDlgPageWizard(CPPgWiz1Speed::IDD)
+	, m_uDownloadCapacity()
+	, m_uUploadCapacity()
+	, m_iApplyResults()
+	, m_testRunning(false)
+{
+}
+
+void CPPgWiz1Speed::DoDataExchange(CDataExchange* pDX)
+{
+	CDlgPageWizard::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_WIZ_SPEED_DOWNLOAD, m_uDownloadCapacity);
+	DDX_Text(pDX, IDC_WIZ_SPEED_UPLOAD, m_uUploadCapacity);
+	DDX_Check(pDX, IDC_WIZ_SPEED_APPLY, m_iApplyResults);
+}
+
+BOOL CPPgWiz1Speed::OnInitDialog()
+{
+	CDlgPageWizard::OnInitDialog();
+	InitWindowStyles(this);
+	static_cast<CEdit*>(GetDlgItem(IDC_WIZ_SPEED_DOWNLOAD))->SetLimitText(9);
+	static_cast<CEdit*>(GetDlgItem(IDC_WIZ_SPEED_UPLOAD))->SetLimitText(9);
+	SetDlgItemText(IDC_WIZ_SPEED_INFO, GetWizardText(IDS_WIZSETUP_SPEEDTEST_INFO));
+	SetDlgItemText(IDC_WIZ_SPEED_START, GetWizardText(IDS_CONNECTIONTEST));
+	SetDlgItemText(IDC_WIZ_SPEED_DOWNLOAD_LABEL, GetWizardText(IDS_DOWNLOAD));
+	SetDlgItemText(IDC_WIZ_SPEED_UPLOAD_LABEL, GetWizardText(IDS_ST_UPLOAD));
+	CString applyText;
+	applyText.Format(_T("%s: %s"), (LPCTSTR)GetWizardText(IDS_PW_APPLY),
+		(LPCTSTR)GetWizardText(IDS_SPEED_LIMITS));
+	SetDlgItemText(IDC_WIZ_SPEED_APPLY, applyText);
+	return TRUE;
+}
+
+BOOL CPPgWiz1Speed::OnSetActive()
+{
+	SetRunning(m_testRunning);
+	return CDlgPageWizard::OnSetActive();
+}
+
+BOOL CPPgWiz1Speed::OnKillActive()
+{
+	if (m_testRunning) {
+		MessageBeep(MB_ICONINFORMATION);
+		return FALSE;
+	}
+	if (!UpdateData(TRUE))
+		return FALSE;
+	if (m_iApplyResults != 0 && (m_uDownloadCapacity == 0 || m_uUploadCapacity == 0
+		|| m_uDownloadCapacity >= UNLIMITED || m_uUploadCapacity >= UNLIMITED)) {
+		LocMessageBox(IDS_WIZSETUP_SPEEDTEST_INVALID, MB_OK | MB_ICONWARNING);
+		return FALSE;
+	}
+	return CDlgPageWizard::OnKillActive();
+}
+
+BOOL CPPgWiz1Speed::OnQueryCancel()
+{
+	if (m_testRunning) {
+		MessageBeep(MB_ICONINFORMATION);
+		return FALSE;
+	}
+	return CDlgPageWizard::OnQueryCancel();
+}
+
+void CPPgWiz1Speed::SetRunning(bool running)
+{
+	m_testRunning = running;
+	GetDlgItem(IDC_WIZ_SPEED_START)->EnableWindow(!running);
+	GetDlgItem(IDC_WIZ_SPEED_DOWNLOAD)->EnableWindow(!running);
+	GetDlgItem(IDC_WIZ_SPEED_UPLOAD)->EnableWindow(!running);
+	GetDlgItem(IDC_WIZ_SPEED_APPLY)->EnableWindow(!running);
+	CPropertySheet* sheet = static_cast<CPropertySheet*>(GetParent());
+	if (sheet != NULL)
+		sheet->SetWizardButtons(running ? 0 : PSWIZB_BACK | PSWIZB_NEXT);
+}
+
+void CPPgWiz1Speed::OnStartSpeedTest()
+{
+	if (m_testRunning)
+		return;
+	m_iApplyResults = 0;
+	UpdateData(FALSE);
+	SetDlgItemText(IDC_WIZ_SPEED_STATUS, GetWizardText(IDS_CONNECTIONTEST) + _T("..."));
+	SetRunning(true);
+	std::unique_ptr<SpeedTestThreadContext> context(new SpeedTestThreadContext{GetSafeHwnd()});
+	if (AfxBeginThread(RunWizardSpeedTest, context.get(), THREAD_PRIORITY_NORMAL) == NULL) {
+		SetRunning(false);
+		SetDlgItemText(IDC_WIZ_SPEED_STATUS,
+			GetWizardText(IDS_CONNECTIONTEST) + _T(": ") + GetWizardText(IDS_FAILED));
+		return;
+	}
+	context.release();
+}
+
+LRESULT CPPgWiz1Speed::OnSpeedTestFinished(WPARAM, LPARAM resultPointer)
+{
+	std::unique_ptr<ConnectionSpeedTest::Result> result(
+		reinterpret_cast<ConnectionSpeedTest::Result*>(resultPointer));
+	if (result != nullptr && result->Succeeded()) {
+		m_uDownloadCapacity = result->downloadKBps;
+		m_uUploadCapacity = result->uploadKBps;
+		m_iApplyResults = 1;
+		UpdateData(FALSE);
+		CString status;
+		status.Format(_T("%s: %u %s | %s: %u %s"),
+			(LPCTSTR)GetWizardText(IDS_DOWNLOAD), m_uDownloadCapacity,
+			(LPCTSTR)GetWizardText(IDS_KBYTESPERSEC),
+			(LPCTSTR)GetWizardText(IDS_ST_UPLOAD), m_uUploadCapacity,
+			(LPCTSTR)GetWizardText(IDS_KBYTESPERSEC));
+		SetDlgItemText(IDC_WIZ_SPEED_STATUS, status);
+	} else {
+		CString status;
+		status.Format(_T("%s: %s (%lu)"), (LPCTSTR)GetWizardText(IDS_CONNECTIONTEST),
+			(LPCTSTR)GetWizardText(IDS_FAILED), result != nullptr ? result->error : ERROR_GEN_FAILURE);
+		SetDlgItemText(IDC_WIZ_SPEED_STATUS, status);
+	}
+	SetRunning(false);
+	return 0;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
 // CPPgWiz1Server dialog
 
 class CPPgWiz1Server : public CDlgPageWizard
@@ -608,7 +754,7 @@ public:
 	CPPgWiz1Server();
 	explicit CPPgWiz1Server(UINT nIDTemplate, LPCTSTR pszCaption = NULL, LPCTSTR pszHeaderTitle = NULL, LPCTSTR pszHeaderSubTitle = NULL)
 		: CDlgPageWizard(nIDTemplate, pszCaption, pszHeaderTitle, pszHeaderSubTitle)
-		, m_iSafeServerConnect(), m_iKademlia(1), m_iED2K(1), m_pbUDPDisabled()
+		, m_iSafeServerConnect(), m_iKademlia(1), m_iED2K(1), m_iAddServers(1), m_iAddKadNodes(1)
 	{
 	}
 	virtual BOOL OnInitDialog();
@@ -616,12 +762,14 @@ public:
 	int m_iSafeServerConnect;
 	int m_iKademlia;
 	int m_iED2K;
-
-	bool *m_pbUDPDisabled;
+	int m_iAddServers;
+	int m_iAddKadNodes;
 
 protected:
 	virtual void DoDataExchange(CDataExchange *pDX);    // DDX/DDV support
 	virtual BOOL OnSetActive();
+	afx_msg void OnNetworkChanged();
+	void UpdateDownloadChoices();
 
 	DECLARE_MESSAGE_MAP()
 };
@@ -629,6 +777,8 @@ protected:
 IMPLEMENT_DYNAMIC(CPPgWiz1Server, CDlgPageWizard)
 
 BEGIN_MESSAGE_MAP(CPPgWiz1Server, CDlgPageWizard)
+	ON_BN_CLICKED(IDC_WIZARD_NETWORK_ED2K, OnNetworkChanged)
+	ON_BN_CLICKED(IDC_WIZARD_NETWORK_KADEMLIA, OnNetworkChanged)
 END_MESSAGE_MAP()
 
 CPPgWiz1Server::CPPgWiz1Server()
@@ -636,7 +786,8 @@ CPPgWiz1Server::CPPgWiz1Server()
 	, m_iSafeServerConnect()
 	, m_iKademlia(1)
 	, m_iED2K(1)
-	, m_pbUDPDisabled()
+	, m_iAddServers(1)
+	, m_iAddKadNodes(1)
 {
 }
 
@@ -646,26 +797,37 @@ void CPPgWiz1Server::DoDataExchange(CDataExchange *pDX)
 	DDX_Check(pDX, IDC_SAFESERVERCONNECT, m_iSafeServerConnect);
 	DDX_Check(pDX, IDC_WIZARD_NETWORK_KADEMLIA, m_iKademlia);
 	DDX_Check(pDX, IDC_WIZARD_NETWORK_ED2K, m_iED2K);
+	DDX_Check(pDX, IDC_WIZ_SERVERS_ADD, m_iAddServers);
+	DDX_Check(pDX, IDC_WIZ_NODES_ADD, m_iAddKadNodes);
 }
 
 BOOL CPPgWiz1Server::OnInitDialog()
 {
 	CDlgPageWizard::OnInitDialog();
 	InitWindowStyles(this);
-	SetDlgItemText(IDC_SAFESERVERCONNECT, GetResString(IDS_FIRSTSAFECON));
-	SetDlgItemText(IDC_WIZARD_NETWORK, GetResString(IDS_WIZARD_NETWORK));
-	SetDlgItemText(IDC_WIZARD_ED2K, GetResString(IDS_WIZARD_ED2K));
+	SetDlgItemText(IDC_SAFESERVERCONNECT, GetWizardText(IDS_FIRSTSAFECON));
+	SetDlgItemText(IDC_WIZARD_NETWORK, GetWizardText(IDS_WIZARD_NETWORK));
+	SetDlgItemText(IDC_WIZARD_ED2K, _T("eD2K / Kad"));
+	SetDlgItemText(IDC_WIZ_SERVERS_ADD, RemoveTrailingChoiceNote(GetWizardText(IDS_WIZSETUP_SERVERS_ADD)));
+	SetDlgItemText(IDC_WIZ_NODES_ADD, RemoveTrailingChoiceNote(GetWizardText(IDS_WIZSETUP_NODES_ADD)));
 	return TRUE;
 }
 
 BOOL CPPgWiz1Server::OnSetActive()
 {
-	if (m_pbUDPDisabled != NULL) {
-		m_iKademlia = *m_pbUDPDisabled ? 0 : m_iKademlia;
-		CheckDlgButton(IDC_SHOWOVERHEAD, m_iKademlia);
-		GetDlgItem(IDC_WIZARD_NETWORK_KADEMLIA)->EnableWindow(!*m_pbUDPDisabled);
-	}
+	UpdateDownloadChoices();
 	return CDlgPageWizard::OnSetActive();
+}
+
+void CPPgWiz1Server::OnNetworkChanged()
+{
+	UpdateDownloadChoices();
+}
+
+void CPPgWiz1Server::UpdateDownloadChoices()
+{
+	GetDlgItem(IDC_WIZ_SERVERS_ADD)->EnableWindow(IsDlgButtonChecked(IDC_WIZARD_NETWORK_ED2K) != 0);
+	GetDlgItem(IDC_WIZ_NODES_ADD)->EnableWindow(IsDlgButtonChecked(IDC_WIZARD_NETWORK_KADEMLIA) != 0);
 }
 
 
@@ -683,14 +845,17 @@ class CPPgWiz1End : public CDlgPageWizard
 
 public:
 	CPPgWiz1End();
-	explicit CPPgWiz1End(UINT nIDTemplate, LPCTSTR pszCaption = NULL, LPCTSTR pszHeaderTitle = NULL, LPCTSTR pszHeaderSubTitle = NULL)
-		: CDlgPageWizard(nIDTemplate, pszCaption, pszHeaderTitle, pszHeaderSubTitle)
+	CPPgWiz1End(LPCTSTR caption, CPPgWiz1Ports& ports, CPPgWiz1Server& networks)
+		: CDlgPageWizard(IDD_WIZ1_END, caption), m_ports(&ports), m_networks(&networks)
 	{
 	}
 	virtual BOOL OnInitDialog();
+	virtual BOOL OnSetActive();
 
 protected:
 	CFont m_FontTitle;
+	CPPgWiz1Ports* m_ports;
+	CPPgWiz1Server* m_networks;
 
 	DECLARE_MESSAGE_MAP()
 };
@@ -702,6 +867,8 @@ END_MESSAGE_MAP()
 
 CPPgWiz1End::CPPgWiz1End()
 	: CDlgPageWizard(CPPgWiz1End::IDD)
+	, m_ports(NULL)
+	, m_networks(NULL)
 {
 }
 
@@ -714,11 +881,49 @@ BOOL CPPgWiz1End::OnInitDialog()
 
 	CDlgPageWizard::OnInitDialog();
 	InitWindowStyles(this);
-	SetDlgItemText(IDC_WIZ1_TITLE, GetResString(IDS_WIZ1_END_TITLE));
-	SetDlgItemText(IDC_WIZ1_ACTIONS, GetResString(IDS_FIRSTCOMPLETE));
-	SetDlgItemText(IDC_WIZ1_BTN_HINT, GetResString(IDS_WIZ1_END_BTN_HINT));
+	CString readyText(GetWizardText(IDS_MAIN_READY));
+	CString readyTitle;
+	readyTitle.Format(readyText, EMULE_NEXT_VERSION_STRING);
+	SetDlgItemText(IDC_WIZ1_TITLE, readyTitle);
+	SetDlgItemText(IDC_WIZ1_BTN_HINT, GetWizardText(IDS_WIZ1_END_BTN_HINT));
 
 	return TRUE;
+}
+
+BOOL CPPgWiz1End::OnSetActive()
+{
+	CString summary(GetWizardText(IDS_FIRSTCOMPLETE));
+	int paragraphEnd = summary.Find(_T("\r\n\r\n"));
+	if (paragraphEnd < 0)
+		paragraphEnd = summary.Find(_T("\n\n"));
+	if (paragraphEnd >= 0)
+		summary = summary.Left(paragraphEnd);
+
+	if (m_ports != NULL && m_networks != NULL) {
+		const CString enabled(GetWizardText(IDS_ENABLED));
+		const CString disabled(GetWizardText(IDS_DISABLED));
+		CString networks;
+		if (m_networks->m_iED2K != 0)
+			networks = _T("eD2K");
+		if (m_networks->m_iKademlia != 0) {
+			if (!networks.IsEmpty())
+				networks += _T(" + ");
+			networks += _T("Kad");
+		}
+		if (networks.IsEmpty())
+			networks = disabled;
+
+		summary.AppendFormat(_T("\r\n\r\n%s: %s\r\n%s: %s\r\n%s: %s\r\n%s: %s"),
+			(LPCTSTR)GetWizardText(IDS_CONNSETUP_TITLE),
+			(LPCTSTR)(m_ports->m_iAutomaticPortSetup != 0 ? enabled : disabled),
+			(LPCTSTR)GetWizardText(IDS_NETWORK), (LPCTSTR)networks,
+			(LPCTSTR)RemoveTrailingChoiceNote(GetWizardText(IDS_WIZSETUP_SERVERS_ADD)),
+			(LPCTSTR)(m_networks->m_iAddServers != 0 && m_networks->m_iED2K != 0 ? enabled : disabled),
+			(LPCTSTR)RemoveTrailingChoiceNote(GetWizardText(IDS_WIZSETUP_NODES_ADD)),
+			(LPCTSTR)(m_networks->m_iAddKadNodes != 0 && m_networks->m_iKademlia != 0 ? enabled : disabled));
+	}
+	SetDlgItemText(IDC_WIZ1_ACTIONS, summary);
+	return CDlgPageWizard::OnSetActive();
 }
 
 
@@ -748,7 +953,10 @@ CPShtWiz1::CPShtWiz1(UINT nIDCaption, CWnd *pParentWnd, UINT iSelectPage)
 
 BOOL FirstTimeWizard()
 {
-	const CString &sWiz1(GetResString(IDS_WIZ1));
+	static bool s_recommendedFirstRunDefaultsApplied = false;
+	const bool firstRun = thePrefs.IsFirstStart() && !s_recommendedFirstRunDefaultsApplied;
+	const bool automaticHomeSetupWasEnabled = thePrefs.IsUPnPEnabled() && thePrefs.IsUPnPHomeOnly();
+	const CString sWiz1(GetWizardText(IDS_WIZ1));
 	CEnBitmap bmWatermark;
 	VERIFY(bmWatermark.LoadImage(IDR_WIZ1_WATERMARK, _T("GIF"), NULL, ::GetSysColor(COLOR_WINDOW)));
 	CEnBitmap bmHeader;
@@ -764,47 +972,39 @@ BOOL FirstTimeWizard()
 	page1.m_psp.dwFlags |= PSP_HIDEHEADER;
 	sheet.AddPage(&page1);
 
-	CPPgWiz1General page2(IDD_WIZ1_GENERAL, sWiz1, GetResString(IDS_PW_GENERAL), GetResString(IDS_QL_USERNAME));
+	CPPgWiz1General page2(IDD_WIZ1_GENERAL, sWiz1, GetWizardText(IDS_PW_GENERAL), GetWizardText(IDS_QL_USERNAME));
 	sheet.AddPage(&page2);
 
-	CPPgWiz1Ports page3(IDD_WIZ1_PORTS, sWiz1, GetResString(IDS_PORTSCON), GetResString(IDS_CONNECTION));
+	CPPgWiz1Ports page3(IDD_WIZ1_PORTS, sWiz1, GetWizardText(IDS_CONNECTION), _T("TCP / UDP - PCP / NAT-PMP / UPnP"));
 	sheet.AddPage(&page3);
-
-
-	CString sPage4(GetResString(IDS_PW_CON_DOWNLBL));
-	sPage4.AppendFormat(_T(" / %s"), (LPCTSTR)GetResString(IDS_PW_CON_UPLBL));
-	CPPgWiz1UlPrio page4(IDD_WIZ1_ULDL_PRIO, sWiz1, sPage4, GetResString(IDS_PRIORITY));
+	CPPgWiz1Speed page4(IDD_WIZ1_SPEEDTEST, sWiz1, GetWizardText(IDS_SPEED_LIMITS), GetWizardText(IDS_CONNECTIONTEST));
 	sheet.AddPage(&page4);
-
-	CPPgWiz1Upload page5(IDD_WIZ1_UPLOAD, sWiz1, GetResString(IDS_SECURITY), GetResString(IDS_OBFUSCATION));
-	sheet.AddPage(&page5);
-
-	CPPgWiz1Server page6(IDD_WIZ1_SERVER, sWiz1, GetResString(IDS_PW_SERVER), GetResString(IDS_NETWORK));
+	CPPgWiz1Server page6(IDD_WIZ1_SERVER, sWiz1, GetWizardText(IDS_NETWORK), _T("eD2K / Kad"));
 	sheet.AddPage(&page6);
 
-	CPPgWiz1End page7(IDD_WIZ1_END, sWiz1);
+	CPPgWiz1End page7(sWiz1, page3, page6);
 	page7.m_psp.dwFlags |= PSP_HIDEHEADER;
 	sheet.AddPage(&page7);
 
-	page2.m_strNick = EMULE_NEXT_PROJECT_URL;
-	page2.m_iAutoConnectAtStart = 0;
+	page2.m_strNick = firstRun ? EMULE_NEXT_DEFAULT_ALIAS : thePrefs.GetUserNick();
+	page2.m_iAutoConnectAtStart = firstRun ? 1 : thePrefs.DoAutoConnect();
+	page2.m_iAutoStart = firstRun ? 0 : thePrefs.GetAutoStart();
 	page3.m_uTCP = thePrefs.GetPort();
-	page3.m_uUDP = thePrefs.GetUDPPort();
-	page4.m_iDAP = 1;
-	page4.m_iUAP = 1;
-	page5.m_iObfuscation = static_cast<int>(thePrefs.IsCryptLayerEnabled()); //was Requested()
-	page6.m_iSafeServerConnect = 0;
-	page6.m_iKademlia = 1;
-	page6.m_iED2K = 1;
-
-	bool bUDPDisabled = thePrefs.GetUDPPort() == 0;
-	page3.m_pbUDPDisabled = &bUDPDisabled;
-	page6.m_pbUDPDisabled = &bUDPDisabled;
+	page3.m_uUDP = thePrefs.GetUDPPort() != 0 ? thePrefs.GetUDPPort() : thePrefs.GetRandomUDPPort();
+	page3.m_iAutomaticPortSetup = firstRun ? 1 : automaticHomeSetupWasEnabled;
+	page4.m_uDownloadCapacity = firstRun ? 0 : thePrefs.GetMaxGraphDownloadRate();
+	page4.m_uUploadCapacity = firstRun ? 0 : thePrefs.GetMaxGraphUploadRate(true);
+	page4.m_iApplyResults = 0;
+	page6.m_iSafeServerConnect = firstRun ? 0 : thePrefs.IsSafeServerConnectEnabled();
+	page6.m_iKademlia = firstRun ? 1 : thePrefs.GetNetworkKademlia();
+	page6.m_iED2K = firstRun ? 1 : thePrefs.GetNetworkED2K();
+	page6.m_iAddServers = firstRun ? 1 : 0;
+	page6.m_iAddKadNodes = firstRun ? 1 : 0;
 
 	uint16 oldtcpport = thePrefs.GetPort();
 	uint16 oldudpport = thePrefs.GetUDPPort();
 
-	if (sheet.DoModal() == IDCANCEL) {
+	if (sheet.DoModal() != ID_WIZFINISH) {
 
 		// restore port settings?
 		thePrefs.port = oldtcpport;
@@ -822,25 +1022,41 @@ BOOL FirstTimeWizard()
 	thePrefs.SetUserNick(page2.m_strNick);
 	thePrefs.SetAutoConnect(page2.m_iAutoConnectAtStart != 0);
 	thePrefs.SetAutoStart(page2.m_iAutoStart != 0);
-	SetAutoStart(thePrefs.GetAutoStart());
+	if (!thePrefs.IsPortableMode())
+		SetAutoStart(thePrefs.GetAutoStart());
 
-	thePrefs.SetNewAutoDown(page4.m_iDAP != 0);
-	thePrefs.SetNewAutoUp(page4.m_iUAP != 0);
-	thePrefs.m_bCryptLayerRequested = page5.m_iObfuscation != 0;
-	if (page5.m_iObfuscation != 0)
+	if (firstRun) {
+		thePrefs.SetNewAutoDown(true);
+		thePrefs.SetNewAutoUp(true);
+		thePrefs.m_bCryptLayerRequested = true;
 		thePrefs.m_bCryptLayerSupported = true;
+		thePrefs.m_bCryptLayerRequired = false;
+		s_recommendedFirstRunDefaultsApplied = true;
+	}
+	if (page4.m_iApplyResults != 0) {
+		thePrefs.SetMaxGraphDownloadRate(page4.m_uDownloadCapacity);
+		thePrefs.SetMaxGraphUploadRate(page4.m_uUploadCapacity);
+		thePrefs.SetMaxUpload(ConnectionSpeedTest::RecommendedUploadLimit(page4.m_uUploadCapacity));
+		thePrefs.SetMaxDownload(UNLIMITED);
+		theApp.emuledlg->statisticswnd->SetARange(false, page4.m_uUploadCapacity);
+		theApp.emuledlg->statisticswnd->SetARange(true, page4.m_uDownloadCapacity);
+	} else if (firstRun) {
+		// A clean installation still carries the conservative legacy limits
+		// loaded by Preferences. Do not silently apply those limits when the
+		// user skips the optional speed test; keep both directions unlimited.
+		thePrefs.SetMaxUpload(UNLIMITED);
+		thePrefs.SetMaxDownload(UNLIMITED);
+	}
 	thePrefs.SetSafeServerConnectEnabled(page6.m_iSafeServerConnect != 0);
 	thePrefs.SetNetworkKademlia(page6.m_iKademlia != 0);
 	thePrefs.SetNetworkED2K(page6.m_iED2K != 0);
+	theApp.serverlist->RequestBootstrapServers(true, page6.m_iAddServers != 0, page6.m_iED2K != 0);
+	if (page6.m_iAddKadNodes != 0 && page6.m_iKademlia != 0)
+		theApp.emuledlg->kademliawnd->UpdateNodesDatFromURL(KadBootstrap::OnlineNodesDatUrl, false);
 
 	// set ports
 	thePrefs.port = (uint16)page3.m_uTCP;
 	thePrefs.udpport = (uint16)page3.m_uUDP;
-	ASSERT(thePrefs.port != 0 && thePrefs.udpport != 0 + 10);
-	if (thePrefs.port == 0)
-		thePrefs.port = thePrefs.GetRandomTCPPort();
-	if (thePrefs.udpport == 0 + 10)
-		thePrefs.udpport = thePrefs.GetRandomUDPPort();
 	if ((thePrefs.port != theApp.listensocket->GetConnectedPort()) || (thePrefs.udpport != theApp.clientudp->GetConnectedPort()))
 		if (!theApp.IsPortchangeAllowed())
 			LocMessageBox(IDS_NOPORTCHANGEPOSSIBLE, MB_OK, 0);
@@ -848,6 +1064,34 @@ BOOL FirstTimeWizard()
 			theApp.listensocket->Rebind();
 			theApp.clientudp->Rebind();
 		}
+
+	if (thePrefs.GetPort() != theApp.listensocket->GetConnectedPort()
+		|| thePrefs.GetUDPPort() != theApp.clientudp->GetConnectedPort())
+	{
+		thePrefs.port = oldtcpport;
+		thePrefs.udpport = oldudpport;
+		theApp.listensocket->Rebind();
+		theApp.clientudp->Rebind();
+		LocMessageBox(IDS_CONNSETUP_BINDFAILED, MB_OK | MB_ICONWARNING);
+	} else if (page3.m_iAutomaticPortSetup != 0) {
+		// Commit only after Finish and successful binding. StartUPnP rechecks
+		// the network, since it may have changed while the wizard was open.
+		thePrefs.EnableAutomaticHomeUPnP();
+		if (!automaticHomeSetupWasEnabled)
+			theApp.emuledlg->StartUPnP(true, 0, 0, true);
+	} else if (automaticHomeSetupWasEnabled) {
+		thePrefs.DisableAutomaticHomeUPnP();
+	}
+
+	// The modal wizard has its own message loop, so the regular startup timer
+	// may already have checked the old auto-connect value. Complete the first
+	// run hand-off here in that case. StartConnection also waits for an active
+	// automatic router setup before contacting eD2K or Kad.
+	if (ConnectionSetupPolicy::ShouldConnectAfterFirstRunFinish(firstRun,
+		thePrefs.DoAutoConnect(), theApp.m_app_state == APP_STATE_RUNNING))
+	{
+		theApp.emuledlg->SendMessage(WM_COMMAND, MP_CONNECT);
+	}
 
 	return TRUE;
 }

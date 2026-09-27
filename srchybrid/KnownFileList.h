@@ -15,6 +15,9 @@
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #pragma once
+#include <atomic>
+#include <string>
+#include <unordered_map>
 #include "MapKey.h"
 #include "SHAHashset.h"
 
@@ -42,6 +45,7 @@ public:
 	CKnownFile* FindKnownFileByPath(const CString &sFilePath) const;
 	bool	IsKnownFile(const CKnownFile *file) const;
 	bool	IsFilePtrInList(const CKnownFile *file) const;
+	void	InvalidateKnownFileLookup() const		{ m_bKnownFileNameIndexDirty.store(true, std::memory_order_relaxed); }
 
 	void	AddCancelledFileID(const uchar *hash);
 	bool	IsCancelledFileByID(const uchar *hash) const;
@@ -59,9 +63,15 @@ public:
 private:
 	bool	LoadKnownFiles();
 	bool	LoadCancelledFiles();
+	void	RebuildKnownFileNameIndex() const;
+
+	typedef std::basic_string<TCHAR> KnownFileNameKey;
+	typedef std::unordered_multimap<KnownFileNameKey, CKnownFile*> KnownFilesByNameMap;
 
 	uint64	transferred;
 	CKnownFilesMap		m_Files_map;
+	mutable KnownFilesByNameMap m_mapKnownFilesByName;
+	mutable std::atomic<bool> m_bKnownFileNameIndexDirty;
 	CancelledFilesMap	m_mapCancelledFiles;
 	// map of files is indexed by AICH-hash for faster access,
 	// not guaranteed to be complete at this point (!)

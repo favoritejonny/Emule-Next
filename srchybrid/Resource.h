@@ -2366,6 +2366,58 @@
 #define IDD_SERVERLIST_SOURCES          3039
 #define IDC_SERVER_SOURCE_LIST          3040
 #define IDC_BUGREPORT                   3041
+#define IDC_SETUP_FIREWALL              3042
+#define IDD_WIZ1_ROUTER                 3043
+#define IDD_WIZ1_PORTTEST               3044
+#define IDD_WIZ1_SERVERLIST             3045
+#define IDC_WIZ_SETUP_INFO              3046
+#define IDC_WIZ_SERVERS_ADD             3047
+#define IDC_WIZ_SERVERS_PREVIEW         3048
+#define IDC_WIZ_AUTO_PORTS              3049
+#define IDD_WIZ1_SPEEDTEST              3050
+#define IDC_WIZ_SPEED_INFO              3051
+#define IDC_WIZ_SPEED_START             3052
+#define IDC_WIZ_SPEED_STATUS            3053
+#define IDC_WIZ_SPEED_DOWNLOAD_LABEL    3054
+#define IDC_WIZ_SPEED_DOWNLOAD          3055
+#define IDC_WIZ_SPEED_UPLOAD_LABEL      3056
+#define IDC_WIZ_SPEED_UPLOAD            3057
+#define IDC_WIZ_SPEED_APPLY             3058
+#define IDC_WIZ_NODES_ADD               3059
+#define IDS_CONNSETUP_TITLE             4100
+#define IDS_CONNSETUP_INFO              4101
+#define IDS_CONNSETUP_BUTTON            4102
+#define IDS_CONNSETUP_CONSENT           4103
+#define IDS_CONNSETUP_PENDING           4104
+#define IDS_CONNSETUP_MANUAL            4105
+#define IDS_CONNSETUP_PRIVATE           4106
+#define IDS_CONNSETUP_VPN               4107
+#define IDS_CONNSETUP_UNKNOWN           4108
+#define IDS_CONNSETUP_SUCCESS           4109
+#define IDS_CONNSETUP_FAILED            4110
+#define IDS_CONNSETUP_SHARED            4111
+#define IDS_CONNSETUP_CONFLICT          4112
+#define IDS_CONNSETUP_BADPORT           4113
+#define IDS_CONNSETUP_TESTINFO          4114
+#define IDS_CONNSETUP_FIREWALL          4115
+#define IDS_CONNSETUP_BINDFAILED        4116
+#define IDS_CONNSETUP_BUSY              4117
+#define IDS_CONNSETUP_UNSELECT          4118
+#define IDS_PORTMAP_WRONGPORT           4119
+#define IDS_PORTMAP_REFUSED             4120
+#define IDS_PORTMAP_NETWORKCHANGED      4121
+#define IDS_PORTMAP_SHORTLEASE          4122
+#define IDS_PORTMAP_PROTOCOL            4123
+#define IDS_WIZSETUP_PROTOCOLS          4124
+#define IDS_WIZSETUP_PORTTEST           4125
+#define IDS_WIZSETUP_NETWORKS           4126
+#define IDS_WIZSETUP_SERVERS_ADD        4127
+#define IDS_WIZSETUP_SERVERS_INFO       4128
+#define IDS_WIZSETUP_PORTS              4129
+#define IDS_WIZSETUP_SPEEDTEST_INFO     4130
+#define IDS_WIZSETUP_SPEEDTEST_INVALID  4131
+#define IDS_ADD_UNC_SHARE               4132
+#define IDS_WIZSETUP_NODES_ADD          4133
 #define IDA_ENTER                       32771
 
 // Next default values for new objects
@@ -2374,7 +2426,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        1568
 #define _APS_NEXT_COMMAND_VALUE         32773
-#define _APS_NEXT_CONTROL_VALUE         3042
+#define _APS_NEXT_CONTROL_VALUE         3060
 #define _APS_NEXT_SYMED_VALUE           1612
 #endif
 #endif

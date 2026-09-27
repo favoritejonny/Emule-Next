@@ -15,6 +15,7 @@
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #pragma once
+#include "ServerBootstrap.h"
 
 class CServer;
 
@@ -27,6 +28,7 @@ public:
 	~CServerList();
 
 	bool		Init();
+	void		RequestBootstrapServers(bool completed, bool selected, bool ed2k);
 	void		Process();
 	void		Sort();
 	void		GetUserSortedServers();
@@ -77,6 +79,9 @@ public:
 #endif
 
 private:
+	void		UpdateInitialServerList();
+	void		AddBootstrapServers();
+	ServerBootstrap::Selection m_bootstrapSelection;
 	CTypedPtrList<CPtrList, CServer*> list;
 	INT_PTR		serverpos;
 	INT_PTR		searchserverpos;

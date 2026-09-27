@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "nodes.dat van internet downloaden en laden om Kad te starten"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP en UPnP vragen een geschikte router alleen de eMule-poorten door te sturen. De automatische modus kiest een ondersteund protocol. Gebruik dit alleen op uw eigen thuisnetwerk zonder VPN. Ga anders verder met handmatige instellingen; bestaande instellingen blijven behouden."
+    IDS_WIZSETUP_PORTTEST "Automatische routerinstelling begint pas na Voltooien; voer de test daarna uit."
+    IDS_WIZSETUP_NETWORKS "eD2K gebruikt een serverlijst. Kad werkt zonder servers, maar heeft UDP en eerste contacten nodig. U kunt beide netwerken gebruiken. UDP uitschakelen schakelt ook Kad uit. De serverlijst kiest u op de volgende pagina."
+    IDS_WIZSETUP_SERVERS_ADD "Een eD2K-serverlijst van internet downloaden en laden"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Optioneel: stop andere overdrachten en verbreek een eventuele VPN-verbinding voordat u de test start. De test verstuurt maximaal ongeveer 100 MB tijdelijke gegevens via Cloudflare, dat uw IP-adres kan zien. eMule Next verstuurt of bewaart het resultaat niet. U kunt de gemeten waarden in KB/s vóór het toepassen bewerken."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Voer geldige download- en uploadsnelheden in KB/s in of schakel het toepassen van de waarden uit."
+    IDS_WIZSETUP_SERVERS_INFO "Als eD2K is geselecteerd, kunt u deze servers bij Voltooien toevoegen. Bestaande servers blijven behouden. Er wordt geen lijst gedownload of automatische verbinding ingeschakeld. Laat uitgevinkt om zelf servers te beheren of alleen Kad te gebruiken."
+    IDS_WIZSETUP_PORTS "TCP dient voor verbindingen en overdrachten; UDP is ook nodig voor Kad. Behoud de voorgestelde poorten of kies uw eigen poorten. Gebruik bij bestaande routerregels dezelfde poortnummers."
     IDS_SOCKETS_INIT_FAILED "Fout bij het initialiseren van de Windows-sockets."
     IDS_ABOUTBOX            "Over eMule..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s van %s"
@@ -938,14 +947,14 @@ BEGIN
                             "Negeer eMule-linkverzendingsprotocolberichten"
     IDS_CHECK4UPDATE        "Controleren voor nieuwe versie"
     IDS_STARTUP             "Opstarten"
-    IDS_NEWVERSIONAVL       "Een nieuwe eMule-versie is beschikbaar! Kijk op de projectpagina voor meer informatie."
-    IDS_NEWVERSIONAVLPOPUP  "Een nieuwe eMule-versie is beschikbaar. Klik hier voor informatie over de nieuwe versie!"
+    IDS_NEWVERSIONAVL       "Een nieuwe eMule Next-versie is beschikbaar! Kijk op de projectpagina voor meer informatie."
+    IDS_NEWVERSIONAVLPOPUP  "Een nieuwe eMule Next-versie is beschikbaar. Klik hier voor informatie over de nieuwe versie!"
     IDS_NEWVERSIONFAILED    "Onmogelijk te controleren of er een nieuwe versie beschikbaar is."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "Nieuwe eMule-versie gevonden"
+    IDS_CB_TBN_ONNEWVERSION "Nieuwe eMule Next-versie gevonden"
     IDS_NONEWERVERSION      "Geen nieuwe eMule-versie gevonden."
     IDS_VERSIONCHECK        "Versiecontrole"
     IDS_VISITVERSIONCHECK   "\n\nWilt u nu de informatiepagina bezoeken?"
@@ -1987,6 +1996,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Taakbalkeffecten van Windows 7 inschakelen"
     IDS_LANMODE             "LAN-mode"
     IDS_OPENPREFINI         "preferences.ini openen"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Automatische verbindingsinstelling"
+    IDS_CONNSETUP_INFO          "Behoud de voorgestelde TCP- en UDP-poorten, of voer uw eigen poorten in. Automatische installatie kan een compatibele thuisrouter configureren nadat u deze wizard hebt voltooid."
+    IDS_CONNSETUP_BUTTON        "Automatisch configureren"
+    IDS_CONNSETUP_CONSENT       "Toestaan ​​dat eMule Next zijn TCP/UDP-poorten doorstuurt met behulp van PCP, NAT-PMP of UPnP op dit privé-thuisnetwerk nadat de wizard is voltooid en later start?\n\nBevestig alleen op een netwerk dat u beheert, zonder VPN. Detectie kan niet elke VPN herkennen. Er is nog steeds toestemming voor Windows Firewall nodig; de webinterfacepoort is uitgesloten. Hoge ID is niet gegarandeerd. Tijdelijke toewijzingen kunnen blijven bestaan ​​tot de door de router toegewezen vervaldatum.\n\nAls u de wizard annuleert, wordt deze keuze niet opgeslagen."
+    IDS_CONNSETUP_PENDING       "Geselecteerd: de routerinstallatie wordt uitgevoerd nadat de wizard is voltooid en later wordt gestart, alleen op in aanmerking komende particuliere netwerken. Er is nog steeds toestemming voor Windows Firewall vereist. De hoge ID- en Kad-bereikbaarheid moeten nog worden geverifieerd."
+    IDS_CONNSETUP_MANUAL        "Geen nieuwe automatische configuratie geselecteerd. Bestaande instellingen blijven behouden. U kunt handmatige port forwarding gebruiken, de firewallrechten van Windows controleren of de externe test zelf uitvoeren."
+    IDS_CONNSETUP_PRIVATE       "Automatische installatie onderbroken: Windows rapporteert een openbaar, beheerd of gemengd netwerk. Er zijn geen routerwijzigingen aangevraagd. Gebruik handmatige configuratie of controleer het netwerkprofiel alleen als dit uw eigen vertrouwde thuisnetwerk is."
+    IDS_CONNSETUP_VPN           "Automatische installatie onderbroken: er is een mogelijke VPN, proxy of expliciete interfacebinding gevonden. De thuisrouter wordt niet automatisch geconfigureerd. Gebruik de port forwarding-instellingen van de verbindingsprovider."
+    IDS_CONNSETUP_UNKNOWN       "Automatische installatie onderbroken: het lokale netwerk kon niet veilig worden geïdentificeerd. Er zijn geen routerwijzigingen aangevraagd. U kunt doorgaan en de verbinding handmatig configureren."
+    IDS_CONNSETUP_SUCCESS       "De router bevestigt het doorsturen van TCP %u en UDP %u (0 = uitgeschakeld) naar deze pc.\n\nDit bewijst niet dat internet bereikbaar is. Controleer de toestemming van de Windows-firewall, maak vervolgens verbinding en controleer de status High ID en Kad, of voer de externe poorttest handmatig uit."
+    IDS_CONNSETUP_FAILED        "De automatische routerinstallatie is niet voltooid. PCP, NAT-PMP of UPnP zijn mogelijk niet beschikbaar of uitgeschakeld, of de router heeft het verzoek mogelijk geweigerd. Controleer de router en Windows firewall; handmatige instelling blijft beschikbaar."
+    IDS_CONNSETUP_SHARED        "De router rapporteert een niet-openbaar internetadres: dubbele NAT of provider CGNAT is mogelijk. Het openen van deze router alleen is mogelijk niet voldoende. Vraag de provider naar een openbaar IP-adres of ondersteunde port forwarding."
+    IDS_CONNSETUP_CONFLICT      "Een aangevraagde poort heeft al een andere of uitgeschakelde routerregel. Het werd niet overschreven. Kies verschillende clientpoorten of inspecteer die regel handmatig."
+    IDS_CONNSETUP_BADPORT       "Voer een TCP-poort in van 1 tot 65535 en een UDP-poort van 1 tot 65535, of schakel UDP expliciet uit."
+    IDS_CONNSETUP_TESTINFO      "Vrijwillige test op de officiële eMule-website. Het ontvangt uw IP- en poortinformatie."
+    IDS_CONNSETUP_FIREWALL      "Windows Firewall openen..."
+    IDS_CONNSETUP_BINDFAILED    "De client kon niet luisteren op de geselecteerde poorten. Mogelijk worden ze door een ander programma gebruikt. Eerdere poortinstellingen zijn hersteld."
+    IDS_CONNSETUP_BUSY          "Er is nog een andere poortconfiguratie actief. Wacht tot het klaar is voordat u het opnieuw probeert."
+    IDS_CONNSETUP_UNSELECT      "Automatische keuze ongedaan maken"
+    IDS_PORTMAP_WRONGPORT       "De router heeft een andere externe poort toegewezen. Het werd niet geaccepteerd als werkende clienttoewijzing. Clientpoorten zijn niet gewijzigd. Gebruik verschillende poorten of controleer de router handmatig. Tijdelijke toewijzingen kunnen tot de vervaldatum blijven bestaan."
+    IDS_PORTMAP_REFUSED         "De router weigerde automatische port forwarding. Er werd geen alternatief protocol gebruikt om deze weigering te omzeilen. Controleer de instellingen van de routerbeheerder of gebruik handmatige installatie."
+    IDS_PORTMAP_NETWORKCHANGED  "Poorttoewijzing gepauzeerd: het netwerk, de gateway, de clientpoorten of het externe adres zijn gewijzigd. Eerdere toewijzingen kunnen tot de vervaldatum blijven bestaan. Controleer de verbinding en voer indien nodig de automatische installatie opnieuw uit."
+    IDS_PORTMAP_SHORTLEASE      "De router kende een levensduur van de kaarten die te kort was voor betrouwbare vernieuwing. Automatische configuratie is niet als succesvol gemarkeerd. Gebruik handmatige configuratie of controleer de router."
+    IDS_PORTMAP_PROTOCOL        "Protocol: %s"
+    IDS_ADD_UNC_SHARE           "Netwerkmap toevoegen"
 END
 
 #endif    // Dutch (Netherlands) resources

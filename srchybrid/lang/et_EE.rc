@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Laadi internetist alla ja ava nodes.dat Kad-võrgu käivitamiseks"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP ja UPnP paluvad sobival ruuteril avada ainult eMule'i pordid. Automaatrežiim valib toetatud protokolli. Kasutage seda vaid oma koduvõrgus ilma VPN-ita. Muidu jätkake käsitsi; senised seaded säilivad."
+    IDS_WIZSETUP_PORTTEST "Ruuteri automaatseadistus algab alles pärast Lõpeta vajutamist; testige seejärel."
+    IDS_WIZSETUP_NETWORKS "eD2K kasutab serveriloendit. Kad töötab serveriteta, kuid vajab UDP-d ja algkontakte. Võite kasutada mõlemat võrku. UDP keelamine keelab ka Kadi. Serveriloendi valik on järgmisel lehel."
+    IDS_WIZSETUP_SERVERS_ADD "Laadi eD2K serveriloend Internetist alla ja ava"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Valikuline: peatage muud edastused ja katkestage VPN-ühendus, seejärel käivitage test. Test saadab Cloudflare'i kaudu kuni umbes 100 MB ajutisi andmeid; teenus näeb teie IP-aadressi. eMule Next ei saada ega salvesta tulemust. Enne rakendamist saate mõõdetud KB/s väärtusi muuta."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Sisestage kehtivad alla- ja üleslaadimiskiirused KB/s või tühjendage rakendamise valik."
+    IDS_WIZSETUP_SERVERS_INFO "Kui eD2K on valitud, saate need serverid lisada nupuga Lõpeta. Senised serverid säilivad. Loendit ei laadita alla ja automaatühendust ei lubata. Jätke märkimata, et hallata servereid ise või kasutada ainult Kadi."
+    IDS_WIZSETUP_PORTS "TCP on ühenduste ja edastuste jaoks; UDP-d vajab ka Kad. Säilitage pakutud pordid või valige oma. Kui ruuter juba suunab porte, kasutage samu numbreid."
     IDS_SOCKETS_INIT_FAILED "Viga Windowsi socketite initsialiseerimsiel."
     IDS_ABOUTBOX            "&eMule info..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s kasutajalt %s"
@@ -928,14 +937,14 @@ BEGIN
                             "Ignoreeri eMule viite saatmise protokollisõnumeid"
     IDS_CHECK4UPDATE        "Kontrolli uue versiooni saadavust"
     IDS_STARTUP             "Käivitamine"
-    IDS_NEWVERSIONAVL       "Uus eMule versioon on saadaval! Vaata projekti kodulehte täiendava info saamiseks."
-    IDS_NEWVERSIONAVLPOPUP  "Uus eMule versioon on saadaval. Kliki siia uue versiooni kohta lugemiseks!"
+    IDS_NEWVERSIONAVL       "Uus eMule Next versioon on saadaval! Vaata projekti kodulehte täiendava info saamiseks."
+    IDS_NEWVERSIONAVLPOPUP  "Uus eMule Next versioon on saadaval. Kliki siia uue versiooni kohta lugemiseks!"
     IDS_NEWVERSIONFAILED    "Ei suutnud kontrollida uue versiooni olemasolu."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "Leidsin uue eMule versiooni"
+    IDS_CB_TBN_ONNEWVERSION "Leidsin uue eMule Next versiooni"
     IDS_NONEWERVERSION      "Uut eMule versiooni ei leitud."
     IDS_VERSIONCHECK        "&Versioonikontroll"
     IDS_VISITVERSIONCHECK   "\n\nKas Sa soovite infolehekülge kohe külastada?"
@@ -1980,6 +1989,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Luba Windows 7 tööristariba effektid"
     IDS_LANMODE             "LAN Mode"
     IDS_OPENPREFINI         "Ava seadistuste.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Ühenduse automaatne seadistamine"
+    IDS_CONNSETUP_INFO          "Jätke pakutud TCP ja UDP pordid alles või sisestage oma. Pärast viisardi lõpetamist saab automaatse häälestuse konfigureerida ühilduva koduruuteri."
+    IDS_CONNSETUP_BUTTON        "Konfigureeri automaatselt"
+    IDS_CONNSETUP_CONSENT       "Kas lubada eMule Nextil edastada oma TCP/UDP-pordid PCP, NAT-PMP või UPnP abil selles erakoduvõrgus pärast viisardi lõpetamist ja hilisemal käivitumisel?\n\nKinnitage ainult teie juhitavas võrgus, ilma VPN-ita. Tuvastamine ei tuvasta kõiki VPN-e. Windowsi tulemüüri luba on endiselt vaja; veebiliidese port on välistatud. Kõrge ID ei ole garanteeritud. Ajutised vastendused võivad jääda kuni nende ruuteri määratud aegumiseni.\n\nNõustaja tühistamine seda valikut ei salvesta."
+    IDS_CONNSETUP_PENDING       "Valitud: ruuteri seadistamine käivitub pärast viisardi lõpetamist ja hilisematel käivitamistel ainult sobivates privaatvõrkudes. Windowsi tulemüüri luba on endiselt vajalik. Kõrge ID ja Kadi ligipääsetavus jääb kontrollimisele."
+    IDS_CONNSETUP_MANUAL        "Uut automaatset seadistust pole valitud. Olemasolevad seaded jäetakse alles. Võite kasutada käsitsi pordi suunamist, kontrollida Windows tulemüüri õigusi või käivitada ise välise testi."
+    IDS_CONNSETUP_PRIVATE       "Automaatne seadistamine peatatud: Windows teatab avalikust, hallatud või segavõrgust. Ruuteri muutmist ei nõutud. Kasutage käsitsi seadistamist või kontrollige võrguprofiili ainult siis, kui see on teie enda usaldusväärne koduvõrk."
+    IDS_CONNSETUP_VPN           "Automaatne seadistamine peatatud: leiti võimalik VPN, puhverserveri või selge liidese sidumine. Koduruuterit ei konfigureerita automaatselt. Kasutage ühenduse pakkuja pordi edastamise seadeid."
+    IDS_CONNSETUP_UNKNOWN       "Automaatne häälestus peatatud: kohalikku võrku ei õnnestunud turvaliselt tuvastada. Ruuteri muutmist ei nõutud. Saate jätkata ja ühenduse käsitsi konfigureerida."
+    IDS_CONNSETUP_SUCCESS       "Ruuter kinnitab TCP %u ja UDP %u (0 = keelatud) edastamist sellele arvutile.\n\nThis does not prove Internet reachability. Kontrollige Windowsi tulemüüri luba, seejärel ühendage ja kontrollige High ID ja Kad olekut või käivitage välise pordi test käsitsi."
+    IDS_CONNSETUP_FAILED        "Ruuteri automaatne seadistamine ei lõppenud. PCP, NAT-PMP või UPnP ei pruugi olla saadaval või keelatud või ruuter võib taotluse tagasi lükata. Kontrollige ruuterit ja Windows tulemüüri; käsitsi seadistamine jääb kättesaadavaks."
+    IDS_CONNSETUP_SHARED        "Ruuter teatab mitteavaliku Interneti-aadressi: topelt-NAT või pakkuja CGNAT on võimalik. Selle ruuteri avamisest üksi ei pruugi piisata. Küsige teenusepakkujalt avaliku IP-aadressi või toetatud pordiedastuse kohta."
+    IDS_CONNSETUP_CONFLICT      "Taotletud pordil on juba erinev või keelatud ruuteri reegel. Seda üle ei kirjutatud. Valige erinevad kliendipordid või kontrollige seda reeglit käsitsi."
+    IDS_CONNSETUP_BADPORT       "Sisestage TCP port vahemikus 1 kuni 65535 ja UDP port vahemikus 1 kuni 65535 või keelake UDP."
+    IDS_CONNSETUP_TESTINFO      "Vabatahtlik test ametlikul eMule veebisaidil. See saab teie IP- ja porditeabe."
+    IDS_CONNSETUP_FIREWALL      "Avage Windowsi tulemüür..."
+    IDS_CONNSETUP_BINDFAILED    "Klient ei saanud valitud portides kuulata. Neid võib kasutada mõni muu programm. Eelmised pordi seaded on taastatud."
+    IDS_CONNSETUP_BUSY          "Veel üks pordi seadistamine töötab. Enne uuesti proovimist oodake, kuni see lõpeb."
+    IDS_CONNSETUP_UNSELECT      "Võta automaatne valik tagasi"
+    IDS_PORTMAP_WRONGPORT       "Ruuter määras teise välise pordi. Seda ei aktsepteeritud kui töötavat kliendikaardistust. Kliendiporte ei muudetud. Kasutage erinevaid porte või kontrollige ruuterit käsitsi. Ajutised kaardistused võivad kehtida kuni aegumiseni."
+    IDS_PORTMAP_REFUSED         "Ruuter keeldus pordi automaatsest edastamisest. Sellest keeldumisest mööda hiilimiseks ei kasutatud alternatiivset protokolli. Kontrollige ruuteri administraatori sätteid või kasutage käsitsi seadistamist."
+    IDS_PORTMAP_NETWORKCHANGED  "Pordi kaardistamine peatatud: võrk, lüüs, kliendi pordid või välisaadress on muudetud. Varasemad kaardistused võivad säilida kuni aegumiseni. Kontrollige ühendust ja vajadusel käivitage automaatne häälestus uuesti."
+    IDS_PORTMAP_SHORTLEASE      "Ruuter andis usaldusväärseks uuendamiseks liiga lühikese kaardi eluea. Automaatset seadistamist ei märgitud edukaks. Kasutage käsitsi seadistamist või kontrollige ruuterit."
+    IDS_PORTMAP_PROTOCOL        "Protokoll: %s"
+    IDS_ADD_UNC_SHARE           "Lisa võrgukaust"
 END
 
 #endif    // Estonian resources

@@ -53,6 +53,7 @@ void CUPnPImpl::SendResultMessage()
 
 void CUPnPImpl::LateEnableWebServerPort(uint16 nPort)
 {
+	if (GetImplementationID() == UPNP_IMPL_PCP_NATPMP) return;
 	if (ArePortsForwarded() == TRIS_TRUE && IsReady()) {
 		m_nOldTCPWebPort = (m_nTCPWebPort == nPort ? 0 : m_nTCPWebPort);
 		m_nTCPWebPort = nPort;

@@ -17,6 +17,7 @@
 #include "stdafx.h"
 #include "TickCountHelpers.h"
 #include <share.h>
+#include <memory>
 #include "emule.h"
 #include "ServerList.h"
 #include "SafeFile.h"
@@ -43,40 +44,6 @@ static char THIS_FILE[] = __FILE__;
 
 
 #define	SERVER_MET_FILENAME	_T("server.met")
-
-namespace
-{
-// The bootstrap is deliberately local: it gives a new installation useful
-// eD2K entry points without downloading an unverified server.met file.
-// Existing staticservers.dat files are always left untouched.
-void CreateEmuleNextBootstrapServerList(const CString& configDirectory)
-{
-	const CString staticServersPath(configDirectory + _T("staticservers.dat"));
-	if (::PathFileExists(staticServersPath))
-		return;
-
-	FILE* const staticServersFile = _tfsopen(staticServersPath, _T("wb"), _SH_DENYWR);
-	if (staticServersFile == NULL)
-		return;
-
-	// Write UTF-16LE, matching CServerList::SaveStaticServers().
-	if (fputwc(u'\xFEFF', staticServersFile) != _TEOF) {
-		_ftprintf(staticServersFile,
-			_T("# eMule Next bootstrap server list\r\n")
-			_T("# Checked 2026-08-11 against https://emule-security.org/serverlist\r\n")
-			_T("# This file is created once and is never overwritten by eMule Next.\r\n")
-			_T("176.123.5.89:4725,1,eMule Sunrise\r\n")
-			_T("77.42.68.79:4232,1,Nordic Server FIN\r\n")
-			_T("85.121.5.137:4232,1,Sharing-Devils No.2\r\n")
-			_T("91.208.162.182:4232,1,MO-Server\r\n")
-			_T("45.87.41.16:6262,1,ed2k-rust test server\r\n")
-			_T("91.208.162.87:4232,1,Sharing-Devils No.4\r\n")
-			_T("213.141.198.207:4232,1,Mazinga Server\r\n")
-			_T("85.17.116.222:6082,1,ed2k-rust main server\r\n"));
-	}
-	fclose(staticServersFile);
-}
-}
 
 CServerList::CServerList()
 	: serverpos()
@@ -147,13 +114,51 @@ bool CServerList::Init()
 			bRes = true;
 	}
 
-	// Ensure a new installation can connect even if server.met is empty.
-	CreateEmuleNextBootstrapServerList(sConfDir);
 	AddServersFromTextFile(sConfDir + _T("staticservers.dat"));
+	if (m_bootstrapSelection.Loaded())
+		UpdateInitialServerList();
 
 	theApp.serverlist->GiveServersForTraceRoute();
 
 	return bRes;
+}
+
+void CServerList::RequestBootstrapServers(bool completed, bool selected, bool ed2k)
+{
+	if (m_bootstrapSelection.Finish(completed, selected, ed2k))
+		UpdateInitialServerList();
+}
+
+void CServerList::UpdateInitialServerList()
+{
+	// Prefer a current HTTPS list and merge it without replacing personal
+	// entries. The checked bundled list is used only if the download or parser
+	// fails, so stale fallback entries are not mixed into a successful update.
+	if (!theApp.emuledlg->serverwnd->UpdateServerMetFromURL(ServerBootstrap::OnlineServerMetUrl))
+		AddBootstrapServers();
+}
+
+void CServerList::AddBootstrapServers()
+{
+	const unsigned added = ServerBootstrap::MergeMissing(
+		[this](const ServerBootstrap::Entry& entry) {
+			const CServer candidate(entry.port, entry.address);
+			// Do not use AddServer's duplicate path: it resets failed counts.
+			return GetServerByAddress(candidate.GetAddress(), candidate.GetPort()) != nullptr
+				|| GetServerByIPTCP(candidate.GetIP(), candidate.GetPort()) != nullptr;
+		},
+		[](const ServerBootstrap::Entry& entry) {
+			std::unique_ptr<CServer> server(new CServer(entry.port, entry.address));
+			server->SetListName(entry.name);
+			server->SetPreference(SRV_PR_NORMAL);
+			if (!theApp.emuledlg->serverwnd->serverlistctrl.AddServer(server.get(), true))
+				return false; // ordinary IP validation/filtering still applies
+			server.release();
+			return true;
+		});
+	if (added != 0)
+		SaveServermetToFile();
+	// No static list or automatic connection preference is enabled.
 }
 
 bool CServerList::AddServerMetToList(const CString &strFile, bool bMerge)
@@ -171,6 +176,7 @@ bool CServerList::AddServerMetToList(const CString &strFile, bool bMerge)
 		return false;
 	}
 	::setvbuf(servermet.m_pStream, NULL, _IOFBF, 16384);
+	bool parsed = true;
 	try {
 		version = servermet.ReadUInt8();
 		if (version != 0xE0 && version != MET_HEADER) {
@@ -222,6 +228,7 @@ bool CServerList::AddServerMetToList(const CString &strFile, bool bMerge)
 			AddLogLine(true, GetResString(IDS_SERVERSADDED), iAddCount, fservercount - iAddCount);
 		servermet.Close();
 	} catch (CFileException *ex) {
+		parsed = false;
 		if (ex->m_cause == CFileException::endOfFile)
 			LogError(LOG_STATUSBAR, GetResString(IDS_ERR_BADSERVERLIST));
 		else
@@ -230,7 +237,7 @@ bool CServerList::AddServerMetToList(const CString &strFile, bool bMerge)
 	}
 	theApp.emuledlg->serverwnd->serverlistctrl.SetRedraw(true);
 	theApp.emuledlg->serverwnd->serverlistctrl.Visible();
-	return true;
+	return parsed;
 }
 
 bool CServerList::AddServer(const CServer *pServer, bool bAddTail)

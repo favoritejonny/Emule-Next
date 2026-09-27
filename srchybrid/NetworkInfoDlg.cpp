@@ -221,7 +221,7 @@ void CreateNetworkInfo(CRichEditCtrlX &rCtrl, CHARFORMAT &rcfDef, CHARFORMAT &rc
 	// Kademlia
 	///////////////////////////////////////////////////////////////////////////
 	rCtrl.SetSelectionCharFormat(rcfBold);
-	rCtrl << GetResString(IDS_KADEMLIA) << _T(" ") << GetResString(IDS_NETWORK) << _T("\r\n");
+	rCtrl << GetResString(IDS_KADEMLIA) << _T("\r\n");
 	rCtrl.SetSelectionCharFormat(rcfDef);
 
 	rCtrl << GetResString(IDS_STATUS) << _T(":\t");

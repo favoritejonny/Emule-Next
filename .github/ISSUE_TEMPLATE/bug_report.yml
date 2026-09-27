@@ -13,7 +13,7 @@ body:
     attributes:
       label: eMule Next version
       description: Copy the complete version shown by the client or package name.
-      placeholder: 1.0.0-alpha.1
+      placeholder: 1.0.0-beta.1
     validations:
       required: true
   - type: dropdown

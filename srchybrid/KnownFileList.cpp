@@ -51,6 +51,7 @@ CKnownFileList::CKnownFileList()
 	, m_nRequestedTotal()
 	, m_nAcceptedTotal()
 	, transferred()
+	, m_bKnownFileNameIndexDirty(true)
 	, m_dwCancelledFilesSeed()
 	, requested()
 	, accepted()
@@ -256,6 +257,8 @@ void CKnownFileList::Save()
 
 void CKnownFileList::Clear()
 {
+	m_mapKnownFilesByName.clear();
+	m_bKnownFileNameIndexDirty.store(false, std::memory_order_relaxed);
 	m_mapKnownFilesByAICH.RemoveAll();
 	CCKey key;
 	for (POSITION pos = m_Files_map.GetStartPosition(); pos != NULL;) {
@@ -274,6 +277,7 @@ void CKnownFileList::Process()
 
 bool CKnownFileList::SafeAddKFile(CKnownFile *toadd)
 {
+	InvalidateKnownFileLookup();
 	bool bRemovedDuplicateSharedFile = false;
 	CCKey key(toadd->GetFileHash());
 	CKnownFile *pFileInMap;
@@ -336,11 +340,28 @@ bool CKnownFileList::SafeAddKFile(CKnownFile *toadd)
 
 CKnownFile* CKnownFileList::FindKnownFile(LPCTSTR filename, time_t date, uint64 size) const
 {
-	for (const CKnownFilesMap::CPair *pair = m_Files_map.PGetFirstAssoc(); pair != NULL; pair = m_Files_map.PGetNextAssoc(pair))
-		if (pair->value->GetUtcFileDate() == date && (uint64)pair->value->GetFileSize() == size && pair->value->GetFileName() == filename)
-			return pair->value;
+	if (m_bKnownFileNameIndexDirty.load(std::memory_order_relaxed))
+		RebuildKnownFileNameIndex();
+
+	const KnownFileNameKey nameKey(filename);
+	const std::pair<KnownFilesByNameMap::const_iterator, KnownFilesByNameMap::const_iterator> candidates =
+		m_mapKnownFilesByName.equal_range(nameKey);
+	for (KnownFilesByNameMap::const_iterator it = candidates.first; it != candidates.second; ++it) {
+		CKnownFile *file = it->second;
+		if (file->GetUtcFileDate() == date && (uint64)file->GetFileSize() == size && file->GetFileName() == filename)
+			return file;
+	}
 
 	return NULL;
+}
+
+void CKnownFileList::RebuildKnownFileNameIndex() const
+{
+	m_mapKnownFilesByName.clear();
+	m_mapKnownFilesByName.reserve(static_cast<size_t>(m_Files_map.GetCount()));
+	for (const CKnownFilesMap::CPair *pair = m_Files_map.PGetFirstAssoc(); pair != NULL; pair = m_Files_map.PGetNextAssoc(pair))
+		m_mapKnownFilesByName.emplace(KnownFileNameKey((LPCTSTR)pair->value->GetFileName()), pair->value);
+	m_bKnownFileNameIndexDirty.store(false, std::memory_order_relaxed);
 }
 
 CKnownFile* CKnownFileList::FindKnownFileByPath(const CString &sFilePath) const

@@ -657,9 +657,7 @@ void CTransferWnd::OnBnClickedQueueRefreshButton()
 
 void CTransferWnd::OnBnClickedBugReport()
 {
-	CString strUrl(EMULE_NEXT_PROJECT_URL);
-	strUrl += _T("/issues");
-	BrowserOpen(strUrl, NULL);
+	BrowserOpen(EMULE_NEXT_ISSUES_URL, thePrefs.GetMuleDirectory(EMULE_EXECUTABLEDIR));
 }
 
 void CTransferWnd::OnHoverUploadList(LPNMHDR, LRESULT *pResult)
@@ -1317,6 +1315,13 @@ void CTransferWnd::VerifyCatTabSize()
 	WINDOWPLACEMENT wp;
 	downloadlistctrl.GetWindowPlacement(&wp);
 	int right = wp.rcNormalPosition.right;
+	CRect rcBugReport;
+	CWnd* bugReport = GetDlgItem(IDC_BUGREPORT);
+	if (bugReport != NULL && bugReport->IsWindowVisible()) {
+		bugReport->GetWindowRect(&rcBugReport);
+		ScreenToClient(&rcBugReport);
+		right = min(right, rcBugReport.left - 4);
+	}
 	m_dlTab.GetWindowPlacement(&wp);
 	if (wp.rcNormalPosition.right < 0)
 		return;

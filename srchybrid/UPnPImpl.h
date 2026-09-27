@@ -16,6 +16,7 @@
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #pragma once
 #include <exception>
+#include <atomic>
 
 enum TRISTATE
 {
@@ -28,7 +29,8 @@ enum UPNP_IMPLEMENTATION
 {
 	UPNP_IMPL_WINDOWSERVICE = 0,
 	UPNP_IMPL_MINIUPNPLIB,
-	UPNP_IMPL_NONE	/*last*/
+	UPNP_IMPL_NONE = 2,
+	UPNP_IMPL_PCP_NATPMP = 3
 };
 
 
@@ -54,6 +56,9 @@ public:
 	virtual void DeletePorts() = 0;
 	virtual bool IsReady() = 0;
 	virtual int GetImplementationID() = 0;
+	virtual bool CanFallbackToUPnP() const { return false; }
+	virtual void MaintainLeases() {}
+	virtual LPCTSTR GetProtocolName() const { return _T("UPnP"); }
 
 	void LateEnableWebServerPort(uint16 nPort);	// Add Web Server port to already existing port mapping
 
@@ -62,11 +67,12 @@ public:
 	uint16 GetUsedTCPPort() const						{ return m_nTCPPort; }
 	uint16 GetUsedUDPPort() const						{ return m_nUDPPort; }
 	uint16 GetUsedTCPWebPort() const					{ return m_nTCPWebPort; }
+	UINT GetDiagnosticMessageID() const				{ return m_diagnosticMessageID.load(); }
 
 // Implementation
 protected:
 	void SendResultMessage();
-	volatile TRISTATE m_bUPnPPortsForwarded;
+	std::atomic<TRISTATE> m_bUPnPPortsForwarded;
 	uint16 m_nOldTCPPort;
 	uint16 m_nOldTCPWebPort;
 	uint16 m_nOldUDPPort;
@@ -74,6 +80,7 @@ protected:
 	uint16 m_nTCPWebPort;
 	uint16 m_nUDPPort;
 	bool m_bCheckAndRefresh;
+	std::atomic<UINT> m_diagnosticMessageID{0};
 };
 
 // Dummy Implementation to be used when no other implementation is available

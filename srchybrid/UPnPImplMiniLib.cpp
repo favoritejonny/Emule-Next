@@ -22,6 +22,8 @@
 #include "miniupnpc\include\miniupnpc.h"
 #include "miniupnpc\include\upnpcommands.h"
 #include "opcodes.h"
+#include "ConnectionSetupPolicy.h"
+#include "Resource.h"
 
 
 #ifdef _DEBUG
@@ -36,6 +38,8 @@ static LPCSTR const sTCPa = "TCP";
 static LPCSTR const sUDPa = "UDP";
 static LPCTSTR const sTCP = _T("TCP");
 static LPCTSTR const sUDP = _T("UDP");
+static const char sMappingTCP[] = "eMule Next TCP";
+static const char sMappingUDP[] = "eMule Next UDP";
 
 CUPnPImplMiniLib::CUPnPImplMiniLib()
 	: m_pURLs()
@@ -101,6 +105,18 @@ void CUPnPImplMiniLib::DeletePort(uint16 port, LPCTSTR prot)
 	if (port != 0) {
 		char achPort[8];
 		snprintf(achPort, _countof(achPort), "%hu", port);
+		char actualIP[16] = {}, actualPort[6] = {}, description[80] = {}, enabled[4] = {};
+		const char* protocol = _tcscmp(prot, sTCP) == 0 ? sTCPa : sUDPa;
+		const char* ownDescription = _tcscmp(prot, sTCP) == 0 ? sMappingTCP : sMappingUDP;
+		const int query = UPNP_GetSpecificPortMappingEntry(m_pURLs->controlURL,
+			m_pIGDData->first.servicetype, achPort, protocol, NULL,
+			actualIP, actualPort, description, enabled, NULL);
+		if (query != UPNPCOMMAND_SUCCESS || strcmp(description, ownDescription) != 0
+			|| !ConnectionSetupPolicy::MappingIsActive(actualIP, actualPort, enabled, m_achLanIP, port))
+		{
+			DebugLog(_T("Not deleting unowned or changed mapping for %s port %hu"), prot, port);
+			return;
+		}
 		int nResult = UPNP_DeletePortMapping(m_pURLs->controlURL, m_pIGDData->first.servicetype, achPort, CStringA(prot), NULL);
 		if (nResult == UPNPCOMMAND_SUCCESS)
 			DebugLog(_T("Successfully removed mapping for %s port %hu"), prot, port);
@@ -111,7 +127,9 @@ void CUPnPImplMiniLib::DeletePort(uint16 port, LPCTSTR prot)
 
 void CUPnPImplMiniLib::GetOldPorts()
 {
-	if (ArePortsForwarded() == TRIS_TRUE) {
+	// Also clean up partial attempts (for example TCP succeeded but UDP
+	// failed). DeletePort verifies both ownership and destination first.
+	if (m_pURLs != NULL && m_pIGDData != NULL) {
 		m_nOldUDPPort = m_nUDPPort;
 		m_nOldTCPPort = m_nTCPPort;
 		m_nOldTCPWebPort = m_nTCPWebPort;
@@ -152,6 +170,7 @@ void CUPnPImplMiniLib::StartDiscovery(uint16 nTCPPort, uint16 nUDPPort, uint16 n
 	m_nTCPWebPort = nTCPWebPort;
 	m_bUPnPPortsForwarded = TRIS_UNKNOWN;
 	m_bCheckAndRefresh = false;
+	m_diagnosticMessageID = 0;
 
 	Cleanup();
 	if (!m_bAbortDiscovery)
@@ -178,6 +197,7 @@ bool CUPnPImplMiniLib::CheckAndRefresh()
 
 	DebugLog(_T("Checking and refreshing UPnP ports"));
 	m_bCheckAndRefresh = true;
+	m_diagnosticMessageID = 0;
 	StartThread();
 	return true;
 }
@@ -251,6 +271,7 @@ int CUPnPImplMiniLib::CStartDiscoveryThread::Run()
 				break;
 			case 2:
 				DebugLog(_T("Found an IGD with a reserved IP address (%S) : %S"), m_pOwner->m_achWanIP, m_pOwner->m_pURLs->controlURL);
+				m_pOwner->m_diagnosticMessageID = IDS_CONNSETUP_SHARED;
 				bNotFound = true;
 				break;
 			case 3:
@@ -307,36 +328,41 @@ bool CUPnPImplMiniLib::CStartDiscoveryThread::OpenPort(uint16 nPort, bool bTCP, 
 	if (m_pOwner->m_bAbortDiscovery)
 		return false;
 
-	static const char achDescTCP[] = "eMule_TCP";
-	static const char achDescUDP[] = "eMule_UDP";
 	char achPort[8];
 	snprintf(achPort, _countof(achPort), "%hu", nPort);
 
-	int nResult;
-	// if we are refreshing ports, check first if the mapping is still fine and only try to open if not
+	// Query on every attempt, including the first one. An existing mapping
+	// must point to this exact endpoint and be enabled; never overwrite a
+	// different PC's rule or a rule which the user deliberately disabled.
 	char achOutIP[20] = {};
 	char achOutPort[8] = {};
-	if (bCheckAndRefresh) {
-		nResult = UPNP_GetSpecificPortMappingEntry(m_pOwner->m_pURLs->controlURL, m_pOwner->m_pIGDData->first.servicetype
+	char enabled[4] = {};
+	int nResult = UPNP_GetSpecificPortMappingEntry(m_pOwner->m_pURLs->controlURL, m_pOwner->m_pIGDData->first.servicetype
 												 , achPort
 												 , (bTCP ? sTCPa : sUDPa)
 												 , NULL
 												 , achOutIP, achOutPort
-												 , NULL, NULL, NULL);
+												 , NULL, enabled, NULL);
 
-		if (nResult == UPNPCOMMAND_SUCCESS && achOutIP[0] != 0) {
+	if (nResult == UPNPCOMMAND_SUCCESS) {
+		if (ConnectionSetupPolicy::MappingIsActive(achOutIP, achOutPort, enabled, pachLANIP, nPort)) {
 			DebugLog(_T("Checking UPnP: Mapping for port %hu (%s) on local IP %S still exists"), nPort, (bTCP ? sTCP : sUDP), achOutIP);
 			return true;
 		}
-
-		DebugLogWarning(_T("Checking UPnP: Mapping for port %hu (%s) on local IP %S is gone, trying to reopen port"), nPort, (bTCP ? sTCP : sUDP), achOutIP);
+		m_pOwner->m_diagnosticMessageID = IDS_CONNSETUP_CONFLICT;
+		return false;
 	}
-
+	// Only NoSuchEntryInArray authorizes adding a new mapping. An unreadable
+	// router table is not evidence that the requested port is free.
+	if (nResult != 714)
+		return false;
+	if (bCheckAndRefresh)
+		DebugLogWarning(_T("UPnP mapping for port %hu is gone, requesting it again"), nPort);
 
 	nResult = UPNP_AddPortMapping(m_pOwner->m_pURLs->controlURL
 								, m_pOwner->m_pIGDData->first.servicetype
 								, achPort, achPort, pachLANIP
-								, (bTCP ? achDescTCP : achDescUDP)
+								, (bTCP ? sMappingTCP : sMappingUDP)
 								, (bTCP ? sTCPa : sUDPa)
 								, NULL, NULL);
 
@@ -350,15 +376,19 @@ bool CUPnPImplMiniLib::CStartDiscoveryThread::OpenPort(uint16 nPort, bool bTCP, 
 
 	// make sure it really worked
 	achOutIP[0] = 0;
+	achOutPort[0] = 0;
+	enabled[0] = 0;
 	nResult = UPNP_GetSpecificPortMappingEntry(m_pOwner->m_pURLs->controlURL
 											 , m_pOwner->m_pIGDData->first.servicetype
 											 , achPort
 											 , (bTCP ? sTCPa : sUDPa)
 											 , NULL
 											 , achOutIP, achOutPort
-											 , NULL, NULL, NULL);
+											 , NULL, enabled, NULL);
 
-	if (nResult == UPNPCOMMAND_SUCCESS && achOutIP[0] != 0) {
+	if (nResult == UPNPCOMMAND_SUCCESS
+		&& ConnectionSetupPolicy::MappingIsActive(achOutIP, achOutPort, enabled, pachLANIP, nPort))
+	{
 		DebugLog(_T("Successfully added mapping for port %hu (%s) on local IP %S"), nPort, (bTCP ? sTCP : sUDP), achOutIP);
 		return true;
 	}

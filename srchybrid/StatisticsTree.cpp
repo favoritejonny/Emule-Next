@@ -298,7 +298,7 @@ CString CStatisticsTree::GetHTML(bool onlyVisible, HTREEITEM theItem, int theIte
 
 	CString strBuffer;
 	if (firstItem)
-		strBuffer.Format(_T("<font face=\"Tahoma,Verdana,Courier New,Helvetica\" size=\"2\">\r\n<b>eMule v%s %s [%s]</b>\r\n<br><br>\r\n"), (LPCTSTR)theApp.m_strCurVersionLong, (LPCTSTR)GetResString(IDS_SF_STATISTICS), (LPCTSTR)thePrefs.GetUserNick());
+		strBuffer.Format(_T("<font face=\"Tahoma,Verdana,Courier New,Helvetica\" size=\"2\">\r\n<b>%s %s [%s]</b>\r\n<br><br>\r\n"), theApp.GetProductDisplayName(), (LPCTSTR)GetResString(IDS_SF_STATISTICS), (LPCTSTR)thePrefs.GetUserNick());
 
 	while (hCurrent != NULL) {
 		CString strItem(GetItemText(hCurrent));
@@ -373,7 +373,7 @@ CString CStatisticsTree::GetText(bool onlyVisible, HTREEITEM theItem, int theIte
 
 	CString strBuffer;
 	if (bPrintHeader)
-		strBuffer.Format(_T("eMule v%s %s [%s]\r\n\r\n"), (LPCTSTR)theApp.m_strCurVersionLong, (LPCTSTR)GetResString(IDS_SF_STATISTICS), (LPCTSTR)thePrefs.GetUserNick());
+		strBuffer.Format(_T("%s %s [%s]\r\n\r\n"), theApp.GetProductDisplayName(), (LPCTSTR)GetResString(IDS_SF_STATISTICS), (LPCTSTR)thePrefs.GetUserNick());
 
 	while (hCurrent != NULL) {
 		strBuffer.AppendFormat(_T("%s%s"), (LPCTSTR)CString(_T(' '), 3 * theItemLevel), (LPCTSTR)GetItemText(hCurrent));

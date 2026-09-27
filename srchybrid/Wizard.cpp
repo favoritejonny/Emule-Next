@@ -141,18 +141,11 @@ void CConnectionWizardDlg::OnBnClickedApply()
 	thePrefs.maxGraphUploadRate = upload;
 
 	if (upload > 0 && download > 0) {
-		thePrefs.m_maxupload = upload * 4 / 5;
-		if (upload < 4 && download > upload * 3) {
-			thePrefs.m_maxdownload = thePrefs.m_maxupload * 3;
-			download = upload * 3;
-		} else if (upload < 10 && download > upload * 4) {
-			thePrefs.m_maxdownload = thePrefs.m_maxupload * 4;
-			download = upload * 4;
-		} else if (upload < 20 && download > upload * 5) {
-			thePrefs.m_maxdownload = thePrefs.m_maxupload * 5;
-			download = upload * 5;
-		} else
-			thePrefs.m_maxdownload = download * 9 / 10;
+		// This assistant supplies capacity data for graphs and connection
+		// sizing, but it is not a measured speed test. Keep both traffic
+		// limits disabled and let the user opt into throttling explicitly.
+		thePrefs.m_maxupload = UNLIMITED;
+		thePrefs.m_maxdownload = UNLIMITED;
 
 		theApp.emuledlg->statisticswnd->SetARange(false, thePrefs.maxGraphUploadRate);
 		theApp.emuledlg->statisticswnd->SetARange(true, thePrefs.maxGraphDownloadRate);

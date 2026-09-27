@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Preuzmi i učitaj nodes.dat sa Interneta za pokretanje Kad mreže"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP eta UPnP protokoloek eMule-ren atakak soilik irekitzeko eskatzen diote bideratzaile bateragarriari. Modu automatikoak onartutako protokoloa hautatzen du. Erabili zure etxeko sarean bakarrik, VPNrik gabe. Bestela jarraitu eskuz; lehengo ezarpenak mantenduko dira."
+    IDS_WIZSETUP_PORTTEST "Bideratzailearen konfigurazio automatikoa Amaitu ondoren hasten da; egin proba orduan."
+    IDS_WIZSETUP_NETWORKS "eD2K-k zerbitzari-zerrenda erabiltzen du. Kad zerbitzaririk gabe dabil, baina UDP eta hasierako kontaktuak behar ditu. Bi sareak erabil ditzakezu. UDP desgaitzeak Kad ere desgaitzen du. Zerbitzari-zerrenda hurrengo orrian hautatzen da."
+    IDS_WIZSETUP_SERVERS_ADD "Deskargatu eta kargatu eD2K zerbitzari-zerrenda Internetetik"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Aukerakoa: gelditu beste transferentziak eta deskonektatu VPNak; ondoren hasi proba. Cloudflare bidez gehienez 100 MB inguruko aldi baterako datuak bidaltzen ditu, eta zerbitzuak zure IP helbidea ikus dezake. eMule Next-ek ez du emaitza bidaltzen edo gordetzen. Neurtutako KB/s balioak editatu ditzakezu aplikatu aurretik."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Sartu baliozko deskarga- eta igoera-abiadurak KB/s-tan, edo kendu aplikatzeko aukera."
+    IDS_WIZSETUP_SERVERS_INFO "eD2K hautatuta, zerbitzari hauek gehi ditzakezu Amaitu sakatzean. Lehendik daudenak mantenduko dira. Ez da zerrendarik deskargatzen, ezta konexio automatikoa gaitzen ere. Utzi markatu gabe zerbitzariak zeuk kudeatzeko edo Kad soilik erabiltzeko."
+    IDS_WIZSETUP_PORTS "TCP konexioetarako eta transferentzietarako da; Kad-ek UDP ere behar du. Mantendu proposatutako atakak edo hautatu zeureak. Bideratzaileak atakak dagoeneko birbideratzen baditu, erabili zenbaki berak."
     IDS_SOCKETS_INIT_FAILED "Errorea Windowseko socket-ak hasterakoan."
     IDS_ABOUTBOX            "&eMule-ren inguruan..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s / %s"
@@ -944,14 +953,14 @@ BEGIN
                             "eMule loturak bidaltzean, protokolo mezuak baztertu"
     IDS_CHECK4UPDATE        "Bertsio berririk dagoen begiratu"
     IDS_STARTUP             "Hasieran"
-    IDS_NEWVERSIONAVL       "eMule bertsio berri bat dago. Informazio gehiago jasotzeko emule-project webgunea bisitatu"
-    IDS_NEWVERSIONAVLPOPUP  "eMule bertsio berri bat dago. Egin klik hemen, bertsio berri honen aldaketak aztertzeko!"
+    IDS_NEWVERSIONAVL       "eMule Next bertsio berri bat dago. Informazio gehiago jasotzeko eMule Next proiektuaren webgunea bisitatu"
+    IDS_NEWVERSIONAVLPOPUP  "eMule Next bertsio berri bat dago. Egin klik hemen, bertsio berri honen aldaketak aztertzeko!"
     IDS_NEWVERSIONFAILED    "Ezin izan da bertsio berririk dagoen begiratu"
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "eMule bertsio berria antzematerakoan"
+    IDS_CB_TBN_ONNEWVERSION "eMule Next bertsio berria antzematerakoan"
     IDS_NONEWERVERSION      "Ez da eMuleren bertsio berririk antzeman."
     IDS_VERSIONCHECK        "Bertsio berria bilatu"
     IDS_VISITVERSIONCHECK   "\n\nInformazio orria bisitatu nahi al duzu?"
@@ -1985,6 +1994,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Enable Windows 7 taskbar effects"
     IDS_LANMODE             "LAN Mode"
     IDS_OPENPREFINI         "Open preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Konexio automatikoa konfiguratzea"
+    IDS_CONNSETUP_INFO          "Mantendu proposatutako TCP eta UDP atakak, edo sartu zurea. Konfigurazio automatikoak etxeko bideratzaile bateragarri bat konfigura dezake morroi hau amaitu ondoren."
+    IDS_CONNSETUP_BUTTON        "Konfiguratu automatikoki"
+    IDS_CONNSETUP_CONSENT       "EMule Next-ek bere TCP/UDP atakak PCP, NAT-PMP edo UPnP erabiliz birbidaltzeko baimena eman nahi diozu etxeko sare pribatu honetan morroia amaitu eta gero hasi ondoren?\n\nBerretsi zuk kontrolatzen duzun sare batean soilik, VPNrik gabe. Detekzioak ezin ditu VPN guztiak ezagutu. Windows suebakiaren baimena behar da oraindik; web interfazearen ataka kanpoan dago. ID altua ez dago bermatuta. Aldi baterako mapak gera daitezke bideratzaileak esleitutako iraungi arte.\n\nMorroia bertan behera uzteak ez du aukera hau gordeko."
+    IDS_CONNSETUP_PENDING       "Hautatuta: bideratzailearen konfigurazioa morroia amaitu ondoren eta geroago hasten denean abiaraziko da, sare pribatu egokietan soilik. Windows suebakiaren baimena behar da oraindik. ID altua eta Kad irisgarritasuna egiaztatu behar dira."
+    IDS_CONNSETUP_MANUAL        "Ez da hautatu konfigurazio automatiko berririk. Lehendik dauden ezarpenak gordetzen dira. Eskuzko ataka birbidaltzea erabil dezakezu, Windows suebakiaren baimenak egiaztatu edo kanpoko proba zuk zeuk exekutatu."
+    IDS_CONNSETUP_PRIVATE       "Konfigurazio automatikoa pausatu da: Windows sare publiko, kudeatu edo misto baten berri ematen du. Ez da bideratzaileen aldaketarik eskatu. Erabili eskuzko konfigurazioa edo egiaztatu sareko profila zure etxeko sare fidagarria bada bakarrik."
+    IDS_CONNSETUP_VPN           "Konfigurazio automatikoa pausatu da: VPN, proxy edo interfazearen lotura esplizitua aurkitu da. Etxeko bideratzailea ez dago automatikoki konfiguratuta. Erabili konexio-hornitzailearen portuak birbidaltzeko ezarpenak."
+    IDS_CONNSETUP_UNKNOWN       "Konfigurazio automatikoa pausatu da: ezin izan da tokiko sarea identifikatu modu seguruan. Ez da bideratzaileen aldaketarik eskatu. Konexioa eskuz jarraitu eta konfigura dezakezu."
+    IDS_CONNSETUP_SUCCESS       "Bideratzaileak TCP %u eta UDP %u (0 = desgaituta) PC honetara birbidaltzea berresten du.\n\nHorrek ez du Internetera irisgarritasuna frogatzen. Egiaztatu Windows suebakiaren baimena, gero konektatu eta egiaztatu High ID eta Kad egoera, edo exekutatu kanpoko ataka proba eskuz."
+    IDS_CONNSETUP_FAILED        "Bideratzailearen konfigurazio automatikoa ez da osatu. Baliteke PCP, NAT-PMP edo UPnP erabilgarri ez egotea edo desgaituta egotea, edo bideratzaileak eskaerari uko egin izana. Egiaztatu bideratzailea eta Windows suebakia; eskuzko konfigurazioa eskuragarri jarraitzen du."
+    IDS_CONNSETUP_SHARED        "Bideratzaileak Interneteko helbide ez publiko baten berri ematen du: NAT bikoitza edo CGNAT hornitzailea posible da. Baliteke bideratzaile hau bakarrik irekitzea nahikoa ez izatea. Galdetu hornitzaileari IP publiko edo onartzen den ataka birbidaltzeari buruz."
+    IDS_CONNSETUP_CONFLICT      "Eskatutako ataka batek bideratzaile-arau desberdina edo desgaituta dauka jada. Ez zen gainidatzi. Aukeratu bezero-portu desberdinak edo ikuskatu arau hori eskuz."
+    IDS_CONNSETUP_BADPORT       "Sartu TCP ataka 1etik 65535era eta UDP 1etik 65535era bitartekoa, edo desgaitu esplizituki UDP."
+    IDS_CONNSETUP_TESTINFO      "Borondatezko proba eMule webgune ofizialean. Zure IP eta ataka informazioa jasotzen du."
+    IDS_CONNSETUP_FIREWALL      "Ireki Windows Firewall..."
+    IDS_CONNSETUP_BINDFAILED    "Bezeroak ezin izan ditu hautatutako portuetan entzun. Baliteke beste programa batek erabiltzea. Aurreko portuaren ezarpenak leheneratu dira."
+    IDS_CONNSETUP_BUSY          "Beste ataka bat martxan dago oraindik. Itxaron amaitu arte berriro saiatu aurretik."
+    IDS_CONNSETUP_UNSELECT      "Desegin aukera automatikoa"
+    IDS_PORTMAP_WRONGPORT       "Bideratzaileak beste kanpoko ataka bat esleitu du. Ez zen onartu laneko bezeroen mapa gisa. Bezeroen atakak ez ziren aldatu. Erabili portu desberdinak edo egiaztatu bideratzailea eskuz. Aldi baterako mapak iraungi arte egon daitezke."
+    IDS_PORTMAP_REFUSED         "Bideratzaileak portuen birbidaltze automatikoari uko egin zion. Ez zen protokolo alternatiborik erabili ezezko hori saihesteko. Egiaztatu bideratzailearen administratzailearen ezarpenak edo erabili eskuzko konfigurazioa."
+    IDS_PORTMAP_NETWORKCHANGED  "Portuen esleipena pausatu da: sarea, atebidea, bezero portuak edo kanpoko helbidea aldatu dira. Baliteke aurreko mapak iraungi arte gera daitezen. Egiaztatu konexioa eta exekutatu berriro konfigurazio automatikoa egokia bada."
+    IDS_PORTMAP_SHORTLEASE      "Bideratzaileak mapen-bizitza laburregia eman zuen berritze fidagarria izateko. Konfigurazio automatikoa ez da arrakastaz markatu. Erabili eskuzko konfigurazioa edo egiaztatu bideratzailea."
+    IDS_PORTMAP_PROTOCOL        "Protokoloa: %s"
+    IDS_ADD_UNC_SHARE           "Gehitu sareko karpeta"
 END
 
 #endif    // Basque resources

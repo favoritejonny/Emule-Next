@@ -55,6 +55,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Kad를 시작하기 위해 인터넷에서 nodes.dat 다운로드 및 불러오기"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP, UPnP는 호환 라우터에 eMule 포트만 전달하도록 요청합니다. 자동 모드는 지원되는 프로토콜을 선택합니다. VPN 없이 본인의 홈 네트워크에서만 사용하세요. 그 외에는 수동으로 진행하세요. 기존 설정은 유지됩니다."
+    IDS_WIZSETUP_PORTTEST "라우터 자동 설정은 마침 이후에 실행되므로, 선택했다면 완료 후 테스트하세요."
+    IDS_WIZSETUP_NETWORKS "eD2K는 서버 목록을 사용합니다. Kad는 서버 없이 작동하지만 UDP와 초기 연락처가 필요합니다. 두 네트워크 모두 사용할 수 있습니다. UDP를 끄면 Kad도 꺼집니다. 다음 페이지에서 서버 목록을 선택합니다."
+    IDS_WIZSETUP_SERVERS_ADD "인터넷에서 eD2K 서버 목록 다운로드 및 불러오기"
+    IDS_WIZSETUP_SPEEDTEST_INFO "선택 사항: 다른 전송을 중지하고 VPN 연결을 끊은 뒤 테스트를 시작하세요. Cloudflare를 통해 최대 약 100MB의 임시 데이터를 전송하므로 서비스에서 사용자의 IP 주소를 볼 수 있습니다. eMule Next는 결과를 전송하거나 저장하지 않습니다. 적용하기 전에 측정된 KB/s 값을 편집할 수 있습니다."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "유효한 다운로드 및 업로드 속도를 KB/s로 입력하거나 적용 옵션을 해제하세요."
+    IDS_WIZSETUP_SERVERS_INFO "eD2K를 선택했다면 마침을 눌러 아래 서버를 추가할 수 있습니다. 기존 서버는 유지됩니다. 목록을 다운로드하거나 자동 연결을 켜지 않습니다. 서버를 직접 관리하거나 Kad만 사용하려면 선택하지 마세요."
+    IDS_WIZSETUP_PORTS "TCP는 연결과 전송에 사용되며, Kad에는 UDP도 필요합니다. 제안된 포트를 유지하거나 직접 선택하세요. 라우터에 이미 포트 전달을 설정했다면 같은 번호를 사용하세요."
     IDS_SOCKETS_INIT_FAILED "Windows 소켓 초기화 중 오류."
     IDS_ABOUTBOX            "eMule 정보(&A)..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s / %s"
@@ -1076,10 +1085,10 @@ BEGIN
 														"eMule 링크 전송 프로토콜 메시지 무시"
     IDS_CHECK4UPDATE        "새로운 버전 확인"
     IDS_STARTUP             "시작"
-    IDS_NEWVERSIONAVL       "eMule의 새로운 버전이 나왔습니다! 프로젝트 홈페이지에서 자세한 내용을 확인하십시오."
-    IDS_NEWVERSIONAVLPOPUP  "eMule의 새로운 버전이 나왔습니다. 새로운 버전에 대한 정보는 여기를 누르십시오!"
+    IDS_NEWVERSIONAVL       "eMule Next의 새로운 버전이 나왔습니다! 프로젝트 홈페이지에서 자세한 내용을 확인하십시오."
+    IDS_NEWVERSIONAVLPOPUP  "eMule Next의 새로운 버전이 나왔습니다. 새로운 버전에 대한 정보는 여기를 누르십시오!"
     IDS_NEWVERSIONFAILED    "새로운 버전을 확인할 수 없음"
-    IDS_CB_TBN_ONNEWVERSION "새로운 eMule 버전을 찾음"
+    IDS_CB_TBN_ONNEWVERSION "새로운 eMule Next 버전을 찾음"
     IDS_NONEWERVERSION      "새로운 eMule 버전이 없음"
 END
 
@@ -1950,6 +1959,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Enable Windows 7 taskbar effects"
     IDS_LANMODE             "LAN Mode"
     IDS_OPENPREFINI         "Open preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "자동 연결 설정"
+    IDS_CONNSETUP_INFO          "제안된 TCP 및 UDP 포트를 유지하거나 직접 입력하세요. 이 마법사를 완료한 후 자동 설정을 통해 호환 가능한 홈 라우터를 구성할 수 있습니다."
+    IDS_CONNSETUP_BUTTON        "자동으로 구성"
+    IDS_CONNSETUP_CONSENT       "마법사가 완료되고 나중에 시작될 때 eMule Next가 이 개인 홈 네트워크에서 PCP, NAT-PMP 또는 UPnP를 사용하여 TCP/UDP 포트를 전달하도록 허용하시겠습니까?\n\nVPN 없이 제어하는 ​​네트워크에서만 확인하세요. 감지에서는 모든 VPN을 인식할 수 없습니다. Windows 방화벽 권한은 여전히 ​​필요합니다. 웹 인터페이스 포트는 제외됩니다. 하이아이디는 보장되지 않습니다. 임시 매핑은 라우터 할당이 만료될 때까지 유지될 수 있습니다.\n\n마법사를 취소하면 이 선택 사항이 저장되지 않습니다."
+    IDS_CONNSETUP_PENDING       "선택됨: 라우터 설정은 마법사가 완료된 후 나중에 시작될 때 적합한 개인 네트워크에서만 실행됩니다. Windows 방화벽 권한은 여전히 ​​필요합니다. 높은 ID와 Kad 도달성은 아직 검증되지 않았습니다."
+    IDS_CONNSETUP_MANUAL        "새로운 자동 설정을 선택하지 않았습니다. 기존 설정이 유지됩니다. 수동 포트 전달을 사용하거나 Windows 방화벽 권한을 확인하거나 외부 테스트를 직접 실행할 수 있습니다."
+    IDS_CONNSETUP_PRIVATE       "자동 설정이 일시 중지됨: Windows는 공용, 관리형 또는 혼합 네트워크를 보고합니다. 라우터 변경이 요청되지 않았습니다. 수동 설정을 사용하거나, 신뢰할 수 있는 홈 네트워크인 경우에만 네트워크 프로필을 확인하세요."
+    IDS_CONNSETUP_VPN           "자동 설정이 일시 중지되었습니다. 가능한 VPN, 프록시 또는 명시적 인터페이스 바인딩이 발견되었습니다. 홈 라우터는 자동으로 구성되지 않습니다. 연결 공급자의 포트 전달 설정을 사용하십시오."
+    IDS_CONNSETUP_UNKNOWN       "자동 설정이 일시 중지되었습니다. 로컬 네트워크를 안전하게 식별할 수 없습니다. 라우터 변경이 요청되지 않았습니다. 계속해서 연결을 수동으로 구성할 수 있습니다."
+    IDS_CONNSETUP_SUCCESS       "라우터는 이 PC에 대한 TCP %u 및 UDP %u(0 = 비활성화됨) 전달을 확인합니다.\n\n이는 인터넷 연결 가능성을 증명하지 않습니다. Windows 방화벽 권한을 확인한 후 연결하여 High ID 및 Kad 상태를 확인하거나, 외부 포트 테스트를 수동으로 실행하세요."
+    IDS_CONNSETUP_FAILED        "자동 라우터 설정이 완료되지 않았습니다. PCP, NAT-PMP 또는 UPnP를 사용할 수 없거나 비활성화되었거나 라우터가 요청을 거부했을 수 있습니다. 라우터와 Windows 방화벽을 확인하세요. 수동 설정은 계속 사용할 수 있습니다."
+    IDS_CONNSETUP_SHARED        "라우터는 비공개 인터넷 주소를 보고합니다. 이중 NAT 또는 공급자 CGNAT가 가능합니다. 이 라우터를 여는 것만으로는 충분하지 않을 수 있습니다. 공용 IP 또는 지원되는 포트 전달에 대해 공급자에게 문의하세요."
+    IDS_CONNSETUP_CONFLICT      "요청된 포트에 이미 다른 라우터 규칙이 있거나 비활성화된 라우터 규칙이 있습니다. 덮어쓰지 않았습니다. 다른 클라이언트 포트를 선택하거나 해당 규칙을 수동으로 검사하십시오."
+    IDS_CONNSETUP_BADPORT       "1~65535 범위의 TCP 포트와 1~65535 범위의 UDP 포트를 입력하거나 UDP를 명시적으로 비활성화합니다."
+    IDS_CONNSETUP_TESTINFO      "공식 eMule 웹사이트에서 자발적인 테스트를 진행합니다. IP 및 포트 정보를 수신합니다."
+    IDS_CONNSETUP_FIREWALL      "Windows 방화벽을 엽니다..."
+    IDS_CONNSETUP_BINDFAILED    "클라이언트가 선택한 포트에서 수신 대기할 수 없습니다. 다른 프로그램에서 사용 중일 수 있습니다. 이전 포트 설정이 복원되었습니다."
+    IDS_CONNSETUP_BUSY          "다른 포트 설정이 아직 실행 중입니다. 다시 시도하기 전에 완료될 때까지 기다리십시오."
+    IDS_CONNSETUP_UNSELECT      "자동 선택 취소"
+    IDS_PORTMAP_WRONGPORT       "라우터가 다른 외부 포트를 할당했습니다. 작동 중인 클라이언트 매핑으로 승인되지 않았습니다. 클라이언트 포트는 변경되지 않았습니다. 다른 포트를 사용하거나 라우터를 수동으로 확인하세요. 임시 매핑은 만료될 때까지 남아 있을 수 있습니다."
+    IDS_PORTMAP_REFUSED         "라우터가 자동 포트 전달을 거부했습니다. 이 거부를 우회하기 위해 대체 프로토콜이 사용되지 않았습니다. 공유기 관리자의 설정을 확인하거나 수동 설정을 사용하세요."
+    IDS_PORTMAP_NETWORKCHANGED  "포트 매핑이 일시 중지됨: 네트워크, 게이트웨이, 클라이언트 포트 또는 외부 주소가 변경되었습니다. 이전 매핑은 만료될 때까지 남아 있을 수 있습니다. 연결을 확인하고 적절한 경우 자동 설정을 다시 실행하십시오."
+    IDS_PORTMAP_SHORTLEASE      "라우터는 안정적인 갱신을 위해 너무 짧은 매핑 수명을 부여했습니다. 자동 설정이 성공한 것으로 표시되지 않았습니다. 수동 설정을 사용하거나 라우터를 확인하세요."
+    IDS_PORTMAP_PROTOCOL        "프로토콜: %s"
+    IDS_ADD_UNC_SHARE           "네트워크 폴더 추가"
 END
 
 #endif    // Korean resources

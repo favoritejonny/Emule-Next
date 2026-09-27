@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Kad'ı başlatmak için İnternet'ten nodes.dat indir ve yükle"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP ve UPnP, uyumlu yönlendiriciden yalnızca eMule bağlantı noktalarını açmasını ister. Otomatik kip desteklenen protokolü seçer. Yalnızca kendi ev ağınızda, VPN olmadan kullanın. Aksi halde elle devam edin; mevcut ayarlar korunur."
+    IDS_WIZSETUP_PORTTEST "Otomatik yönlendirici ayarı yalnızca Bitir'den sonra başlar; testi daha sonra yapın."
+    IDS_WIZSETUP_NETWORKS "eD2K sunucu listesi kullanır. Kad sunucusuz çalışır, ancak UDP ve başlangıç kişileri gerekir. Her iki ağı kullanabilirsiniz. UDP'yi kapatmak Kad'ı da kapatır. Sunucu listesi sonraki sayfada seçilir."
+    IDS_WIZSETUP_SERVERS_ADD "İnternetten eD2K sunucu listesi indir ve yükle"
+    IDS_WIZSETUP_SPEEDTEST_INFO "İsteğe bağlı: diğer aktarımları durdurun ve VPN bağlantısını kesin, ardından testi başlatın. Cloudflare üzerinden yaklaşık 100 MB'a kadar geçici veri aktarılır ve hizmet IP adresinizi görebilir. eMule Next sonucu göndermez veya saklamaz. Uygulamadan önce ölçülen KB/s değerlerini düzenleyebilirsiniz."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "KB/s cinsinden geçerli indirme ve yükleme hızları girin veya değerleri uygulama seçimini kaldırın."
+    IDS_WIZSETUP_SERVERS_INFO "eD2K seçiliyse bu sunucuları Bitir'e basarak ekleyebilirsiniz. Mevcut sunucular korunur. Liste indirilmez ve otomatik bağlantı açılmaz. Sunucuları kendiniz yönetmek veya yalnızca Kad kullanmak için işaretlemeyin."
+    IDS_WIZSETUP_PORTS "TCP bağlantı ve aktarımlar içindir; UDP, Kad için de gerekir. Önerilen bağlantı noktalarını koruyun veya kendiniz seçin. Yönlendiricide zaten açılmış noktalar varsa aynı numaraları kullanın."
     IDS_SOCKETS_INIT_FAILED "Windows soketlerini başlatım hatası."
     IDS_ABOUTBOX            "eMule &Hakkında..."
     IDS_HTTPDOWNLOAD_FILESTATUS "Dosya: %s, Adresi: %s"
@@ -953,14 +962,14 @@ BEGIN
                             "eMule bağlantı gönder protokol mesajlarını yoksay"
     IDS_CHECK4UPDATE        "Yeni sürümü kontrol et"
     IDS_STARTUP             "Başlangıç"
-    IDS_NEWVERSIONAVL       "eMule'un yeni sürümü mevcut! Daha fazla bilgi için proje ana sayfamızı kontrol edin."
-    IDS_NEWVERSIONAVLPOPUP  "eMule'un yeni sürümü mevcut! Yeni sürüm hakkında bilgi almak için buraya tıklayın!"
+    IDS_NEWVERSIONAVL       "eMule Next'un yeni sürümü mevcut! Daha fazla bilgi için proje ana sayfamızı kontrol edin."
+    IDS_NEWVERSIONAVLPOPUP  "eMule Next'un yeni sürümü mevcut! Yeni sürüm hakkında bilgi almak için buraya tıklayın!"
     IDS_NEWVERSIONFAILED    "Yeni Sürüm Kontrol Edilemez!"
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "Yeni eMule sürümü algılandığında"
+    IDS_CB_TBN_ONNEWVERSION "Yeni eMule Next sürümü algılandığında"
     IDS_NONEWERVERSION      "Yeni eMule Sürümü Algılanmadı!"
     IDS_VERSIONCHECK        "&Sürüm Kontrolü"
     IDS_VISITVERSIONCHECK   "\n\nBilgi sayfasını şimdi ziyaret etmek istiyor musunuz?"
@@ -1986,6 +1995,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Windows 7 görev çubuğu efektleri etkin"
     IDS_LANMODE             "LAN Kipi"
     IDS_OPENPREFINI         "Preferences.ini'yi aç"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Otomatik bağlantı kurulumu"
+    IDS_CONNSETUP_INFO          "Önerilen TCP ve UDP bağlantı noktalarını koruyun veya kendinizinkini girin. Otomatik kurulum, bu sihirbazı tamamladıktan sonra uyumlu bir ev yönlendiricisini yapılandırabilir."
+    IDS_CONNSETUP_BUTTON        "Otomatik olarak yapılandır"
+    IDS_CONNSETUP_CONSENT       "Sihirbaz bittikten ve daha sonra yeniden başladıktan sonra eMule Next'in bu özel ev ağında PCP, NAT-PMP veya UPnP kullanarak TCP/UDP bağlantı noktalarını iletmesine izin verilsin mi?\n\nYalnızca kontrol ettiğiniz bir ağda, VPN olmadan onaylayın. Algılama her VPN'yi tanıyamaz. Windows güvenlik duvarı iznine hâlâ ihtiyaç var; web arayüzü bağlantı noktası hariçtir. Yüksek kimlik garanti edilmez. Geçici eşlemeler, yönlendirici tarafından atanan geçerlilik süreleri dolana kadar kalabilir.\n\nSihirbazın iptal edilmesi bu seçimi kaydetmez."
+    IDS_CONNSETUP_PENDING       "Seçili: yönlendirici kurulumu, sihirbaz tamamlandıktan sonra ve daha sonra başlatıldığında yalnızca uygun özel ağlarda çalıştırılacaktır. Windows güvenlik duvarı izni hala gereklidir. Yüksek Kimlik ve Kad erişilebilirliğinin doğrulanması gerekiyor."
+    IDS_CONNSETUP_MANUAL        "Yeni otomatik kurulum seçilmedi. Mevcut ayarlar korunur. Manuel bağlantı noktası yönlendirmeyi kullanabilir, Windows güvenlik duvarı izinlerini kontrol edebilir veya harici testi kendiniz çalıştırabilirsiniz."
+    IDS_CONNSETUP_PRIVATE       "Otomatik kurulum duraklatıldı: Windows genel, yönetilen veya karma bir ağı bildirir. Hiçbir yönlendirici değişikliği istenmedi. Manuel kurulumu kullanın veya ağ profilini yalnızca bu sizin kendi güvenilir ev ağınızsa kontrol edin."
+    IDS_CONNSETUP_VPN           "Otomatik kurulum duraklatıldı: Olası bir VPN, proxy veya açık arayüz bağlaması bulundu. Ev yönlendiricisi otomatik olarak yapılandırılmadı. Bağlantı sağlayıcının bağlantı noktası yönlendirme ayarlarını kullanın."
+    IDS_CONNSETUP_UNKNOWN       "Otomatik kurulum duraklatıldı: Yerel ağ güvenli bir şekilde tanımlanamadı. Hiçbir yönlendirici değişikliği istenmedi. Bağlantıya manuel olarak devam edebilir ve yapılandırabilirsiniz."
+    IDS_CONNSETUP_SUCCESS       "Yönlendirici, TCP %u ve UDP %u (0 = devre dışı)'nın bu bilgisayara iletilmesini onaylar.\n\nBu, İnternet'e erişilebilirliği kanıtlamaz. Windows güvenlik duvarı iznini kontrol edin, ardından bağlanın ve Yüksek Kimlik ve Kad durumunu kontrol edin veya harici bağlantı noktası testini manuel olarak çalıştırın."
+    IDS_CONNSETUP_FAILED        "Otomatik yönlendirici kurulumu tamamlanmadı. PCP, NAT-PMP veya UPnP kullanılamıyor veya devre dışı bırakılmış olabilir ya da yönlendirici isteği reddetmiş olabilir. Yönlendiriciyi ve Windows güvenlik duvarını kontrol edin; manuel kurulum kullanılabilir durumda kalır."
+    IDS_CONNSETUP_SHARED        "Yönlendirici, halka açık olmayan bir İnternet adresi bildiriyor: çift NAT veya sağlayıcı CGNAT mümkündür. Bu yönlendiriciyi tek başına açmak yeterli olmayabilir. Sağlayıcıya genel IP veya desteklenen bağlantı noktası yönlendirme hakkında bilgi verin."
+    IDS_CONNSETUP_CONFLICT      "İstenen bağlantı noktasının zaten farklı veya devre dışı bırakılmış bir yönlendirici kuralı var. Üzerine yazılmadı. Farklı istemci bağlantı noktaları seçin veya bu kuralı manuel olarak inceleyin."
+    IDS_CONNSETUP_BADPORT       "1 ile 65535 arasında bir TCP bağlantı noktası ve 1 ile 65535 arasında bir UDP bağlantı noktası girin veya UDP'yi açıkça devre dışı bırakın."
+    IDS_CONNSETUP_TESTINFO      "Resmi eMule web sitesindeki gönüllü test. IP ve port bilgilerinizi alır."
+    IDS_CONNSETUP_FIREWALL      "Windows Güvenlik Duvarı'nı açın..."
+    IDS_CONNSETUP_BINDFAILED    "İstemci seçilen bağlantı noktalarını dinleyemedi. Başka bir program tarafından kullanılıyor olabilirler. Önceki bağlantı noktası ayarları geri yüklendi."
+    IDS_CONNSETUP_BUSY          "Başka bir bağlantı noktası kurulumu hala çalışıyor. Tekrar denemeden önce bitmesini bekleyin."
+    IDS_CONNSETUP_UNSELECT      "Otomatik seçimi geri al"
+    IDS_PORTMAP_WRONGPORT       "Yönlendirici farklı bir harici bağlantı noktası atadı. Çalışan bir istemci eşlemesi olarak kabul edilmedi. İstemci bağlantı noktaları değiştirilmedi. Farklı bağlantı noktaları kullanın veya yönlendiriciyi manuel olarak kontrol edin. Geçici eşlemeler sona erene kadar kalabilir."
+    IDS_PORTMAP_REFUSED         "Yönlendirici otomatik bağlantı noktası iletmeyi reddetti. Bu reddi atlamak için alternatif bir protokol kullanılmadı. Yönlendirici yöneticisinin ayarlarını kontrol edin veya manuel kurulumu kullanın."
+    IDS_PORTMAP_NETWORKCHANGED  "Bağlantı noktası eşleme duraklatıldı: ağ, ağ geçidi, istemci bağlantı noktaları veya harici adres değişti. Önceki eşlemeler sona erene kadar kalabilir. Bağlantıyı kontrol edin ve uygunsa otomatik kurulumu yeniden çalıştırın."
+    IDS_PORTMAP_SHORTLEASE      "Yönlendirici, güvenilir yenileme için çok kısa bir eşleme ömrü verdi. Otomatik kurulum başarılı olarak işaretlenmedi. Manuel kurulumu kullanın veya yönlendiriciyi kontrol edin."
+    IDS_PORTMAP_PROTOCOL        "Protokol: %s"
+    IDS_ADD_UNC_SHARE           "Ağ klasörü ekle"
 END
 
 #endif    // Turkish resources

@@ -260,7 +260,7 @@ void CSharedFilesCtrl::Init()
 	ASSERT((GetStyle() & LVS_SINGLESEL) == 0);
 
 	InsertColumn(0,		_T(""),	LVCFMT_LEFT,	DFLT_FILENAME_COL_WIDTH);			//IDS_DL_FILENAME
-	InsertColumn(1,		_T(""),	LVCFMT_RIGHT,	DFLT_SIZE_COL_WIDTH);				//IDS_DL_SIZE
+	InsertColumn(1,		_T(""),	LVCFMT_RIGHT,	85);								//IDS_DL_SIZE
 	InsertColumn(2,		_T(""),	LVCFMT_LEFT,	DFLT_FILETYPE_COL_WIDTH);			//IDS_TYPE
 	InsertColumn(3,		_T(""),	LVCFMT_LEFT,	DFLT_PRIORITY_COL_WIDTH);			//IDS_PRIORITY
 	InsertColumn(4,		_T(""),	LVCFMT_LEFT,	DFLT_HASH_COL_WIDTH, -1, true);		//IDS_FILEID
@@ -269,7 +269,7 @@ void CSharedFilesCtrl::Init()
 	InsertColumn(7,		_T(""),	LVCFMT_RIGHT,	120);								//IDS_SF_TRANSFERRED
 	InsertColumn(8,		_T(""),	LVCFMT_LEFT,	DFLT_PARTSTATUS_COL_WIDTH);			//IDS_SHARED_STATUS
 	InsertColumn(9,		_T(""),	LVCFMT_LEFT,	DFLT_FOLDER_COL_WIDTH, -1, true);	//IDS_FOLDER
-	InsertColumn(10,	_T(""),	LVCFMT_RIGHT,	60);								//IDS_COMPLSOURCES
+	InsertColumn(10,	_T(""),	LVCFMT_RIGHT,	90);								//IDS_COMPLSOURCES
 	InsertColumn(11,	_T(""),	LVCFMT_LEFT,	100);								//IDS_SHAREDTITLE
 	InsertColumn(12,	_T(""),	LVCFMT_LEFT,	DFLT_ARTIST_COL_WIDTH, -1, true);	//IDS_ARTIST
 	InsertColumn(13,	_T(""),	LVCFMT_LEFT,	DFLT_ALBUM_COL_WIDTH, -1, true);	//IDS_ALBUM
@@ -355,7 +355,7 @@ void CSharedFilesCtrl::Localize()
 	ShowFilesCount();
 }
 
-void CSharedFilesCtrl::AddFile(const CShareableFile *file)
+void CSharedFilesCtrl::AddFile(const CShareableFile *file, bool bCheckExisting)
 {
 	if (theApp.IsClosing())
 		return;
@@ -397,7 +397,7 @@ void CSharedFilesCtrl::AddFile(const CShareableFile *file)
 	}
 	if (IsFilteredOut(file))
 		return;
-	if (FindFile(file) >= 0) {
+	if (bCheckExisting && FindFile(file) >= 0) {
 		// in the file system view the shared status might have changed so we need to update the item to redraw the checkbox
 		if (m_pDirectoryFilter != NULL && m_pDirectoryFilter->m_eItemType == SDI_UNSHAREDDIRECTORY)
 			UpdateFile(file);
@@ -462,11 +462,12 @@ int CSharedFilesCtrl::FindFile(const CShareableFile *pFile)
 
 void CSharedFilesCtrl::ReloadFileList()
 {
+	SetRedraw(FALSE);
 	DeleteAllItems();
 	theApp.emuledlg->sharedfileswnd->ShowSelectedFilesDetails();
 
 	for (const CKnownFilesMap::CPair *pair = theApp.sharedfiles->m_Files_map.PGetFirstAssoc(); pair != NULL; pair = theApp.sharedfiles->m_Files_map.PGetNextAssoc(pair))
-		AddFile(pair->value);
+		AddFile(pair->value, false); // rebuilding an empty list needs no per-item duplicate scan
 
 	if (m_pDirectoryFilter != NULL && m_pDirectoryFilter->m_eItemType == SDI_UNSHAREDDIRECTORY && !m_pDirectoryFilter->m_strFullPath.IsEmpty())
 		AddShareableFiles(m_pDirectoryFilter->m_strFullPath);
@@ -475,6 +476,8 @@ void CSharedFilesCtrl::ReloadFileList()
 			delete liTempShareableFilesInDir.RemoveHead();
 
 	ShowFilesCount();
+	SetRedraw(TRUE);
+	Invalidate(FALSE);
 }
 
 void CSharedFilesCtrl::ShowFilesCount()

@@ -57,6 +57,15 @@ END
 
 STRINGTABLE
 BEGIN
+    IDS_WIZSETUP_NODES_ADD "Niżżel u tella' nodes.dat mill-Internet biex tibda Kad"
+    IDS_WIZSETUP_PROTOCOLS "PCP, NAT-PMP u UPnP jitolbu router kompatibbli jiftaħ biss il-portijiet ta' eMule. Il-mod awtomatiku jagħżel protokoll appoġġjat. Użah biss fin-netwerk tad-dar tiegħek mingħajr VPN. Inkella kompli manwalment; is-settings eżistenti jinżammu."
+    IDS_WIZSETUP_PORTTEST "Is-setup awtomatiku tar-router jibda biss wara Temm; agħmel it-test wara."
+    IDS_WIZSETUP_NETWORKS "eD2K juża lista ta' servers. Kad jaħdem mingħajr servers, iżda jeħtieġ UDP u kuntatti inizjali. Tista' tuża ż-żewġ netwerks. Jekk tiddiżattiva UDP, tiddiżattiva wkoll Kad. Il-lista tas-servers tintgħażel fil-paġna li jmiss."
+    IDS_WIZSETUP_SERVERS_ADD "Niżżel u tagħbija lista ta' servers eD2K mill-Internet"
+    IDS_WIZSETUP_SPEEDTEST_INFO "Fakultattiv: waqqaf trasferimenti oħra u skonnettja kwalunkwe VPN, imbagħad ibda t-test. Jittrasferixxi sa madwar 100 MB ta' data temporanja permezz ta' Cloudflare, li tista' tara l-indirizz IP tiegħek. eMule Next ma jibgħatx u ma jaħżinx ir-riżultat. Tista' tibdel il-valuri mkejla f'KB/s qabel tapplikahom."
+    IDS_WIZSETUP_SPEEDTEST_INVALID "Daħħal veloċitajiet validi ta' tniżżil u tlugħ f'KB/s jew neħħi l-għażla tal-applikazzjoni."
+    IDS_WIZSETUP_SERVERS_INFO "Jekk tagħżel eD2K, tista' żżid dawn is-servers meta tagħfas Temm. Is-servers eżistenti jinżammu. Ma titniżżel ebda lista u ma tinxtegħelx konnessjoni awtomatika. Ħalli mhux magħżul biex timmaniġġja s-servers int jew tuża Kad biss."
+    IDS_WIZSETUP_PORTS "TCP jintuża għal konnessjonijiet u trasferimenti; UDP huwa meħtieġ ukoll għal Kad. Żomm il-portijiet proposti jew agħżel tiegħek. Jekk diġà ftaħt portijiet fir-router, uża l-istess numri."
     IDS_SOCKETS_INIT_FAILED "Kien hemm problema bis-sockets tal-windows."
     IDS_ABOUTBOX            "&Dwar l-eMule..."
     IDS_HTTPDOWNLOAD_FILESTATUS "%s mingħand %s"
@@ -1027,14 +1036,14 @@ BEGIN
                             "Injora il-messaġġi tal-'eMule send link protocol'"
     IDS_CHECK4UPDATE        "Iċċekja għall-verżjonijiet ġodda"
     IDS_STARTUP             "Ftuħ tal-programm"
-    IDS_NEWVERSIONAVL       "Ħarġet verżjoni ġdida tal-eMule! Iċċekja il-website għal aktar informazzjoni."
-    IDS_NEWVERSIONAVLPOPUP  "Ħarġet verżjoni ġdida tal-eMule! Agħfas hawn biex taqra dwar din il-verżjoni."
+    IDS_NEWVERSIONAVL       "Ħarġet verżjoni ġdida tal-eMule Next! Iċċekja il-website għal aktar informazzjoni."
+    IDS_NEWVERSIONAVLPOPUP  "Ħarġet verżjoni ġdida tal-eMule Next! Agħfas hawn biex taqra dwar din il-verżjoni."
     IDS_NEWVERSIONFAILED    "Ma jistax jiġi ċċekkjat jekk hemmx verzjoni ġdida."
 END
 
 STRINGTABLE
 BEGIN
-    IDS_CB_TBN_ONNEWVERSION "M'hemmx verżjoni ġdida tal-eMule"
+    IDS_CB_TBN_ONNEWVERSION "M'hemmx verżjoni ġdida tal-eMule Next"
     IDS_NONEWERVERSION      "M'hemmx verżjoni ġdida tal-eMule."
     IDS_VERSIONCHECK        "Iċċeka l-verżjoni"
     IDS_VISITVERSIONCHECK   "\n\nTixtieq iżżur il-paġna tal-Informazzjoni issa?"
@@ -1977,6 +1986,35 @@ BEGIN
     IDS_SHOWWIN7TASKBARGOODIES "Enable Windows 7 taskbar effects"
     IDS_LANMODE             "LAN Mode"
     IDS_OPENPREFINI         "Open preferences.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONNSETUP_TITLE         "Setup ta' konnessjoni awtomatika"
+    IDS_CONNSETUP_INFO          "Żomm il-portijiet TCP u UDP proposti, jew daħħal tiegħek. Setup awtomatiku jista 'jikkonfigura router tad-dar kompatibbli wara li tispiċċa dan l-wizard."
+    IDS_CONNSETUP_BUTTON        "Ikkonfigura awtomatikament"
+    IDS_CONNSETUP_CONSENT       "Ħalli eMule Next jgħaddi l-portijiet TCP/UDP tiegħu billi juża PCP, NAT-PMP jew UPnP fuq dan in-netwerk domestiku privat wara li l-wizard jintemm u jibda aktar tard?\n\nIkkonferma biss fuq netwerk li tikkontrolla, mingħajr VPN. L-iskoperta ma tistax tirrikonoxxi kull VPN. Il-permess tal-firewall tal-Windows għadu meħtieġ; il-port tal-interface tal-web huwa eskluż. ID għolja mhix garantita. Il-mappings temporanji jistgħu jibqgħu sakemm jiskadihom assenjati mir-router.\n\nLi tikkanċella l-wizard ma tiffrankax din l-għażla."
+    IDS_CONNSETUP_PENDING       "Magħżula: is-setup tar-router jibda jaħdem wara li l-wizard jintemm u jibda aktar tard, fuq netwerks privati ​​eliġibbli biss. Il-permess tal-firewall tal-Windows għadu meħtieġ. ID għolja u l-aċċessibilità Kad għad iridu jiġu vverifikati."
+    IDS_CONNSETUP_MANUAL        "Ebda setup awtomatiku ġdid magħżul. Is-settings eżistenti jinżammu. Tista' tuża port forwarding manwali, tiċċekkja l-permessi tal-firewall Windows, jew tmexxi t-test estern lilek innifsek."
+    IDS_CONNSETUP_PRIVATE       "Setup awtomatiku waqfa: Windows jirrapporta netwerk pubbliku, immexxi jew imħallat. L-ebda tibdil fir-router ma kien mitlub. Uża setup manwali, jew iċċekkja l-profil tan-netwerk biss jekk dan huwa n-netwerk tad-dar fdat tiegħek stess."
+    IDS_CONNSETUP_VPN           "Setup awtomatiku waqfa: instab VPN, proxy jew rabta espliċita ta' interface. Ir-router tad-dar mhuwiex ikkonfigurat awtomatikament. Uża s-settings tal-port-forwarding tal-fornitur tal-konnessjoni."
+    IDS_CONNSETUP_UNKNOWN       "Setup awtomatiku waqfa: in-netwerk lokali ma setax jiġi identifikat b'mod sikur. L-ebda tibdil fir-router ma kien mitlub. Tista' tkompli u tikkonfigura l-konnessjoni manwalment."
+    IDS_CONNSETUP_SUCCESS       "Ir-router jikkonferma t-trażmissjoni ta' TCP %u u UDP %u (0 = diżattivat) lil dan il-PC.\n\nDan ma jipprovax li tista' tintlaħaq l-Internet. Iċċekkja l-permess tal-firewall tal-Windows, imbagħad qabbad u ċċekkja l-ID Għoli u l-istatus Kad, jew agħmel it-test tal-port estern manwalment."
+    IDS_CONNSETUP_FAILED        "Is-setup awtomatiku tar-router ma tlestietx. PCP, NAT-PMP jew UPnP jistgħu ma jkunux disponibbli jew diżattivati, jew ir-router jista' jkun irrifjuta t-talba. Iċċekkja r-router u Windows firewall; is-setup manwali jibqa' disponibbli."
+    IDS_CONNSETUP_SHARED        "Ir-router jirrapporta indirizz tal-Internet mhux pubbliku: NAT doppju jew fornitur CGNAT huwa possibbli. Il-ftuħ ta 'dan ir-router waħdu jista' ma jkunx biżżejjed. Staqsi lill-fornitur dwar IP pubbliku jew port forwarding appoġġjat."
+    IDS_CONNSETUP_CONFLICT      "Port mitlub diġà għandu regola router differenti jew diżattivata. Ma kienx miktub fuqu. Agħżel portijiet tal-klijenti differenti, jew spezzjona dik ir-regola manwalment."
+    IDS_CONNSETUP_BADPORT       "Daħħal port TCP minn 1 sa 65535 u port UDP minn 1 sa 65535, jew espliċitament iddiżattiva UDP."
+    IDS_CONNSETUP_TESTINFO      "Test volontarju fuq il-websajt uffiċjali tal-eMule. Jirċievi l-IP tiegħek u l-informazzjoni tal-port."
+    IDS_CONNSETUP_FIREWALL      "Iftaħ Windows Firewall..."
+    IDS_CONNSETUP_BINDFAILED    "Il-klijent ma setax jisma' fuq il-portijiet magħżula. Jistgħu jkunu qed jintużaw minn programm ieħor. Is-settings tal-port preċedenti ġew restawrati."
+    IDS_CONNSETUP_BUSY          "Setup ieħor tal-port għadu għaddej. Stenna li tispiċċa qabel terġa' tipprova."
+    IDS_CONNSETUP_UNSELECT      "Ħoll l-għażla awtomatika"
+    IDS_PORTMAP_WRONGPORT       "Ir-router assenjat port estern differenti. Ma ġiex aċċettat bħala mapping tal-klijent li jaħdem. Il-portijiet tal-klijenti ma nbidlux. Uża portijiet differenti jew iċċekkja r-router manwalment. Mappings temporanji jistgħu jibqgħu sal-iskadenza."
+    IDS_PORTMAP_REFUSED         "Ir-router irrifjuta t-twassil awtomatiku tal-port. Ma ntuża l-ebda protokoll alternattiv biex jiġi evitat dan ir-rifjut. Iċċekkja s-settings tal-amministratur tar-router jew uża setup manwali."
+    IDS_PORTMAP_NETWORKCHANGED  "L-immappjar tal-port waqaf: in-netwerk, il-portal, il-portijiet tal-klijenti jew l-indirizz estern inbidlu. Mappings preċedenti jistgħu jibqgħu sal-iskadenza. Iċċekkja l-konnessjoni u erġa ħaddem is-setup awtomatiku jekk ikun xieraq."
+    IDS_PORTMAP_SHORTLEASE      "Ir-router ta ħajja tal-mapping qasir wisq għal tiġdid affidabbli. Is-setup awtomatiku ma kienx immarkat b'suċċess. Uża setup manwali jew iċċekkja r-router."
+    IDS_PORTMAP_PROTOCOL        "Protokoll: %s"
+    IDS_ADD_UNC_SHARE           "Żid folder tan-netwerk"
 END
 
 #endif    // Maltese resources

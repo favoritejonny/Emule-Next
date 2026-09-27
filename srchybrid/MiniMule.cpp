@@ -391,8 +391,16 @@ void CMiniMule::UpdateContent(UINT uUpDatarate, UINT uDownDatarate)
 	}
 
 	SetElementHtml(_T("connected"), CComBSTR(GetResString(theApp.IsConnected() ? IDS_YES : IDS_NO)));
-	SetElementHtml(_T("upRate"), CComBSTR(theApp.emuledlg->GetUpDatarateString(uUpDatarate)));
-	SetElementHtml(_T("downRate"), CComBSTR(theApp.emuledlg->GetDownDatarateString(uDownDatarate)));
+	CString upRate;
+	upRate.Format(_T("%s %s"),
+		(LPCTSTR)theApp.emuledlg->GetUpDatarateString(uUpDatarate),
+		(LPCTSTR)GetResString(IDS_KBYTESPERSEC));
+	CString downRate;
+	downRate.Format(_T("%s %s"),
+		(LPCTSTR)theApp.emuledlg->GetDownDatarateString(uDownDatarate),
+		(LPCTSTR)GetResString(IDS_KBYTESPERSEC));
+	SetElementHtml(_T("upRate"), CComBSTR(upRate));
+	SetElementHtml(_T("downRate"), CComBSTR(downRate));
 	UINT uCompleted = 0;
 	if (thePrefs.GetRemoveFinishedDownloads())
 		uCompleted = thePrefs.GetDownSessionCompletedFiles();

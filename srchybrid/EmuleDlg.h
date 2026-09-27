@@ -135,7 +135,7 @@ public:
 	bool IsPreferencesDlgOpen() const;
 	bool IsTrayIconToFlash()				{ return m_iMsgIcon != 0; }
 	void SetToolTipsDelay(UINT uMilliseconds);
-	void StartUPnP(bool bReset = true, uint16 nForceTCPPort = 0, uint16 nForceUDPPort = 0);
+	void StartUPnP(bool bReset = true, uint16 nForceTCPPort = 0, uint16 nForceUDPPort = 0, bool reportSetupResult = false);
 	void RefreshUPnP(bool bRequestAnswer = false);
 	HBRUSH GetCtlColor(CDC*, CWnd*, UINT);
 
@@ -222,6 +222,7 @@ protected:
 
 	// UPnP TimeOutTimer
 	UINT_PTR m_hUPnPTimeOutTimer;
+	bool m_reportUPnPSetupResult = false;
 	static void CALLBACK UPnPTimeOutTimer(HWND hwnd, UINT uiMsg, UINT_PTR idEvent, DWORD dwTime) noexcept;
 
 	void StartConnection();
@@ -237,6 +238,7 @@ protected:
 	void LoadNotifier(const CString &configuration);
 	bool notifierenabled;
 	void ShowToolPopup(bool toolsonly = false);
+	void ShowProjectLinksPopup();
 	void SetAllIcons();
 	bool CanClose();
 	int MapWindowToToolbarButton(CWnd *pWnd) const;
