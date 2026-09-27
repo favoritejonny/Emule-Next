@@ -50,7 +50,7 @@ Beta 1 is unsigned because the project has not yet qualified for a public code-s
 </table>
 
 <p align="center">
-  <img src="docs/media/screenshots/preferences-modern-light-v2.png" alt="eMule Next preferences with refreshed icons" width="539">
+  <imgithub-social-preview-v2.jpg src="docs/media/screenshots/preferences-modern-light-v2.png" alt="eMule Next preferences with refreshed icons" width="539">
   <br>
   <strong>Modernised preferences and included language selection</strong>
 </p>
