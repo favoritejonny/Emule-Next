@@ -51,7 +51,7 @@ body:
     attributes:
       label: Router brand and model (connection problems only)
       description: If known; do not include a serial number or login details.
-      placeholder: Example: FRITZ!Box 7590
+      placeholder: "Example: FRITZ!Box 7590"
     validations:
       required: false
   - type: dropdown
