@@ -42,6 +42,58 @@ body:
       placeholder: Windows 11 24H2
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        For connection problems, complete the optional fields below. For other bugs, leave them as "Not applicable". Do not include your public IP address, router serial number, passwords or screenshots of router settings.
+  - type: input
+    id: router
+    attributes:
+      label: Router brand and model (connection problems only)
+      description: If known; do not include a serial number or login details.
+      placeholder: Example: FRITZ!Box 7590
+    validations:
+      required: false
+  - type: dropdown
+    id: port_setup
+    attributes:
+      label: How are the router ports opened?
+      options:
+        - Not applicable
+        - I don't know
+        - Manual port forwarding
+        - UPnP
+        - NAT-PMP
+        - PCP
+        - No port opening configured
+    validations:
+      required: false
+  - type: dropdown
+    id: ed2k_result
+    attributes:
+      label: eD2K result
+      description: Check the eD2K status in eMule Next; do not paste your IP address.
+      options:
+        - Not applicable
+        - I don't know
+        - Not connected
+        - Connected, High ID
+        - Connected, Low ID
+    validations:
+      required: false
+  - type: dropdown
+    id: kad_result
+    attributes:
+      label: Kad result
+      description: Report Kad separately from eD2K.
+      options:
+        - Not applicable
+        - I don't know
+        - Not connected
+        - Connected, open
+        - Connected, firewalled
+    validations:
+      required: false
   - type: textarea
     id: problem
     attributes:
