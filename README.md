@@ -96,3 +96,8 @@ eMule Next is a derivative work of eMule and is distributed under the GNU Genera
 - Read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing a source change.
 - Report security vulnerabilities privately as described in [SECURITY.md](SECURITY.md), never in a public issue.
 - Follow [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) in all project spaces.
+
+
+## Beta feedback
+
+No GitHub account? Share your test results through the [eMule Next beta feedback form](https://tally.so/r/lboWYW). Please include your Windows version, router setup, and separate eD2K/Kad results when relevant. Do not include private files, IP addresses, credentials, or personal data. For reproducible bugs, you can also use [GitHub Issues](https://github.com/favoritejonny/Emule-Next/issues/new/choose).
