@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> **Development paused (November 2026).** eMule Next development is temporarily on hold, and no new updates are planned for the time being. Existing releases remain available, but bug reports and feedback may not receive a prompt response. Thank you to everyone who has tested and supported the project.
+
 <p align="center">
   <img src="docs/media/github-social-preview-v2.jpg" alt="eMule Next — modern eD2K and Kad client for Windows" width="100%">
 </p>
@@ -59,7 +62,7 @@ Beta 1 is unsigned because the project has not yet qualified for a public code-s
 
 Both portable packages in `1.0.0-beta.1` passed clean-start, automated regression and manual stability tests. This remains a pre-release: back up important configuration, report reproducible problems through [GitHub Issues](https://github.com/favoritejonny/Emule-Next/issues), and do not treat it as a finished stable release.
 
-The project is maintained by Jonny Favorite. It is not an official eMule Project release and is not affiliated with, endorsed by, or sponsored by the original eMule Project.
+Jonny Favorite is the project maintainer; development is currently paused. It is not an official eMule Project release and is not affiliated with, endorsed by, or sponsored by the original eMule Project.
 
 ## Safe and lawful use
 
